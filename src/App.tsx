@@ -8,7 +8,6 @@ import { ServicesSection } from '@/components/ServicesSection'
 import { ContactSection } from '@/components/ContactSection'
 import { Footer } from '@/components/Footer'
 import { SplashCursor } from '@/components/SplashCursor'
-import { CustomCursor } from '@/components/CustomCursor'
 
 function App() {
   const scrollToSection = (sectionId: string) => {
@@ -58,7 +57,6 @@ function App() {
       <Footer onSectionClick={scrollToSection} />
       
       <SplashCursor />
-      <CustomCursor />
       
       <Toaster 
         position="top-right"
