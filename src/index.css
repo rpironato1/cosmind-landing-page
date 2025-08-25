@@ -80,6 +80,66 @@
   border: 1px solid oklch(0.35 0.15 280 / 0.2);
 }
 
+/* Splash Cursor Effects */
+.splash-glow {
+  filter: drop-shadow(0 0 6px oklch(0.75 0.15 25 / 0.4));
+}
+
+.splash-ring {
+  animation: splash-pulse 0.8s ease-out;
+}
+
+@keyframes splash-pulse {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Smooth cursor interaction - only on desktop */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  
+  button, a, input, textarea, [role="button"] {
+    cursor: none !important;
+  }
+}
+
+/* Custom cursor dot */
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: oklch(0.75 0.15 25);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: all 0.1s ease;
+  box-shadow: 0 0 10px oklch(0.75 0.15 25 / 0.3);
+}
+
+.cursor-outline {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border: 2px solid oklch(0.75 0.15 25 / 0.3);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease;
+}
+
 /* Map CSS variables to Tailwind theme */
 @theme {
   --color-background: var(--background);
