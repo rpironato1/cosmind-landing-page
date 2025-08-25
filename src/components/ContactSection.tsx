@@ -31,31 +31,31 @@ export function ContactSection() {
   const contactInfo = [
     {
       icon: Phone,
-      title: 'Telefone',
+      title: 'Atendimento Cósmico',
       content: '+55 (11) 99999-9999',
-      subtitle: 'Atendimento 24/7'
+      subtitle: 'Suporte místico 24/7'
     },
     {
       icon: EnvelopeSimple,
-      title: 'Email',
-      content: 'contato@cosmind.com.br',
+      title: 'Email Astral',
+      content: 'contato@cosmind.ai',
       subtitle: 'Resposta em até 2h'
     },
     {
       icon: MapPin,
-      title: 'Localização',
-      content: 'São Paulo, SP',
-      subtitle: 'Atendimento online e presencial'
+      title: 'Portal Digital',
+      content: 'Conexão Global',
+      subtitle: 'Atendimento online universal'
     }
   ]
 
   const services = [
-    'Terapia Digital',
-    'Protocolos Estéticos',
-    'Wellness Integrado',
-    'Coaching Pessoal',
-    'Análise Avançada',
-    'Suporte Premium'
+    'Horóscopo Diário',
+    'Compatibilidade Amorosa',
+    'Mapa Astral Completo',
+    'Consulta com IA Mística',
+    'Previsões de Carreira',
+    'Perfil Cósmico Premium'
   ]
 
   const handleInputChange = (field: keyof ContactForm, value: string) => {
@@ -133,8 +133,8 @@ export function ContactSection() {
               </span>
             </h2>
             <p className="font-sans text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Estamos aqui para ajudá-lo a iniciar sua jornada de transformação. 
-              Entre em contato e descubra como podemos personalizar nossa abordagem para você.
+              Conecte-se conosco e descubra como nossa IA mística pode transformar 
+              sua jornada de autoconhecimento através do cosmos digital.
             </p>
           </motion.div>
 
@@ -148,7 +148,7 @@ export function ContactSection() {
             >
               <Card className="p-8 bg-card/80 backdrop-blur-sm border-border/50">
                 <h3 className="font-display font-semibold text-2xl text-foreground mb-6">
-                  Envie uma Mensagem
+                  Conecte-se ao Cosmos
                 </h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -223,7 +223,7 @@ export function ContactSection() {
                       id="message"
                       value={formData.message}
                       onChange={(e) => handleInputChange('message', e.target.value)}
-                      placeholder="Como podemos ajudá-lo em sua jornada de transformação?"
+                      placeholder="Como podemos ajudá-lo em sua jornada cósmica?"
                       rows={5}
                       className="border-border/50 focus:border-primary/50 resize-none"
                     />
@@ -259,11 +259,11 @@ export function ContactSection() {
             >
               <div>
                 <h3 className="font-display font-semibold text-2xl text-foreground mb-6">
-                  Informações de Contato
+                  Canais de Conexão Cósmica
                 </h3>
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  Nossa equipe está sempre disponível para atendê-lo. 
-                  Entre em contato através dos canais abaixo ou agende uma consulta gratuita.
+                  Nossa equipe de especialistas cósmicos está sempre disponível para guiá-lo. 
+                  Conecte-se através dos portais abaixo ou inicie sua consulta astral gratuita.
                 </p>
               </div>
 

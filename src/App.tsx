@@ -5,6 +5,9 @@ import { Navigation } from '@/components/Navigation'
 import { HeroSection } from '@/components/HeroSection'
 import { AboutSection } from '@/components/AboutSection'
 import { ServicesSection } from '@/components/ServicesSection'
+import { HoroscopeGenerator } from '@/components/HoroscopeGenerator'
+import { HoroscopeHistory } from '@/components/HoroscopeHistory'
+import { TokenShop } from '@/components/TokenShop'
 import { ContactSection } from '@/components/ContactSection'
 import { Footer } from '@/components/Footer'
 import { SplashCursor } from '@/components/SplashCursor'
@@ -23,8 +26,8 @@ function App() {
     }
   }
 
-  const scrollToContact = () => {
-    scrollToSection('contact')
+  const scrollToHoroscope = () => {
+    scrollToSection('horoscope')
   }
 
   useEffect(() => {
@@ -48,9 +51,12 @@ function App() {
       <Navigation onSectionClick={scrollToSection} />
       
       <main>
-        <HeroSection onCtaClick={scrollToContact} />
+        <HeroSection onCtaClick={scrollToHoroscope} />
         <AboutSection />
-        <ServicesSection onContactClick={scrollToContact} />
+        <HoroscopeGenerator />
+        <HoroscopeHistory />
+        <ServicesSection onContactClick={scrollToHoroscope} />
+        <TokenShop />
         <ContactSection />
       </main>
       

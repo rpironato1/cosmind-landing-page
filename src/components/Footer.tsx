@@ -12,7 +12,9 @@ export function Footer({ onSectionClick }: FooterProps) {
   const navigationLinks = [
     { label: 'Início', section: 'hero' },
     { label: 'Sobre', section: 'about' },
+    { label: 'Horóscopo', section: 'horoscope' },
     { label: 'Serviços', section: 'services' },
+    { label: 'Tokens', section: 'tokens' },
     { label: 'Contato', section: 'contact' }
   ]
 
@@ -20,14 +22,14 @@ export function Footer({ onSectionClick }: FooterProps) {
     { icon: InstagramLogo, href: '#', label: 'Instagram' },
     { icon: LinkedinLogo, href: '#', label: 'LinkedIn' },
     { icon: TwitterLogo, href: '#', label: 'Twitter' },
-    { icon: EnvelopeSimple, href: 'mailto:contato@cosmind.com.br', label: 'Email' }
+    { icon: EnvelopeSimple, href: 'mailto:contato@cosmind.ai', label: 'Email' }
   ]
 
   const services = [
-    'Terapia Digital',
-    'Protocolos Estéticos',
-    'Wellness Integrado',
-    'Coaching Pessoal'
+    'Horóscopo Diário',
+    'Compatibilidade Amorosa',
+    'Mapa Astral Completo',
+    'Consulta com IA Mística'
   ]
 
   return (
@@ -45,11 +47,11 @@ export function Footer({ onSectionClick }: FooterProps) {
               className="lg:col-span-1"
             >
               <div className="font-display font-bold text-3xl mb-4">
-                Cosmind
+                CosMind
               </div>
               <p className="text-white/80 leading-relaxed mb-6">
-                Transformando vidas através da integração entre bem-estar mental e estético, 
-                com tecnologia de ponta e cuidado humano especializado.
+                Desvende os mistérios do cosmos com nossa inteligência artificial mística. 
+                Conecte-se às estrelas e descubra os segredos que o universo reserva para você.
               </p>
               <div className="flex gap-4">
                 {socialLinks.map((social, index) => {
@@ -116,19 +118,19 @@ export function Footer({ onSectionClick }: FooterProps) {
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <h3 className="font-sans font-semibold text-lg mb-6">Contato</h3>
+              <h3 className="font-sans font-semibold text-lg mb-6">Portal Cósmico</h3>
               <div className="space-y-3 text-white/80">
                 <div>
-                  <div className="font-medium text-white">Telefone</div>
+                  <div className="font-medium text-white">Atendimento Astral</div>
                   <div>+55 (11) 99999-9999</div>
                 </div>
                 <div>
-                  <div className="font-medium text-white">Email</div>
-                  <div>contato@cosmind.com.br</div>
+                  <div className="font-medium text-white">Email Cósmico</div>
+                  <div>contato@cosmind.ai</div>
                 </div>
                 <div>
-                  <div className="font-medium text-white">Localização</div>
-                  <div>São Paulo, SP</div>
+                  <div className="font-medium text-white">Conexão Universal</div>
+                  <div>Portal Digital Global</div>
                 </div>
               </div>
             </motion.div>
@@ -144,10 +146,10 @@ export function Footer({ onSectionClick }: FooterProps) {
           >
             <div className="text-center max-w-2xl mx-auto">
               <h3 className="font-display font-semibold text-2xl mb-4">
-                Fique por Dentro das Novidades
+                Receba Energias Cósmicas
               </h3>
               <p className="text-white/80 mb-6">
-                Receba dicas exclusivas sobre bem-estar, novos tratamentos e conteúdos especiais.
+                Inscreva-se para receber horóscopo personalizado, dicas astrológicas e novidades sobre o universo místico.
               </p>
               <Button
                 onClick={() => onSectionClick('contact')}
@@ -169,7 +171,7 @@ export function Footer({ onSectionClick }: FooterProps) {
           >
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="text-white/80 text-sm">
-                © {currentYear} Cosmind. Todos os direitos reservados.
+                © {currentYear} CosMind. Todos os direitos reservados. Conectado ao cosmos.
               </div>
               <div className="flex gap-6 text-sm">
                 <button className="text-white/80 hover:text-white transition-colors duration-200">

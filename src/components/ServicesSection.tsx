@@ -1,6 +1,6 @@
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Brain, Sparkle, Heart, UserCircle, ChartLine, Shield } from '@phosphor-icons/react'
+import { Brain, Star, Heart, UserCircle, ChartLine, Sparkles } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 
 interface ServicesProps {
@@ -10,45 +10,45 @@ interface ServicesProps {
 export function ServicesSection({ onContactClick }: ServicesProps) {
   const services = [
     {
-      icon: Brain,
-      title: 'Terapia Digital',
-      description: 'Sessões personalizadas com IA avançada para cuidado da saúde mental, incluindo técnicas de mindfulness e terapia cognitivo-comportamental.',
-      features: ['Disponível 24/7', 'Totalmente personalizada', 'Privacidade garantida'],
+      icon: Star,
+      title: 'Horóscopo Diário',
+      description: 'Previsões personalizadas geradas por IA para cada dia, incluindo orientações sobre amor, trabalho, saúde e finanças.',
+      features: ['Atualizado diariamente', 'Personalização total', 'Insights profundos'],
       gradient: 'from-primary to-primary/70'
     },
     {
-      icon: Sparkle,
-      title: 'Protocolos Estéticos',
-      description: 'Tratamentos personalizados baseados em análise de pele e objetivos individuais, com acompanhamento profissional especializado.',
-      features: ['Análise por IA', 'Resultados mensuráveis', 'Produtos premium'],
+      icon: Heart,
+      title: 'Compatibilidade Amorosa',
+      description: 'Análise completa de compatibilidade entre signos com insights detalhados sobre relacionamentos e afinidades cósmicas.',
+      features: ['Análise de sinastria', 'Dicas de relacionamento', 'Previsões românticas'],
       gradient: 'from-accent to-accent/70'
     },
     {
-      icon: Heart,
-      title: 'Wellness Integrado',
-      description: 'Programa completo que une cuidados mentais e físicos, criando uma rotina de bem-estar sustentável e transformadora.',
-      features: ['Abordagem holística', 'Rotinas personalizadas', 'Suporte contínuo'],
+      icon: Sparkles,
+      title: 'Mapa Astral Completo',
+      description: 'Interpretação detalhada do seu mapa natal com análise de planetas, casas astrológicas e aspectos planetários.',
+      features: ['Mapa personalizado', 'Interpretação profissional', 'Insights de personalidade'],
       gradient: 'from-secondary to-primary/50'
     },
     {
-      icon: UserCircle,
-      title: 'Coaching Pessoal',
-      description: 'Acompanhamento individualizado com coaches especializados em transformação pessoal e desenvolvimento de autoestima.',
-      features: ['Mentoria 1:1', 'Planos personalizados', 'Objetivos claros'],
+      icon: Brain,
+      title: 'Consulta com IA Mística',
+      description: 'Converse diretamente com nossa IA especializada em astrologia para tirar dúvidas e receber orientações específicas.',
+      features: ['Chat em tempo real', 'Respostas personalizadas', 'Disponível 24/7'],
       gradient: 'from-primary/70 to-accent/70'
     },
     {
       icon: ChartLine,
-      title: 'Análise Avançada',
-      description: 'Monitoramento detalhado do seu progresso com métricas precisas e insights para otimizar sua jornada de transformação.',
-      features: ['Relatórios detalhados', 'Insights em tempo real', 'Ajustes inteligentes'],
+      title: 'Previsões de Carreira',
+      description: 'Orientações astrológicas para decisões profissionais, timing ideal para mudanças e oportunidades de crescimento.',
+      features: ['Timing profissional', 'Orientação de carreira', 'Análise de trânsitos'],
       gradient: 'from-accent/70 to-secondary'
     },
     {
-      icon: Shield,
-      title: 'Suporte Premium',
-      description: 'Atendimento especializado com profissionais qualificados, garantindo apoio completo durante toda sua jornada.',
-      features: ['Atendimento prioritário', 'Especialistas dedicados', 'Emergência 24h'],
+      icon: UserCircle,
+      title: 'Perfil Cósmico Premium',
+      description: 'Análise completa da sua personalidade astrológica com relatórios detalhados sobre talentos, desafios e potenciais.',
+      features: ['Relatório completo', 'Análise psicológica', 'Guia de desenvolvimento'],
       gradient: 'from-primary to-secondary/70'
     }
   ]
@@ -66,14 +66,14 @@ export function ServicesSection({ onContactClick }: ServicesProps) {
             className="text-center mb-16"
           >
             <h2 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl mb-6">
-              Nossos{' '}
+              Serviços{' '}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Serviços
+                Cósmicos
               </span>
             </h2>
             <p className="font-sans text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Uma gama completa de soluções integradas para sua transformação pessoal, 
-              combinando tecnologia de ponta com cuidado humano especializado.
+              Uma gama completa de serviços astrológicos premium, powered by IA, 
+              para desvendar os mistérios do cosmos e guiar sua jornada de vida.
             </p>
           </motion.div>
 
@@ -135,14 +135,14 @@ export function ServicesSection({ onContactClick }: ServicesProps) {
             className="text-center glass p-12 rounded-3xl"
           >
             <h3 className="font-display font-semibold text-3xl md:text-4xl text-foreground mb-6">
-              Pronto para Começar sua{' '}
+              Pronto para Desvendar os{' '}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Transformação?
+                Segredos do Cosmos?
               </span>
             </h3>
             <p className="font-sans text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Nossa equipe está pronta para criar um plano personalizado que atenda 
-              suas necessidades específicas e objetivos de bem-estar.
+              Nossa IA mística está pronta para revelar os mistérios que as estrelas 
+              guardam sobre seu destino e futuro.
             </p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
               <Button
@@ -150,7 +150,7 @@ export function ServicesSection({ onContactClick }: ServicesProps) {
                 size="lg"
                 className="bg-gradient-to-r from-primary to-accent text-white font-medium px-10 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                Agendar Consulta Gratuita
+                Começar Jornada Cósmica
               </Button>
             </motion.div>
           </motion.div>

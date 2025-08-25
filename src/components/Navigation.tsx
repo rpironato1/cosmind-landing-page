@@ -13,7 +13,9 @@ export function Navigation({ onSectionClick }: NavigationProps) {
   const navigationItems = [
     { label: 'Início', section: 'hero' },
     { label: 'Sobre', section: 'about' },
+    { label: 'Horóscopo', section: 'horoscope' },
     { label: 'Serviços', section: 'services' },
+    { label: 'Tokens', section: 'tokens' },
     { label: 'Contato', section: 'contact' }
   ]
 
@@ -37,7 +39,7 @@ export function Navigation({ onSectionClick }: NavigationProps) {
             className="font-display font-bold text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent cursor-pointer"
             onClick={() => handleNavClick('hero')}
           >
-            Cosmind
+            CosMind
           </motion.div>
 
           {/* Desktop Navigation */}

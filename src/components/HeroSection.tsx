@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Sparkle, Brain, Heart } from '@phosphor-icons/react'
+import { ArrowRight, Star, Moon, Sun } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 
 interface HeroSectionProps {
@@ -37,7 +37,7 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
 
       <div className="container mx-auto px-6 py-32 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Floating Icons */}
+          {/* Floating Cosmic Icons */}
           <div className="flex justify-center gap-8 mb-8">
             <motion.div
               initial={{ y: 20, opacity: 0 }}
@@ -46,7 +46,7 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
               whileHover={{ scale: 1.1, rotate: 5 }}
               className="glass-dark p-4 rounded-2xl"
             >
-              <Brain size={32} className="text-primary" />
+              <Sun size={32} className="text-accent" />
             </motion.div>
             <motion.div
               initial={{ y: 20, opacity: 0 }}
@@ -55,7 +55,7 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
               whileHover={{ scale: 1.1, rotate: -5 }}
               className="glass-dark p-4 rounded-2xl"
             >
-              <Sparkle size={32} className="text-accent" />
+              <Star size={32} className="text-primary" />
             </motion.div>
             <motion.div
               initial={{ y: 20, opacity: 0 }}
@@ -64,7 +64,7 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
               whileHover={{ scale: 1.1, rotate: 5 }}
               className="glass-dark p-4 rounded-2xl"
             >
-              <Heart size={32} className="text-secondary" />
+              <Moon size={32} className="text-secondary" />
             </motion.div>
           </div>
 
@@ -76,11 +76,11 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
             className="font-display font-bold text-5xl md:text-7xl lg:text-8xl leading-tight mb-6"
           >
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              Bem-estar
+              CosMind
             </span>
             <br />
             <span className="text-foreground">
-              Mental & Cosmético
+              Portal Cósmico
             </span>
           </motion.h1>
 
@@ -91,8 +91,8 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="font-sans text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed"
           >
-            Transforme sua mente e sua aparência através de tecnologias inovadoras. 
-            Uma jornada personalizada que combina cuidados mentais e estéticos para o seu bem-estar completo.
+            Descubra os segredos do universo com horóscopo personalizado por IA. 
+            Conecte-se ao cosmos e desvende seu destino através de leituras místicas premium.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -108,7 +108,7 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
                 size="lg"
                 className="bg-gradient-to-r from-primary to-accent text-white font-medium px-8 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                Começar Jornada
+                Consultar Astros
                 <ArrowRight size={20} className="ml-2" />
               </Button>
             </motion.div>
@@ -119,12 +119,12 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
                 size="lg"
                 className="border-2 border-primary/30 text-primary hover:bg-primary/5 font-medium px-8 py-4 text-lg rounded-xl glass backdrop-blur-sm"
               >
-                Saiba Mais
+                Ver Horóscopo Grátis
               </Button>
             </motion.div>
           </motion.div>
 
-          {/* Stats or Trust Indicators */}
+          {/* Cosmic Stats */}
           <motion.div
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -132,9 +132,9 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
             className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto"
           >
             {[
-              { number: '1000+', label: 'Clientes Satisfeitos' },
-              { number: '98%', label: 'Taxa de Sucesso' },
-              { number: '24/7', label: 'Suporte Disponível' }
+              { number: '50K+', label: 'Leituras Realizadas' },
+              { number: '99.5%', label: 'Precisão Cósmica' },
+              { number: 'IA', label: 'Inteligência Mística' }
             ].map((stat, index) => (
               <motion.div
                 key={index}
