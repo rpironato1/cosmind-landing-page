@@ -51,7 +51,7 @@ function pointerPrototype(): Pointer {
   };
 }
 
-export default function SplashCursor({
+export function SplashCursor({
   SIM_RESOLUTION = 128,
   DYE_RESOLUTION = 1440,
   CAPTURE_RESOLUTION = 512,
