@@ -5,6 +5,10 @@
   * {
     @apply border-border;
   }
+  
+  body {
+    cursor: auto;
+  }
 }
 
 :root {
