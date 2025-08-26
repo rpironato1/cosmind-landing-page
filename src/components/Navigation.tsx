@@ -267,12 +267,14 @@ export function Navigation({ onSectionClick }: NavigationProps) {
       )}
       
       {/* Token Shop */}
-      <StripeCheckout
-        isOpen={showTokenShop}
-        onClose={() => setShowTokenShop(false)}
-        user={currentUser!}
-        onPurchaseComplete={handleTokenPurchase}
-      />
+      {currentUser && (
+        <StripeCheckout
+          isOpen={showTokenShop}
+          onClose={() => setShowTokenShop(false)}
+          user={currentUser}
+          onPurchaseComplete={handleTokenPurchase}
+        />
+      )}
     </motion.nav>
   )
 }

@@ -48,7 +48,7 @@ interface StripeCheckoutProps {
   isOpen: boolean
   onClose: () => void
   selectedPackage?: TokenPackage
-  user: UserData
+  user: UserData | null
   onPurchaseComplete: (tokens: number) => void
 }
 
@@ -124,11 +124,16 @@ const paymentMethods: PaymentMethod[] = [
 ]
 
 export function StripeCheckout({ isOpen, onClose, selectedPackage, user, onPurchaseComplete }: StripeCheckoutProps) {
-  const [tokenPurchases, setTokenPurchases] = useKV<TokenPurchase[]>(`purchases-${user.id}`, [])
+  const [tokenPurchases, setTokenPurchases] = useKV<TokenPurchase[]>(`purchases-${user?.id || 'guest'}`, [])
   const [currentPackage, setCurrentPackage] = useState<TokenPackage | null>(selectedPackage || null)
   const [selectedPayment, setSelectedPayment] = useState<'card' | 'pix' | 'boleto'>('card')
   const [isProcessing, setIsProcessing] = useState(false)
   const [step, setStep] = useState<'package' | 'payment' | 'checkout'>('package')
+  
+  // Early return if user is null
+  if (!user) {
+    return null
+  }
   
   const [cardData, setCardData] = useState({
     number: '',
