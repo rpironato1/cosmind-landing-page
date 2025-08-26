@@ -15,6 +15,9 @@ O CosMind é um portal de horóscopo premium que combina inteligência artificia
 - **Trânsitos Planetários**: Análise de movimentos planetários em tempo real ✅
 - **Central de Notificações**: Sistema completo de notificações personalizadas ✅
 - **Perfil Cósmico**: Customização avançada do perfil do usuário ✅
+- **Análise de Compatibilidade Amorosa**: Sistema completo para análise de relacionamentos ✅
+- **Gerador de Rituais Místicos**: Criação de rituais personalizados por IA ✅
+- **Astrologia Profissional**: Orientação vocacional e análise de carreira ✅
 
 ### 🎨 Design & UX
 - **Tema Cosmic**: Paleta de cores inspirada no cosmos (roxos, rosa dourado, lavanda)
@@ -24,11 +27,13 @@ O CosMind é um portal de horóscopo premium que combina inteligência artificia
 
 ### 🔮 Serviços Astrológicos
 1. **Horóscopo Diário**: Previsões personalizadas por IA
-2. **Compatibilidade Amorosa**: Análise de relacionamentos entre signos
+2. **Compatibilidade Amorosa**: Análise detalhada de relacionamentos entre signos
 3. **Mapa Astral Completo**: Interpretação detalhada do mapa natal
 4. **Consulta com IA Mística**: Chat inteligente para dúvidas astrológicas
 5. **Previsões de Carreira**: Orientações profissionais baseadas nos astros
 6. **Perfil Cósmico Premium**: Análise completa de personalidade
+7. **Rituais Personalizados**: Geração de rituais místicos por IA
+8. **Astrologia Profissional**: Análise vocacional e orientação de carreira
 
 ### 💫 Sistema de Monetização
 - **Pacote Iniciante**: 10 tokens por R$9,90 (50% desconto)
@@ -48,6 +53,9 @@ O CosMind é um portal de horóscopo premium que combina inteligência artificia
 - **About Section**: Visão da empresa e valores cósmicos ✅
 - **Horoscope Generator**: Gerador principal de horóscopo ✅
 - **Horoscope History**: Histórico de consultas realizadas ✅
+- **Compatibility Analyzer**: Análise detalhada de compatibilidade amorosa ✅
+- **Ritual Generator**: Gerador de rituais místicos personalizados ✅
+- **Career Astrology**: Análise astrológica profissional e vocacional ✅
 - **Planetary Transits**: Análise de trânsitos planetários em tempo real ✅
 - **Services Section**: Catálogo de serviços astrológicos ✅
 - **Token Shop**: Loja de créditos para consultas ✅
@@ -106,11 +114,11 @@ O CosMind é um portal de horóscopo premium que combina inteligência artificia
 
 O CosMind está completamente funcional com TODAS as features principais e avançadas implementadas:
 
-🌟 **Funcionalidades Core**: 100% completas
+🌟 **Funcionalidades Core**: 100% completas + EXPANSÕES AVANÇADAS
 🎨 **Interface & UX**: Design premium finalizado  
-🤖 **IA Integration**: Chat bot + gerador de horóscopo
-🔮 **Features Avançadas**: Trânsitos planetários + notificações + perfil personalizado
+🤖 **IA Integration**: Chat bot + gerador de horóscopo + análise de compatibilidade + rituais personalizados + carreira astrológica
+🔮 **Features Avançadas**: Trânsitos planetários + notificações + perfil personalizado + análise de relacionamentos + rituais místicos + orientação profissional
 💫 **Sistema de Monetização**: Loja de tokens completa
 📱 **Experiência Mobile**: Totalmente responsivo
 
-A aplicação oferece uma experiência premium completa de horóscopo com IA, interface moderna, sistema de monetização efetivo e funcionalidades avançadas como análise de trânsitos planetários e chat bot inteligente.
+A aplicação oferece uma experiência premium completa de horóscopo com IA, interface moderna, sistema de monetização efetivo e funcionalidades avançadas como análise de trânsitos planetários, chat bot inteligente, análise de compatibilidade amorosa completa, gerador de rituais místicos personalizados e sistema de astrologia profissional para orientação vocacional.

@@ -13,6 +13,9 @@ import { Footer } from '@/components/Footer'
 import { SplashCursor } from '@/components/SplashCursor'
 import { AstrologyChatBot } from '@/components/AstrologyChatBot'
 import { PlanetaryTransits } from '@/components/PlanetaryTransits'
+import { CompatibilityAnalyzer } from '@/components/CompatibilityAnalyzer'
+import { RitualGenerator } from '@/components/RitualGenerator'
+import { CareerAstrology } from '@/components/CareerAstrology'
 
 function App() {
   const scrollToSection = (sectionId: string) => {
@@ -57,6 +60,9 @@ function App() {
         <AboutSection />
         <HoroscopeGenerator />
         <HoroscopeHistory />
+        <CompatibilityAnalyzer />
+        <RitualGenerator />
+        <CareerAstrology />
         <PlanetaryTransits />
         <ServicesSection onContactClick={scrollToHoroscope} />
         <TokenShop />
