@@ -6,72 +6,91 @@ Baseado na análise do gap entre o estado atual e o PRD.md v2.0, este documento 
 
 ## 🎯 FASES DE IMPLEMENTAÇÃO RECOMENDADAS
 
-### 🔥 FASE 1: INFRAESTRUTURA CRÍTICA (Semanas 1-4)
-**Objetivo**: Estabelecer base sólida para observabilidade e resiliência
+### 🔥 FASE 1: DECISÃO ARQUITETURAL + INFRAESTRUTURA (Semanas 1-4)
+**Objetivo**: Definir arquitetura e estabelecer base para observabilidade
 
-#### 1.1 Sistema de Observabilidade (SEMANA 1)
-**Prioridade**: CRÍTICA - Visibilidade zero em produção
+#### 1.1 Decisão Arquitetural (SEMANA 1)
+**Prioridade**: CRÍTICA - Definir abordagem antes de implementar
 
-**Implementação**:
+**Opções para Web + Mobile**:
+
+**OPÇÃO A: Multi-repo Simplificado (RECOMENDADO)**
 ```bash
-# 1. Criar package de observabilidade
-mkdir -p packages/observability/src/{metrics,tracing,logging,alerts}
+# Estrutura proposta
+cosmind-web/          # Next.js (atual migrado)
+├── src/
+├── shared/           # Código compartilhado
+│   ├── types/
+│   ├── api-client/
+│   └── utils/
+└── package.json
 
-# 2. Instalar dependências
-npm install @opentelemetry/api @opentelemetry/sdk-node prom-client winston
+cosmind-mobile/       # React Native (futuro)
+cosmind-shared/       # NPM package (quando necessário)
+```
+
+**OPÇÃO B: Monorepo Completo**
+```bash
+cosmind/
+├── apps/
+│   ├── web/
+│   └── mobile/
+├── packages/
+│   ├── shared/
+│   ├── ui/
+│   └── utils/
+```
+
+**Recomendação**: Começar com Opção A para time pequeno/médio
+
+#### 1.2 Migração Next.js + Observabilidade (SEMANA 2)
+**Prioridade**: ALTA - Base tecnológica sólida
+
+**Implementação Simplificada**:
+```bash
+# 1. Migrar para Next.js 14
+npx create-next-app@latest cosmind-web --typescript --tailwind --app
+
+# 2. Mover componentes existentes
+cp -r src/components cosmind-web/src/
+cp -r src/hooks cosmind-web/src/
+
+# 3. Adicionar observabilidade básica
+npm install @opentelemetry/api @opentelemetry/sdk-node prom-client
 ```
 
 **Arquivos a criar**:
-- `packages/observability/src/index.ts` - Sistema principal
-- `packages/observability/src/metrics/business.ts` - Métricas de negócio
-- `packages/observability/src/tracing/setup.ts` - OpenTelemetry
-- `packages/observability/src/logging/winston.ts` - Logging estruturado
+- `src/shared/observability/index.ts` - Sistema básico
+- `src/shared/api-client/index.ts` - Cliente API tipado
+- `instrumentation.ts` - OpenTelemetry setup
 
-#### 1.2 Circuit Breaker (SEMANA 2)
-**Prioridade**: ALTA - Prevenir cascading failures
+#### 1.3 Circuit Breaker + Cache (SEMANA 3)
+**Prioridade**: ALTA - Resiliência de produção
 
 **Implementação**:
 ```bash
-# 1. Criar package AI com circuit breaker
-mkdir -p packages/ai/src/{circuit-breaker,providers,rag}
+# 1. Adicionar ao projeto atual
+mkdir -p src/shared/{resilience,cache}
 
 # 2. Instalar dependências
-npm install opossum lru-cache
+npm install opossum lru-cache ioredis
 ```
 
 **Arquivos a criar**:
-- `packages/ai/src/circuit-breaker/resilient-client.ts`
-- `packages/ai/src/providers/multi-provider.ts`
-- `packages/ai/src/fallback/cache-strategy.ts`
+- `src/shared/resilience/circuit-breaker.ts`
+- `src/shared/cache/intelligent-cache.ts`
+- `src/shared/api/resilient-client.ts`
 
-#### 1.3 Cache Multi-Layer (SEMANA 3)
-**Prioridade**: ALTA - Reduzir custo IA em 90%
-
-**Implementação**:
-```bash
-# 1. Criar package de cache
-mkdir -p packages/cache/src/{layers,strategies,prefetch}
-
-# 2. Instalar dependências
-npm install ioredis lru-cache
-```
-
-**Arquivos a criar**:
-- `packages/cache/src/intelligent-cache.ts`
-- `packages/cache/src/layers/{memory,redis,cdn}.ts`
-- `packages/cache/src/strategies/ttl-dynamic.ts`
-
-#### 1.4 Setup Monorepo (SEMANA 4)
-**Prioridade**: MÉDIA - Base para modularização
+#### 1.4 Preparação Mobile (SEMANA 4)
+**Prioridade**: MÉDIA - Setup para desenvolvimento mobile
 
 **Implementação**:
 ```bash
-# 1. Instalar Turborepo
-npm install -g turbo
-turbo init
+# 1. Extrair shared para NPM package (quando necessário)
+# 2. Criar projeto React Native base
+npx react-native init CosmindMobile --template react-native-template-typescript
 
-# 2. Configurar workspaces
-# Atualizar package.json e turbo.json
+# 3. Setup shared dependencies
 ```
 
 ### ⚡ FASE 2: FEATURE FLAGS E EVENTOS (Semanas 5-8)

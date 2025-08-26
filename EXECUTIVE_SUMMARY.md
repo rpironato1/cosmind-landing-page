@@ -13,10 +13,11 @@
 
 ## 🚨 PRINCIPAIS GAPS IDENTIFICADOS
 
-### 1. **ARQUITETURA** (Gap: 80%)
+### 1. **ARQUITETURA** (Gap: 60-80%)
 - **Atual**: SPA monolítica simples
-- **Objetivo**: Monorepo modular com 12+ packages
-- **Impacto**: Escalabilidade limitada
+- **Decisão necessária**: Monorepo vs Multi-repo para web + mobile
+- **Recomendação**: Multi-repo simplificado para time pequeno/médio
+- **Impacto**: Flexibilidade vs Complexidade
 
 ### 2. **OBSERVABILIDADE** (Gap: 100%)
 - **Atual**: Zero visibilidade de produção
@@ -120,6 +121,27 @@ cosmind/
 ```
 
 ## 🎯 RECOMENDAÇÃO FINAL
+
+### **DECISÃO ARQUITETURAL CHAVE**: Monorepo vs Multi-repo
+
+**CONTEXTO**: Projeto será web app + Android/iOS
+
+**ANÁLISE**:
+- **Monorepo**: Mais complexidade, melhor compartilhamento de código
+- **Multi-repo**: Simplicidade, deploy independente, menor curva de aprendizado
+
+**RECOMENDAÇÃO**: **Multi-repo simplificado**
+```bash
+cosmind-web/     # Next.js (migração do atual)
+cosmind-mobile/  # React Native (futuro)  
+cosmind-shared/  # NPM package compartilhado
+```
+
+**Justificativa**:
+1. Time pequeno/médio se beneficia mais da simplicidade
+2. Deploy independente reduz riscos
+3. Pode evoluir para monorepo quando necessário
+4. 70% dos benefícios com 30% da complexidade
 
 ### **DECISÃO ESTRATÉGICA**:
 1. **IMPLEMENTAR FASE 1** imediatamente (4 semanas)

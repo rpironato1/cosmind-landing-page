@@ -18,19 +18,23 @@ O projeto CosMind atual é uma aplicação React/Vite funcional com features bá
 
 ## 🏗️ 1. ARQUITETURA MODULAR
 
-### 1.1 Monorepo com Turborepo
-**Status**: ❌ Não implementado
+### 1.1 Avaliação: Monorepo vs Multi-repo
+**Status**: ❌ Requer decisão arquitetural
 **Atual**: Estrutura simples de SPA
-**Objetivo**: Monorepo modular com packages independentes
+**Questão**: Monorepo é necessário para web app + mobile?
 
+#### 🤔 ANÁLISE DE NECESSIDADE
+
+**Cenário Atual**:
+- Projeto funcional como React SPA
+- Objetivo: Web app + Android/iOS
+- Time pequeno/médio
+- Foco em time-to-market
+
+#### 📊 OPÇÕES ARQUITETURAIS
+
+**OPÇÃO 1: Monorepo Completo (PRD v2.0)**
 ```bash
-# Estrutura atual
-cosmind-landing-page/
-├── src/
-├── package.json
-└── vite.config.ts
-
-# Estrutura objetivo (PRD.md)
 cosmind/
 ├── apps/
 │   ├── web/           # Next.js 14
@@ -38,21 +42,85 @@ cosmind/
 │   └── mobile/        # React Native
 ├── packages/
 │   ├── ui/           # Design System
-│   ├── ai/           # Engine IA
-│   ├── cache/        # Cache inteligente
-│   ├── observability/  # Monitoring
-│   ├── events/       # Event bus
-│   └── feature-flags/ # A/B testing
-└── tools/
-    ├── mcp-playwright/
-    └── load-testing/
+│   ├── api-client/   # Shared API
+│   ├── types/        # TypeScript tipos
+│   └── utils/        # Utilities
 ```
 
-**Implementação necessária**:
-- [ ] Setup Turborepo
+✅ **Vantagens**:
+- Compartilhamento de código entre web/mobile
+- Atomic commits cross-platform
+- Unified development experience
+- Shared design system
+
+❌ **Desvantagens**:
+- Complexidade de setup/CI
+- Learning curve
+- Overkill para projetos pequenos
+- Build times podem aumentar
+
+---
+
+**OPÇÃO 2: Multi-repo Simplificado (RECOMENDADO)**
+```bash
+cosmind-web/          # React/Next.js
+├── src/
+└── package.json
+
+cosmind-mobile/       # React Native
+├── src/
+└── package.json
+
+cosmind-shared/       # NPM package
+├── types/
+├── api-client/
+└── utils/
+```
+
+✅ **Vantagens**:
+- Simplicidade de manutenção
+- Deploy independente
+- Times podem trabalhar separadamente
+- Menor curva de aprendizado
+
+❌ **Desvantagens**:
+- Duplicação potencial de código
+- Versionamento de dependências
+- Menos atomic commits
+
+---
+
+**OPÇÃO 3: Híbrida (PRAGMÁTICA)**
+```bash
+cosmind-web/          # Atual + melhorias
+├── src/
+├── shared/           # Código compartilhado
+│   ├── types/
+│   ├── api/
+│   └── utils/
+└── package.json
+
+cosmind-mobile/       # React Native
+├── src/
+├── shared/           # Symlink ou submodule
+└── package.json
+```
+
+### 🎯 RECOMENDAÇÃO BASEADA NO CONTEXTO
+
+**Para um projeto que será web + mobile:**
+
+1. **INÍCIO**: Manter estrutura atual (React SPA)
+2. **FASE 1**: Migrar para Next.js sem monorepo
+3. **FASE 2**: Criar cosmind-shared como NPM package
+4. **FASE 3**: Desenvolver mobile consumindo shared package
+5. **FUTURO**: Considerar monorepo quando team > 5 devs
+
+**Implementação necessária (Opção 3)**:
 - [ ] Migração Next.js 14 com App Router
-- [ ] Extração de packages modulares
-- [ ] Configuração de workspaces
+- [ ] Extração de tipos/utils para shared/
+- [ ] Publicação de cosmind-shared no NPM
+- [ ] Setup CI/CD simplificado
 
 ### 1.2 Dependências e Grafo
 **Status**: ❌ Não validado
