@@ -44,7 +44,11 @@ const zodiacSigns = [
   { value: 'pisces', label: '♓ Peixes', element: 'Água', quality: 'Mutável' }
 ]
 
-export function CompatibilityAnalyzer() {
+interface CompatibilityAnalyzerProps {
+  onSectionClick?: (section: string) => void
+}
+
+export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerProps = {}) {
   const [person1Sign, setPerson1Sign] = useState<string>('')
   const [person2Sign, setPerson2Sign] = useState<string>('')
   const [person1Name, setPerson1Name] = useState<string>('')
@@ -470,6 +474,40 @@ export function CompatibilityAnalyzer() {
                   </div>
                 </CardContent>
               </Card>
+            </motion.div>
+          )}
+
+          {/* Next Steps CTA */}
+          {result && onSectionClick && (
+            <motion.div
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="mt-12 text-center"
+            >
+              <div className="glass p-8 rounded-2xl max-w-2xl mx-auto">
+                <h3 className="font-display font-semibold text-2xl mb-4">
+                  Continue sua Jornada Cósmica
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  Aprofunde sua conexão com base nos insights descobertos
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    onClick={() => onSectionClick('ritual-generator')}
+                    className="bg-gradient-to-r from-primary to-accent text-white"
+                  >
+                    Criar Ritual de Harmonia
+                  </Button>
+                  <Button
+                    onClick={() => onSectionClick('horoscope')}
+                    variant="outline"
+                    className="border-primary/30 text-primary hover:bg-primary/5"
+                  >
+                    Ver Horóscopo Individual
+                  </Button>
+                </div>
+              </div>
             </motion.div>
           )}
         </div>

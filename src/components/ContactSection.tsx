@@ -17,7 +17,11 @@ interface ContactForm {
   message: string
 }
 
-export function ContactSection() {
+interface ContactSectionProps {
+  onSectionClick?: (section: string) => void
+}
+
+export function ContactSection({ onSectionClick }: ContactSectionProps = {}) {
   const [formData, setFormData] = useState<ContactForm>({
     name: '',
     email: '',
@@ -99,6 +103,13 @@ export function ContactSection() {
       setContacts((currentContacts: any[]) => [...currentContacts, newContact])
       
       toast.success('Mensagem enviada com sucesso! Entraremos em contato em breve.')
+      
+      // Navigate to horoscope after successful submission
+      if (onSectionClick) {
+        setTimeout(() => {
+          onSectionClick('horoscope')
+        }, 2000)
+      }
       
       setFormData({
         name: '',

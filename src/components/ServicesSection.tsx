@@ -5,51 +5,58 @@ import { motion } from 'framer-motion'
 
 interface ServicesProps {
   onContactClick: () => void
+  onSectionClick: (section: string) => void
 }
 
-export function ServicesSection({ onContactClick }: ServicesProps) {
+export function ServicesSection({ onContactClick, onSectionClick }: ServicesProps) {
   const services = [
     {
       icon: Star,
       title: 'Horóscopo Diário',
       description: 'Previsões personalizadas geradas por IA para cada dia, incluindo orientações sobre amor, trabalho, saúde e finanças.',
       features: ['Atualizado diariamente', 'Personalização total', 'Insights profundos'],
-      gradient: 'from-primary to-primary/70'
+      gradient: 'from-primary to-primary/70',
+      section: 'horoscope'
     },
     {
       icon: Heart,
       title: 'Compatibilidade Amorosa',
       description: 'Análise completa de compatibilidade entre signos com insights detalhados sobre relacionamentos e afinidades cósmicas.',
       features: ['Análise de sinastria', 'Dicas de relacionamento', 'Previsões românticas'],
-      gradient: 'from-accent to-accent/70'
+      gradient: 'from-accent to-accent/70',
+      section: 'compatibility'
     },
     {
       icon: Sparkles,
       title: 'Mapa Astral Completo',
       description: 'Interpretação detalhada do seu mapa natal com análise de planetas, casas astrológicas e aspectos planetários.',
       features: ['Mapa personalizado', 'Interpretação profissional', 'Insights de personalidade'],
-      gradient: 'from-secondary to-primary/50'
+      gradient: 'from-secondary to-primary/50',
+      section: 'horoscope'
     },
     {
       icon: Brain,
       title: 'Consulta com IA Mística',
       description: 'Converse diretamente com nossa IA especializada em astrologia para tirar dúvidas e receber orientações específicas.',
       features: ['Chat em tempo real', 'Respostas personalizadas', 'Disponível 24/7'],
-      gradient: 'from-primary/70 to-accent/70'
+      gradient: 'from-primary/70 to-accent/70',
+      section: 'chat'
     },
     {
       icon: ChartLine,
       title: 'Previsões de Carreira',
       description: 'Orientações astrológicas para decisões profissionais, timing ideal para mudanças e oportunidades de crescimento.',
       features: ['Timing profissional', 'Orientação de carreira', 'Análise de trânsitos'],
-      gradient: 'from-accent/70 to-secondary'
+      gradient: 'from-accent/70 to-secondary',
+      section: 'career-astrology'
     },
     {
       icon: UserCircle,
       title: 'Perfil Cósmico Premium',
       description: 'Análise completa da sua personalidade astrológica com relatórios detalhados sobre talentos, desafios e potenciais.',
       features: ['Relatório completo', 'Análise psicológica', 'Guia de desenvolvimento'],
-      gradient: 'from-primary to-secondary/70'
+      gradient: 'from-primary to-secondary/70',
+      section: 'horoscope'
     }
   ]
 
@@ -119,6 +126,20 @@ export function ServicesSection({ onContactClick }: ServicesProps) {
                           </div>
                         ))}
                       </div>
+
+                      {/* Action Button */}
+                      <motion.div 
+                        whileHover={{ scale: 1.02 }} 
+                        whileTap={{ scale: 0.98 }}
+                        className="pt-4"
+                      >
+                        <Button
+                          onClick={() => onSectionClick(service.section)}
+                          className={`w-full bg-gradient-to-r ${service.gradient} text-white font-medium hover:shadow-lg transition-all duration-300`}
+                        >
+                          Experimentar Agora
+                        </Button>
+                      </motion.div>
                     </div>
                   </Card>
                 </motion.div>
@@ -146,7 +167,7 @@ export function ServicesSection({ onContactClick }: ServicesProps) {
             </p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
               <Button
-                onClick={onContactClick}
+                onClick={() => onSectionClick('horoscope')}
                 size="lg"
                 className="bg-gradient-to-r from-primary to-accent text-white font-medium px-10 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
               >

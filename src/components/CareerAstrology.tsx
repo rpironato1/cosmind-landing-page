@@ -93,7 +93,11 @@ const careerSatisfaction = [
   { value: 'very-dissatisfied', label: 'Muito insatisfeito', score: 10 }
 ]
 
-export function CareerAstrology() {
+interface CareerAstrologyProps {
+  onSectionClick?: (section: string) => void
+}
+
+export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
   const [selectedSign, setSelectedSign] = useState<string>('')
   const [currentRole, setCurrentRole] = useState<string>('')
   const [careerArea, setCareerArea] = useState<string>('')
@@ -600,6 +604,39 @@ export function CareerAstrology() {
               <div className="lg:col-span-3 text-center text-xs text-muted-foreground">
                 Análise realizada em {analysis.date} • Use estas orientações como guia em sua jornada profissional
               </div>
+
+              {/* Next Steps CTA */}
+              {onSectionClick && (
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  className="lg:col-span-3 mt-6"
+                >
+                  <div className="glass p-6 rounded-2xl text-center">
+                    <h4 className="font-display font-semibold text-lg mb-3">
+                      Potencialize sua Carreira
+                    </h4>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                      <Button
+                        onClick={() => onSectionClick('planetary-transits')}
+                        className="bg-gradient-to-r from-primary to-accent text-white"
+                        size="sm"
+                      >
+                        Ver Timing Ideal
+                      </Button>
+                      <Button
+                        onClick={() => onSectionClick('ritual-generator')}
+                        variant="outline"
+                        size="sm"
+                        className="border-primary/30 text-primary hover:bg-primary/5"
+                      >
+                        Ritual de Sucesso
+                      </Button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
             </motion.div>
           )}
         </div>

@@ -16,6 +16,7 @@ import { PlanetaryTransits } from '@/components/PlanetaryTransits'
 import { CompatibilityAnalyzer } from '@/components/CompatibilityAnalyzer'
 import { RitualGenerator } from '@/components/RitualGenerator'
 import { CareerAstrology } from '@/components/CareerAstrology'
+import { BackToTop } from '@/components/BackToTop'
 
 function App() {
   const scrollToSection = (sectionId: string) => {
@@ -56,23 +57,24 @@ function App() {
       <Navigation onSectionClick={scrollToSection} />
       
       <main>
-        <HeroSection onCtaClick={scrollToHoroscope} />
+        <HeroSection onCtaClick={scrollToHoroscope} onSectionClick={scrollToSection} />
         <AboutSection />
-        <HoroscopeGenerator />
+        <HoroscopeGenerator onSectionClick={scrollToSection} />
         <HoroscopeHistory />
-        <CompatibilityAnalyzer />
-        <RitualGenerator />
-        <CareerAstrology />
-        <PlanetaryTransits />
-        <ServicesSection onContactClick={scrollToHoroscope} />
-        <TokenShop />
-        <ContactSection />
+        <CompatibilityAnalyzer onSectionClick={scrollToSection} />
+        <RitualGenerator onSectionClick={scrollToSection} />
+        <CareerAstrology onSectionClick={scrollToSection} />
+        <PlanetaryTransits onSectionClick={scrollToSection} />
+        <ServicesSection onContactClick={scrollToHoroscope} onSectionClick={scrollToSection} />
+        <TokenShop onSectionClick={scrollToSection} />
+        <ContactSection onSectionClick={scrollToSection} />
       </main>
       
       <Footer onSectionClick={scrollToSection} />
       
       <SplashCursor />
       <AstrologyChatBot />
+      <BackToTop />
       
       <Toaster 
         position="top-right"

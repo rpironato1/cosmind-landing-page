@@ -16,6 +16,10 @@ export function Navigation({ onSectionClick }: NavigationProps) {
     { label: 'Início', section: 'hero' },
     { label: 'Sobre', section: 'about' },
     { label: 'Horóscopo', section: 'horoscope' },
+    { label: 'Histórico', section: 'history' },
+    { label: 'Compatibilidade', section: 'compatibility' },
+    { label: 'Rituais', section: 'ritual-generator' },
+    { label: 'Carreira', section: 'career-astrology' },
     { label: 'Trânsitos', section: 'planetary-transits' },
     { label: 'Serviços', section: 'services' },
     { label: 'Tokens', section: 'tokens' },
@@ -23,7 +27,12 @@ export function Navigation({ onSectionClick }: NavigationProps) {
   ]
 
   const handleNavClick = (section: string) => {
-    onSectionClick(section)
+    if (section === 'chat') {
+      // Trigger chat bot opening by dispatching a custom event
+      window.dispatchEvent(new CustomEvent('openChatBot'))
+    } else {
+      onSectionClick(section)
+    }
     setIsMenuOpen(false)
   }
 

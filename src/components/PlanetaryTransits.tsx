@@ -33,7 +33,11 @@ interface TransitAnalysis {
   lastUpdated: Date
 }
 
-export function PlanetaryTransits() {
+interface PlanetaryTransitsProps {
+  onSectionClick?: (section: string) => void
+}
+
+export function PlanetaryTransits({ onSectionClick }: PlanetaryTransitsProps = {}) {
   const [transitData, setTransitData] = useKV('planetary-transits', null)
   const [isLoading, setIsLoading] = useState(false)
   const [selectedSign, setSelectedSign] = useState<string>('')
@@ -357,6 +361,40 @@ export function PlanetaryTransits() {
                 Clique em "Atualizar Trânsitos" para revelar os movimentos planetários atuais 
                 e suas influências cósmicas.
               </p>
+            </motion.div>
+          )}
+
+          {/* Next Steps CTA */}
+          {transitData && onSectionClick && (
+            <motion.div
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="mt-12 text-center"
+            >
+              <div className="glass p-8 rounded-2xl max-w-2xl mx-auto">
+                <h3 className="font-display font-semibold text-2xl mb-4">
+                  Use o Timing Cósmico a Seu Favor
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  Com base nos trânsitos atuais, explore como otimizar este momento
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    onClick={() => onSectionClick('career-astrology')}
+                    className="bg-gradient-to-r from-primary to-accent text-white"
+                  >
+                    Orientação Profissional
+                  </Button>
+                  <Button
+                    onClick={() => onSectionClick('horoscope')}
+                    variant="outline"
+                    className="border-primary/30 text-primary hover:bg-primary/5"
+                  >
+                    Horóscopo Personalizado
+                  </Button>
+                </div>
+              </div>
             </motion.div>
           )}
         </div>

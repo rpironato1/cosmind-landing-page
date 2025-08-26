@@ -13,6 +13,11 @@ export function Footer({ onSectionClick }: FooterProps) {
     { label: 'Início', section: 'hero' },
     { label: 'Sobre', section: 'about' },
     { label: 'Horóscopo', section: 'horoscope' },
+    { label: 'Histórico', section: 'history' },
+    { label: 'Compatibilidade', section: 'compatibility' },
+    { label: 'Rituais', section: 'ritual-generator' },
+    { label: 'Carreira', section: 'career-astrology' },
+    { label: 'Trânsitos', section: 'planetary-transits' },
     { label: 'Serviços', section: 'services' },
     { label: 'Tokens', section: 'tokens' },
     { label: 'Contato', section: 'contact' }

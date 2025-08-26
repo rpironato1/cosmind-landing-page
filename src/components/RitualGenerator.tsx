@@ -71,7 +71,11 @@ const experience = [
   { value: 'advanced', label: 'Avançado', description: 'Praticante experiente' }
 ]
 
-export function RitualGenerator() {
+interface RitualGeneratorProps {
+  onSectionClick?: (section: string) => void
+}
+
+export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
   const [ritualType, setRitualType] = useState<string>('')
   const [moonPhase, setMoonPhase] = useState<string>('')
   const [userExperience, setUserExperience] = useState<string>('')
@@ -598,6 +602,40 @@ export function RitualGenerator() {
               <div className="text-center text-xs text-muted-foreground">
                 Ritual criado em {generatedRitual.date} • Use com respeito e intenção positiva
               </div>
+
+              {/* Next Steps CTA */}
+              {onSectionClick && (
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  className="mt-8"
+                >
+                  <div className="glass p-6 rounded-2xl">
+                    <h4 className="font-display font-semibold text-lg mb-3">
+                      Continue sua Prática Espiritual
+                    </h4>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                      <Button
+                        onClick={() => onSectionClick('compatibility')}
+                        variant="outline"
+                        size="sm"
+                        className="border-primary/30 text-primary hover:bg-primary/5"
+                      >
+                        Analisar Compatibilidade
+                      </Button>
+                      <Button
+                        onClick={() => onSectionClick('planetary-transits')}
+                        variant="outline"
+                        size="sm"
+                        className="border-accent/30 text-accent hover:bg-accent/5"
+                      >
+                        Ver Trânsitos Planetários
+                      </Button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
             </motion.div>
           )}
         </div>

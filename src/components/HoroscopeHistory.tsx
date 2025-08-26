@@ -61,7 +61,7 @@ export function HoroscopeHistory() {
 
   if (!history || history.length === 0) {
     return (
-      <section className="py-16 bg-gradient-to-br from-secondary/10 to-primary/5">
+      <section id="history" className="py-16 bg-gradient-to-br from-secondary/10 to-primary/5">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div

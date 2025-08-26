@@ -7,7 +7,11 @@ import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
 
-export function TokenShop() {
+interface TokenShopProps {
+  onSectionClick?: (section: string) => void
+}
+
+export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
   const [tokens, setTokens] = useKV('user-tokens', 5)
   const [isProcessing, setIsProcessing] = useState(false)
 
@@ -90,6 +94,13 @@ export function TokenShop() {
       await spark.kv.set('purchase-history', [...purchases, newPurchase])
       
       toast.success(`🌟 ${tokenAmount} tokens adicionados com sucesso!`)
+      
+      // Navigate to horoscope section after successful purchase
+      if (onSectionClick) {
+        setTimeout(() => {
+          onSectionClick('horoscope')
+        }, 1500)
+      }
       
     } catch (error) {
       console.error('Payment error:', error)

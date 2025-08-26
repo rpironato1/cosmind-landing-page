@@ -4,9 +4,10 @@ import { motion } from 'framer-motion'
 
 interface HeroSectionProps {
   onCtaClick: () => void
+  onSectionClick: (section: string) => void
 }
 
-export function HeroSection({ onCtaClick }: HeroSectionProps) {
+export function HeroSection({ onCtaClick, onSectionClick }: HeroSectionProps) {
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center bg-gradient-cosmic relative overflow-hidden">
       {/* Background Decorative Elements */}
@@ -115,6 +116,7 @@ export function HeroSection({ onCtaClick }: HeroSectionProps) {
             
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
               <Button
+                onClick={() => onSectionClick('horoscope')}
                 variant="outline"
                 size="lg"
                 className="border-2 border-primary/30 text-primary hover:bg-primary/5 font-medium px-8 py-4 text-lg rounded-xl glass backdrop-blur-sm"

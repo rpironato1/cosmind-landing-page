@@ -33,6 +33,15 @@ export function AstrologyChatBot() {
     scrollToBottom()
   }, [messages])
 
+  useEffect(() => {
+    const handleOpenChat = () => {
+      setIsOpen(true)
+    }
+
+    window.addEventListener('openChatBot', handleOpenChat)
+    return () => window.removeEventListener('openChatBot', handleOpenChat)
+  }, [])
+
   const sendMessage = async () => {
     if (!inputValue.trim()) return
     

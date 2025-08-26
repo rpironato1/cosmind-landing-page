@@ -34,7 +34,11 @@ const zodiacSigns = [
   { value: 'pisces', label: '♓ Peixes', dates: '19/02 - 20/03' }
 ]
 
-export function HoroscopeGenerator() {
+interface HoroscopeGeneratorProps {
+  onSectionClick?: (section: string) => void
+}
+
+export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps = {}) {
   const [selectedSign, setSelectedSign] = useState<string>('')
   const [userName, setUserName] = useState<string>('')
   const [birthDate, setBirthDate] = useState<string>('')
@@ -264,6 +268,35 @@ export function HoroscopeGenerator() {
                         </div>
                       </div>
                     </CardContent>
+
+                    {/* Next Steps CTA */}
+                    {onSectionClick && (
+                      <div className="px-6 pb-6">
+                        <div className="glass p-4 rounded-lg">
+                          <h4 className="font-display font-semibold text-sm mb-3 text-center">
+                            Continue Explorando
+                          </h4>
+                          <div className="flex flex-col gap-2">
+                            <Button
+                              onClick={() => onSectionClick('compatibility')}
+                              size="sm"
+                              variant="outline"
+                              className="border-primary/30 text-primary hover:bg-primary/5"
+                            >
+                              Análise de Compatibilidade
+                            </Button>
+                            <Button
+                              onClick={() => onSectionClick('history')}
+                              size="sm"
+                              variant="ghost"
+                              className="text-muted-foreground hover:text-primary"
+                            >
+                              Ver Histórico de Leituras
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </Card>
                 </motion.div>
               ) : (
