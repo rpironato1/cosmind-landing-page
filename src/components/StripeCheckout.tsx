@@ -20,14 +20,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
 
-interface StripeCheckoutProps {
-  isOpen: boolean
-  onClose: () => void
-  selectedPackage?: TokenPackage
-  user: UserData
-  onPurchaseComplete: (tokens: number) => void
-}
-
 interface UserData {
   id: string
   email: string
@@ -50,6 +42,14 @@ interface TokenPackage {
   popular?: boolean
   description: string
   features: string[]
+}
+
+interface StripeCheckoutProps {
+  isOpen: boolean
+  onClose: () => void
+  selectedPackage?: TokenPackage
+  user: UserData
+  onPurchaseComplete: (tokens: number) => void
 }
 
 interface PaymentMethod {
