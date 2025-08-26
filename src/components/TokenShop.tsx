@@ -109,14 +109,6 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
     setShowCheckout(false)
     setSelectedPackage(null)
   }
-      
-    } catch (error) {
-      console.error('Payment error:', error)
-      toast.error('Erro no pagamento. Tente novamente.')
-    } finally {
-      setIsProcessing(false)
-    }
-  }
 
   return (
     <section id="tokens" className="py-24 bg-background">
