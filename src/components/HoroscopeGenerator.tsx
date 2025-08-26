@@ -5,10 +5,22 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
-import { Loader2, Star, Heart, Coins } from '@phosphor-icons/react'
+import { Loader2, Star, Heart, Coins, User, Lock } from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
+
+interface UserData {
+  id: string
+  email: string
+  name: string
+  zodiacSign: string
+  birthDate: string
+  tokens: number
+  createdAt: string
+  isSubscribed: boolean
+  subscriptionTier?: string
+}
 
 interface HoroscopeData {
   sign: string
@@ -17,6 +29,14 @@ interface HoroscopeData {
   mood: string
   lucky_numbers: number[]
   compatibility: string
+}
+
+interface UserActivity {
+  id: string
+  type: 'horoscope' | 'compatibility' | 'ritual' | 'career' | 'transit'
+  title: string
+  date: string
+  tokensUsed: number
 }
 
 const zodiacSigns = [
@@ -39,12 +59,13 @@ interface HoroscopeGeneratorProps {
 }
 
 export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps = {}) {
-  const [selectedSign, setSelectedSign] = useState<string>('')
-  const [userName, setUserName] = useState<string>('')
-  const [birthDate, setBirthDate] = useState<string>('')
+  const [currentUser, setCurrentUser] = useKV<UserData | null>('current-user', null)
+  const [users, setUsers] = useKV<UserData[]>('cosmind-users', [])
+  const [selectedSign, setSelectedSign] = useState<string>(currentUser?.zodiacSign || '')
+  const [userName, setUserName] = useState<string>(currentUser?.name || '')
+  const [birthDate, setBirthDate] = useState<string>(currentUser?.birthDate || '')
   const [isGenerating, setIsGenerating] = useState(false)
   const [horoscope, setHoroscope] = useState<HoroscopeData | null>(null)
-  const [tokens, setTokens] = useKV('user-tokens', 5) // Start with 5 free tokens
 
   const generateHoroscope = async () => {
     if (!selectedSign || !userName) {
@@ -52,7 +73,12 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
       return
     }
 
-    if (tokens <= 0) {
+    if (!currentUser) {
+      toast.error('Você precisa estar logado para gerar horóscopo')
+      return
+    }
+
+    if (currentUser.tokens <= 0) {
       toast.error('Você não possui tokens suficientes. Adquira mais tokens para continuar!')
       return
     }
@@ -92,7 +118,28 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
       }
 
       setHoroscope(newHoroscope)
-      setTokens(currentTokens => currentTokens - 1)
+      
+      // Update user tokens
+      const updatedUser = { ...currentUser, tokens: currentUser.tokens - 1 }
+      setCurrentUser(updatedUser)
+      
+      // Update users array
+      setUsers(currentUsers => 
+        currentUsers.map(u => u.id === currentUser.id ? updatedUser : u)
+      )
+      
+      // Add to user activity
+      const activity: UserActivity = {
+        id: Date.now().toString(),
+        type: 'horoscope',
+        title: `Horóscopo de ${selectedSignData?.label}`,
+        date: new Date().toISOString(),
+        tokensUsed: 1
+      }
+      
+      const currentActivity = await spark.kv.get<UserActivity[]>(`activity-${currentUser.id}`) || []
+      await spark.kv.set(`activity-${currentUser.id}`, [...currentActivity, activity])
+      
       toast.success('Horóscopo gerado com sucesso! ✨')
 
       // Save to history
@@ -131,13 +178,23 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
             </p>
             
             {/* Token Counter */}
-            <motion.div 
-              className="flex items-center justify-center gap-2 mt-6 glass p-3 rounded-xl w-fit mx-auto"
-              whileHover={{ scale: 1.05 }}
-            >
-              <Coins size={20} className="text-accent" />
-              <span className="font-medium">{tokens} tokens restantes</span>
-            </motion.div>
+            {currentUser ? (
+              <motion.div 
+                className="flex items-center justify-center gap-2 mt-6 glass p-3 rounded-xl w-fit mx-auto"
+                whileHover={{ scale: 1.05 }}
+              >
+                <Coins size={20} className="text-accent" />
+                <span className="font-medium">{currentUser.tokens} tokens restantes</span>
+              </motion.div>
+            ) : (
+              <motion.div 
+                className="flex items-center justify-center gap-2 mt-6 glass p-3 rounded-xl w-fit mx-auto bg-muted/50"
+                whileHover={{ scale: 1.05 }}
+              >
+                <Lock size={20} className="text-muted-foreground" />
+                <span className="font-medium text-muted-foreground">Faça login para ver seus tokens</span>
+              </motion.div>
+            )}
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
@@ -192,14 +249,24 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
 
                 <Button 
                   onClick={generateHoroscope}
-                  disabled={isGenerating || !selectedSign || !userName || tokens <= 0}
+                  disabled={isGenerating || !selectedSign || !userName || !currentUser || (currentUser && currentUser.tokens <= 0)}
                   className="w-full bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all duration-300"
                   size="lg"
                 >
-                  {isGenerating ? (
+                  {!currentUser ? (
+                    <>
+                      <Lock className="mr-2 h-4 w-4" />
+                      Faça login para gerar horóscopo
+                    </>
+                  ) : isGenerating ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Consultando os Astros...
+                    </>
+                  ) : currentUser.tokens <= 0 ? (
+                    <>
+                      <Coins className="mr-2 h-4 w-4" />
+                      Sem tokens - Compre mais
                     </>
                   ) : (
                     <>

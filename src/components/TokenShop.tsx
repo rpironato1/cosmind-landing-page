@@ -2,18 +2,34 @@ import { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Coins, Star, Sparkles, Crown, Check } from '@phosphor-icons/react'
+import { Coins, Star, Sparkles, Crown, Check, User, Lock } from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
+import { StripeCheckout } from '@/components/StripeCheckout'
 
 interface TokenShopProps {
   onSectionClick?: (section: string) => void
 }
 
+interface UserData {
+  id: string
+  email: string
+  name: string
+  zodiacSign: string
+  birthDate: string
+  tokens: number
+  createdAt: string
+  isSubscribed: boolean
+  subscriptionTier?: string
+}
+
 export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
-  const [tokens, setTokens] = useKV('user-tokens', 5)
+  const [currentUser] = useKV<UserData | null>('current-user', null)
+  const [users, setUsers] = useKV<UserData[]>('cosmind-users', [])
   const [isProcessing, setIsProcessing] = useState(false)
+  const [showCheckout, setShowCheckout] = useState(false)
+  const [selectedPackage, setSelectedPackage] = useState<any>(null)
 
   const tokenPackages = [
     {
@@ -72,35 +88,27 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
     }
   ]
 
-  const purchaseTokens = async (packageId: string, tokenAmount: number) => {
-    setIsProcessing(true)
-    
-    try {
-      // Simulate payment processing
-      await new Promise(resolve => setTimeout(resolve, 2000))
+  const handlePurchase = (pkg: any) => {
+    if (!currentUser) {
+      toast.error('Você precisa estar logado para comprar tokens')
+      return
+    }
+    setSelectedPackage(pkg)
+    setShowCheckout(true)
+  }
+
+  const handlePurchaseComplete = (tokens: number) => {
+    if (currentUser) {
+      const updatedUser = { ...currentUser, tokens: currentUser.tokens + tokens }
       
-      // Add tokens to user balance
-      setTokens(currentTokens => currentTokens + tokenAmount)
-      
-      // Save purchase history
-      const purchases = await spark.kv.get('purchase-history') || []
-      const newPurchase = {
-        id: Date.now().toString(),
-        packageId,
-        tokenAmount,
-        date: new Date().toISOString(),
-        status: 'completed'
-      }
-      await spark.kv.set('purchase-history', [...purchases, newPurchase])
-      
-      toast.success(`🌟 ${tokenAmount} tokens adicionados com sucesso!`)
-      
-      // Navigate to horoscope section after successful purchase
-      if (onSectionClick) {
-        setTimeout(() => {
-          onSectionClick('horoscope')
-        }, 1500)
-      }
+      // Update users array
+      setUsers(currentUsers => 
+        currentUsers.map(u => u.id === currentUser.id ? updatedUser : u)
+      )
+    }
+    setShowCheckout(false)
+    setSelectedPackage(null)
+  }
       
     } catch (error) {
       console.error('Payment error:', error)
@@ -134,15 +142,27 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
             </p>
             
             {/* Current Balance */}
-            <motion.div 
-              className="flex items-center justify-center gap-3 mt-8 glass p-4 rounded-2xl w-fit mx-auto"
-              whileHover={{ scale: 1.05 }}
-            >
-              <Coins size={24} className="text-accent" />
-              <span className="font-display font-semibold text-xl">
-                Saldo Atual: {tokens} tokens
-              </span>
-            </motion.div>
+            {currentUser ? (
+              <motion.div 
+                className="flex items-center justify-center gap-3 mt-8 glass p-4 rounded-2xl w-fit mx-auto"
+                whileHover={{ scale: 1.05 }}
+              >
+                <Coins size={24} className="text-accent" />
+                <span className="font-display font-semibold text-xl">
+                  Saldo Atual: {currentUser.tokens} tokens
+                </span>
+              </motion.div>
+            ) : (
+              <motion.div 
+                className="flex items-center justify-center gap-3 mt-8 glass p-4 rounded-2xl w-fit mx-auto bg-muted/50"
+                whileHover={{ scale: 1.05 }}
+              >
+                <Lock size={24} className="text-muted-foreground" />
+                <span className="font-sans font-medium text-muted-foreground">
+                  Faça login para ver seu saldo
+                </span>
+              </motion.div>
+            )}
           </motion.div>
 
           {/* Packages Grid */}
@@ -225,8 +245,8 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
                         
                         {/* Purchase Button */}
                         <Button
-                          onClick={() => purchaseTokens(pkg.id, pkg.tokens)}
-                          disabled={isProcessing}
+                          onClick={() => handlePurchase(pkg)}
+                          disabled={isProcessing || !currentUser}
                           className={`w-full py-3 font-medium transition-all duration-300 ${
                             pkg.popular
                               ? 'bg-gradient-to-r from-primary to-accent hover:shadow-lg'
@@ -234,7 +254,16 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
                           }`}
                           size="lg"
                         >
-                          {isProcessing ? 'Processando...' : 'Adquirir Agora'}
+                          {!currentUser ? (
+                            <>
+                              <User className="w-4 h-4 mr-2" />
+                              Faça login para comprar
+                            </>
+                          ) : isProcessing ? (
+                            'Processando...'
+                          ) : (
+                            'Adquirir Agora'
+                          )}
                         </Button>
                         
                         {/* Value Proposition */}
@@ -268,6 +297,20 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
           </motion.div>
         </div>
       </div>
+      
+      {/* Stripe Checkout Modal */}
+      {currentUser && (
+        <StripeCheckout
+          isOpen={showCheckout}
+          onClose={() => {
+            setShowCheckout(false)
+            setSelectedPackage(null)
+          }}
+          selectedPackage={selectedPackage}
+          user={currentUser}
+          onPurchaseComplete={handlePurchaseComplete}
+        />
+      )}
     </section>
   )
 }
