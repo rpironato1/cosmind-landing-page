@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { List, X } from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { NotificationCenter } from '@/components/NotificationCenter'
+import { UserProfileCustomization } from '@/components/UserProfileCustomization'
 
 interface NavigationProps {
   onSectionClick: (section: string) => void
@@ -14,6 +16,7 @@ export function Navigation({ onSectionClick }: NavigationProps) {
     { label: 'Início', section: 'hero' },
     { label: 'Sobre', section: 'about' },
     { label: 'Horóscopo', section: 'horoscope' },
+    { label: 'Trânsitos', section: 'planetary-transits' },
     { label: 'Serviços', section: 'services' },
     { label: 'Tokens', section: 'tokens' },
     { label: 'Contato', section: 'contact' }

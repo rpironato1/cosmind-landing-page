@@ -11,6 +11,8 @@ import { TokenShop } from '@/components/TokenShop'
 import { ContactSection } from '@/components/ContactSection'
 import { Footer } from '@/components/Footer'
 import { SplashCursor } from '@/components/SplashCursor'
+import { AstrologyChatBot } from '@/components/AstrologyChatBot'
+import { PlanetaryTransits } from '@/components/PlanetaryTransits'
 
 function App() {
   const scrollToSection = (sectionId: string) => {
@@ -55,6 +57,7 @@ function App() {
         <AboutSection />
         <HoroscopeGenerator />
         <HoroscopeHistory />
+        <PlanetaryTransits />
         <ServicesSection onContactClick={scrollToHoroscope} />
         <TokenShop />
         <ContactSection />
@@ -63,6 +66,7 @@ function App() {
       <Footer onSectionClick={scrollToSection} />
       
       <SplashCursor />
+      <AstrologyChatBot />
       
       <Toaster 
         position="top-right"
