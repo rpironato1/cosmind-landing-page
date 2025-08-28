@@ -1,7 +1,16 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { List, X, User, Star, SignOut } from '@phosphor-icons/react'
+import {
+  List,
+  X,
+  User,
+  Star,
+  SignOut,
+  Shield,
+  Megaphone,
+} from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { NotificationCenter } from '@/components/NotificationCenter'
 import { UserProfileCustomization } from '@/components/UserProfileCustomization'
 import { AuthModal } from '@/components/AuthModal'
@@ -56,6 +65,11 @@ export function Navigation({ onSectionClick }: NavigationProps) {
     { label: 'Serviços', section: 'services' },
     { label: 'Tokens', section: 'tokens' },
     { label: 'Contato', section: 'contact' },
+  ]
+
+  const adminItems = [
+    { label: 'Admin', href: '/admin', icon: Shield },
+    { label: 'Publicidade', href: '/advertising', icon: Megaphone },
   ]
 
   const handleNavClick = (section: string) => {
@@ -123,6 +137,20 @@ export function Navigation({ onSectionClick }: NavigationProps) {
               >
                 {item.label}
               </motion.button>
+            ))}
+
+            {/* Admin Navigation */}
+            {adminItems.map(item => (
+              <Link key={item.href} to={item.href}>
+                <motion.button
+                  whileHover={{ y: -2 }}
+                  whileTap={{ y: 0 }}
+                  className="flex items-center gap-2 font-sans text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-200"
+                >
+                  <item.icon className="w-4 h-4" />
+                  {item.label}
+                </motion.button>
+              </Link>
             ))}
 
             {/* User Authentication */}
@@ -221,6 +249,22 @@ export function Navigation({ onSectionClick }: NavigationProps) {
                     {item.label}
                   </motion.button>
                 ))}
+
+                {/* Admin Mobile Navigation */}
+                <div className="border-t border-border/30 pt-4">
+                  {adminItems.map(item => (
+                    <Link key={item.href} to={item.href}>
+                      <motion.button
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => setIsMenuOpen(false)}
+                        className="flex items-center gap-2 font-sans text-left py-2 text-foreground/80 hover:text-primary transition-colors duration-200 w-full"
+                      >
+                        <item.icon className="w-4 h-4" />
+                        {item.label}
+                      </motion.button>
+                    </Link>
+                  ))}
+                </div>
 
                 {currentUser ? (
                   <>
