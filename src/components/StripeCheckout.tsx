@@ -172,12 +172,6 @@ export function StripeCheckout({
   const [step, setStep] = useState<'package' | 'payment' | 'checkout'>(
     'package'
   )
-
-  // Early return if user is null
-  if (!user) {
-    return null
-  }
-
   const [cardData, setCardData] = useState({
     number: '',
     name: '',
@@ -185,6 +179,11 @@ export function StripeCheckout({
     cvv: '',
     cpf: '',
   })
+
+  // Early return if user is null
+  if (!user) {
+    return null
+  }
 
   const handlePackageSelect = (pkg: TokenPackage) => {
     setCurrentPackage(pkg)

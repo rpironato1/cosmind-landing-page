@@ -41,40 +41,40 @@ describe('BackToTop component', () => {
     })
 
     render(<BackToTop />)
-    
+
     // Component should not be in the document initially
     expect(screen.queryByRole('button')).not.toBeInTheDocument()
   })
 
   it('should become visible when scrolled past 300px', () => {
     render(<BackToTop />)
-    
+
     // Simulate scroll past 300px
     Object.defineProperty(window, 'pageYOffset', {
       value: 400,
       writable: true,
     })
-    
+
     fireEvent.scroll(window)
-    
+
     // Component should now be visible
     expect(screen.getByRole('button')).toBeInTheDocument()
   })
 
   it('should call scrollTo when clicked', () => {
     render(<BackToTop />)
-    
+
     // Make component visible
     Object.defineProperty(window, 'pageYOffset', {
       value: 400,
       writable: true,
     })
-    
+
     fireEvent.scroll(window)
-    
+
     const button = screen.getByRole('button')
     fireEvent.click(button)
-    
+
     expect(window.scrollTo).toHaveBeenCalledWith({
       top: 0,
       behavior: 'smooth',
@@ -83,15 +83,15 @@ describe('BackToTop component', () => {
 
   it('should clean up scroll event listener on unmount', () => {
     const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener')
-    
+
     const { unmount } = render(<BackToTop />)
     unmount()
-    
+
     expect(removeEventListenerSpy).toHaveBeenCalledWith(
       'scroll',
-      expect.any(Function),
+      expect.any(Function)
     )
-    
+
     removeEventListenerSpy.mockRestore()
   })
 })

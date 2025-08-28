@@ -7,10 +7,14 @@ describe('cn utility function', () => {
   })
 
   it('should handle conditional classes', () => {
-    expect(cn('base-class', true && 'conditional-class')).toBe(
-      'base-class conditional-class',
+    const condition1 = true
+    const condition2 = false
+    expect(cn('base-class', condition1 && 'conditional-class')).toBe(
+      'base-class conditional-class'
     )
-    expect(cn('base-class', false && 'conditional-class')).toBe('base-class')
+    expect(cn('base-class', condition2 && 'conditional-class')).toBe(
+      'base-class'
+    )
   })
 
   it('should handle tailwind merge conflicts', () => {

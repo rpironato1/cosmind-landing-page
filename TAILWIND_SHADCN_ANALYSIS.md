@@ -131,7 +131,6 @@ const buttonVariants = cva(
 ```tsx
 // HeroSection.tsx - Using standardized components
 import { Button } from '@/components/ui/button'
-
 ;<Button variant="default" size="lg" onClick={onCtaClick}>
   Gerar Horóscopo <ArrowRight />
 </Button>
@@ -142,7 +141,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem } from '@/components/ui/select'
-
 ;<Card>
   <CardHeader>
     <CardTitle>Gerar Horóscopo Personalizado</CardTitle>
