@@ -1,5 +1,10 @@
 import { Button } from '@/components/ui/button'
-import { InstagramLogo, LinkedinLogo, TwitterLogo, EnvelopeSimple } from '@phosphor-icons/react'
+import {
+  InstagramLogo,
+  LinkedinLogo,
+  TwitterLogo,
+  EnvelopeSimple,
+} from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 
 interface FooterProps {
@@ -20,21 +25,21 @@ export function Footer({ onSectionClick }: FooterProps) {
     { label: 'Trânsitos', section: 'planetary-transits' },
     { label: 'Serviços', section: 'services' },
     { label: 'Tokens', section: 'tokens' },
-    { label: 'Contato', section: 'contact' }
+    { label: 'Contato', section: 'contact' },
   ]
 
   const socialLinks = [
     { icon: InstagramLogo, href: '#', label: 'Instagram' },
     { icon: LinkedinLogo, href: '#', label: 'LinkedIn' },
     { icon: TwitterLogo, href: '#', label: 'Twitter' },
-    { icon: EnvelopeSimple, href: 'mailto:contato@cosmind.ai', label: 'Email' }
+    { icon: EnvelopeSimple, href: 'mailto:contato@cosmind.ai', label: 'Email' },
   ]
 
   const services = [
     'Horóscopo Diário',
     'Compatibilidade Amorosa',
     'Mapa Astral Completo',
-    'Consulta com IA Mística'
+    'Consulta com IA Mística',
   ]
 
   return (
@@ -55,8 +60,9 @@ export function Footer({ onSectionClick }: FooterProps) {
                 CosMind
               </div>
               <p className="text-white/80 leading-relaxed mb-6">
-                Desvende os mistérios do cosmos com nossa inteligência artificial mística. 
-                Conecte-se às estrelas e descubra os segredos que o universo reserva para você.
+                Desvende os mistérios do cosmos com nossa inteligência
+                artificial mística. Conecte-se às estrelas e descubra os
+                segredos que o universo reserva para você.
               </p>
               <div className="flex gap-4">
                 {socialLinks.map((social, index) => {
@@ -84,9 +90,11 @@ export function Footer({ onSectionClick }: FooterProps) {
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <h3 className="font-sans font-semibold text-lg mb-6">Navegação</h3>
+              <h3 className="font-sans font-semibold text-lg mb-6">
+                Navegação
+              </h3>
               <div className="space-y-3">
-                {navigationLinks.map((link) => (
+                {navigationLinks.map(link => (
                   <motion.button
                     key={link.section}
                     onClick={() => onSectionClick(link.section)}
@@ -108,7 +116,7 @@ export function Footer({ onSectionClick }: FooterProps) {
             >
               <h3 className="font-sans font-semibold text-lg mb-6">Serviços</h3>
               <div className="space-y-3">
-                {services.map((service) => (
+                {services.map(service => (
                   <div key={service} className="text-white/80">
                     {service}
                   </div>
@@ -123,10 +131,14 @@ export function Footer({ onSectionClick }: FooterProps) {
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <h3 className="font-sans font-semibold text-lg mb-6">Portal Cósmico</h3>
+              <h3 className="font-sans font-semibold text-lg mb-6">
+                Portal Cósmico
+              </h3>
               <div className="space-y-3 text-white/80">
                 <div>
-                  <div className="font-medium text-white">Atendimento Astral</div>
+                  <div className="font-medium text-white">
+                    Atendimento Astral
+                  </div>
                   <div>+55 (11) 99999-9999</div>
                 </div>
                 <div>
@@ -134,7 +146,9 @@ export function Footer({ onSectionClick }: FooterProps) {
                   <div>contato@cosmind.ai</div>
                 </div>
                 <div>
-                  <div className="font-medium text-white">Conexão Universal</div>
+                  <div className="font-medium text-white">
+                    Conexão Universal
+                  </div>
                   <div>Portal Digital Global</div>
                 </div>
               </div>
@@ -154,7 +168,8 @@ export function Footer({ onSectionClick }: FooterProps) {
                 Receba Energias Cósmicas
               </h3>
               <p className="text-white/80 mb-6">
-                Inscreva-se para receber horóscopo personalizado, dicas astrológicas e novidades sobre o universo místico.
+                Inscreva-se para receber horóscopo personalizado, dicas
+                astrológicas e novidades sobre o universo místico.
               </p>
               <Button
                 onClick={() => onSectionClick('contact')}
@@ -176,7 +191,8 @@ export function Footer({ onSectionClick }: FooterProps) {
           >
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="text-white/80 text-sm">
-                © {currentYear} CosMind. Todos os direitos reservados. Conectado ao cosmos.
+                © {currentYear} CosMind. Todos os direitos reservados.
+                Conectado ao cosmos.
               </div>
               <div className="flex gap-6 text-sm">
                 <button className="text-white/80 hover:text-white transition-colors duration-200">

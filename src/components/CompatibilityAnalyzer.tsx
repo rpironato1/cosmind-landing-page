@@ -1,12 +1,32 @@
 import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
-import { Heart, Users, Star, Sparkles, Fire, Loader2, Coins } from '@phosphor-icons/react'
+import {
+  Heart,
+  Users,
+  Star,
+  Sparkles,
+  Fire,
+  Loader2,
+  Coins,
+} from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
@@ -38,17 +58,29 @@ const zodiacSigns = [
   { value: 'virgo', label: '♍ Virgem', element: 'Terra', quality: 'Mutável' },
   { value: 'libra', label: '♎ Libra', element: 'Ar', quality: 'Cardeal' },
   { value: 'scorpio', label: '♏ Escorpião', element: 'Água', quality: 'Fixo' },
-  { value: 'sagittarius', label: '♐ Sagitário', element: 'Fogo', quality: 'Mutável' },
-  { value: 'capricorn', label: '♑ Capricórnio', element: 'Terra', quality: 'Cardeal' },
+  {
+    value: 'sagittarius',
+    label: '♐ Sagitário',
+    element: 'Fogo',
+    quality: 'Mutável',
+  },
+  {
+    value: 'capricorn',
+    label: '♑ Capricórnio',
+    element: 'Terra',
+    quality: 'Cardeal',
+  },
   { value: 'aquarius', label: '♒ Aquário', element: 'Ar', quality: 'Fixo' },
-  { value: 'pisces', label: '♓ Peixes', element: 'Água', quality: 'Mutável' }
+  { value: 'pisces', label: '♓ Peixes', element: 'Água', quality: 'Mutável' },
 ]
 
 interface CompatibilityAnalyzerProps {
   onSectionClick?: (section: string) => void
 }
 
-export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerProps = {}) {
+export function CompatibilityAnalyzer({
+  onSectionClick,
+}: CompatibilityAnalyzerProps = {}) {
   const [person1Sign, setPerson1Sign] = useState<string>('')
   const [person2Sign, setPerson2Sign] = useState<string>('')
   const [person1Name, setPerson1Name] = useState<string>('')
@@ -64,7 +96,9 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
     }
 
     if (tokens < 3) {
-      toast.error('Você precisa de pelo menos 3 tokens para análise de compatibilidade')
+      toast.error(
+        'Você precisa de pelo menos 3 tokens para análise de compatibilidade'
+      )
       return
     }
 
@@ -73,7 +107,7 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
     try {
       const person1Data = zodiacSigns.find(sign => sign.value === person1Sign)
       const person2Data = zodiacSigns.find(sign => sign.value === person2Sign)
-      
+
       const prompt = spark.llmPrompt`
         Você é um astrólogo especialista em análise de compatibilidade amorosa. Faça uma análise completa e detalhada da compatibilidade entre ${person1Name} (${person1Data?.label}) e ${person2Name} (${person2Data?.label}).
 
@@ -118,7 +152,7 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
         bestAspects: aiResult.bestAspects,
         attentionAreas: aiResult.attentionAreas,
         futureOutlook: aiResult.futureOutlook,
-        date: new Date().toLocaleDateString('pt-BR')
+        date: new Date().toLocaleDateString('pt-BR'),
       }
 
       setResult(compatibilityResult)
@@ -126,13 +160,15 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
       toast.success('Análise de compatibilidade concluída! 💕')
 
       // Save to history
-      const history = await spark.kv.get('compatibility-history') || []
-      await spark.kv.set('compatibility-history', [...history, {
-        ...compatibilityResult,
-        person1: { name: person1Name, sign: person1Sign },
-        person2: { name: person2Name, sign: person2Sign }
-      }])
-
+      const history = (await spark.kv.get('compatibility-history')) || []
+      await spark.kv.set('compatibility-history', [
+        ...history,
+        {
+          ...compatibilityResult,
+          person1: { name: person1Name, sign: person1Sign },
+          person2: { name: person2Name, sign: person2Sign },
+        },
+      ])
     } catch (error) {
       console.error('Error analyzing compatibility:', error)
       toast.error('Erro ao analisar compatibilidade. Tente novamente.')
@@ -142,18 +178,45 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
   }
 
   const getCompatibilityLevel = (score: number) => {
-    if (score >= 80) return { label: 'Excelente', color: 'text-green-600 bg-green-50', emoji: '💚' }
-    if (score >= 65) return { label: 'Muito Boa', color: 'text-blue-600 bg-blue-50', emoji: '💙' }
-    if (score >= 50) return { label: 'Boa', color: 'text-yellow-600 bg-yellow-50', emoji: '💛' }
-    if (score >= 35) return { label: 'Moderada', color: 'text-orange-600 bg-orange-50', emoji: '🧡' }
-    return { label: 'Desafiadora', color: 'text-red-600 bg-red-50', emoji: '❤️' }
+    if (score >= 80)
+      return {
+        label: 'Excelente',
+        color: 'text-green-600 bg-green-50',
+        emoji: '💚',
+      }
+    if (score >= 65)
+      return {
+        label: 'Muito Boa',
+        color: 'text-blue-600 bg-blue-50',
+        emoji: '💙',
+      }
+    if (score >= 50)
+      return {
+        label: 'Boa',
+        color: 'text-yellow-600 bg-yellow-50',
+        emoji: '💛',
+      }
+    if (score >= 35)
+      return {
+        label: 'Moderada',
+        color: 'text-orange-600 bg-orange-50',
+        emoji: '🧡',
+      }
+    return {
+      label: 'Desafiadora',
+      color: 'text-red-600 bg-red-50',
+      emoji: '❤️',
+    }
   }
 
   const person1Data = zodiacSigns.find(sign => sign.value === person1Sign)
   const person2Data = zodiacSigns.find(sign => sign.value === person2Sign)
 
   return (
-    <section id="compatibility" className="py-24 bg-gradient-to-br from-accent/5 to-primary/10">
+    <section
+      id="compatibility"
+      className="py-24 bg-gradient-to-br from-accent/5 to-primary/10"
+    >
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -171,16 +234,19 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
               </span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Descubra a sintonia cósmica entre vocês através de uma análise astrológica profunda e personalizada
+              Descubra a sintonia cósmica entre vocês através de uma análise
+              astrológica profunda e personalizada
             </p>
-            
+
             {/* Token Info */}
-            <motion.div 
+            <motion.div
               className="flex items-center justify-center gap-3 mt-6 glass p-3 rounded-xl w-fit mx-auto"
               whileHover={{ scale: 1.05 }}
             >
               <Coins size={20} className="text-accent" />
-              <span className="font-medium">{tokens} tokens • Análise custa 3 tokens</span>
+              <span className="font-medium">
+                {tokens} tokens • Análise custa 3 tokens
+              </span>
             </motion.div>
           </motion.div>
 
@@ -193,7 +259,8 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
                   Dados do Casal
                 </CardTitle>
                 <CardDescription>
-                  Preencha as informações para uma análise detalhada de compatibilidade
+                  Preencha as informações para uma análise detalhada de
+                  compatibilidade
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -209,19 +276,22 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
                       <Input
                         id="person1-name"
                         value={person1Name}
-                        onChange={(e) => setPerson1Name(e.target.value)}
+                        onChange={e => setPerson1Name(e.target.value)}
                         placeholder="Nome da primeira pessoa"
                         className="bg-background/50"
                       />
                     </div>
                     <div>
                       <Label htmlFor="person1-sign">Signo</Label>
-                      <Select value={person1Sign} onValueChange={setPerson1Sign}>
+                      <Select
+                        value={person1Sign}
+                        onValueChange={setPerson1Sign}
+                      >
                         <SelectTrigger className="bg-background/50">
                           <SelectValue placeholder="Signo" />
                         </SelectTrigger>
                         <SelectContent>
-                          {zodiacSigns.map((sign) => (
+                          {zodiacSigns.map(sign => (
                             <SelectItem key={sign.value} value={sign.value}>
                               {sign.label}
                             </SelectItem>
@@ -250,19 +320,22 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
                       <Input
                         id="person2-name"
                         value={person2Name}
-                        onChange={(e) => setPerson2Name(e.target.value)}
+                        onChange={e => setPerson2Name(e.target.value)}
                         placeholder="Nome da segunda pessoa"
                         className="bg-background/50"
                       />
                     </div>
                     <div>
                       <Label htmlFor="person2-sign">Signo</Label>
-                      <Select value={person2Sign} onValueChange={setPerson2Sign}>
+                      <Select
+                        value={person2Sign}
+                        onValueChange={setPerson2Sign}
+                      >
                         <SelectTrigger className="bg-background/50">
                           <SelectValue placeholder="Signo" />
                         </SelectTrigger>
                         <SelectContent>
-                          {zodiacSigns.map((sign) => (
+                          {zodiacSigns.map(sign => (
                             <SelectItem key={sign.value} value={sign.value}>
                               {sign.label}
                             </SelectItem>
@@ -279,9 +352,16 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
                   )}
                 </div>
 
-                <Button 
+                <Button
                   onClick={analyzeCompatibility}
-                  disabled={isAnalyzing || !person1Sign || !person2Sign || !person1Name || !person2Name || tokens < 3}
+                  disabled={
+                    isAnalyzing ||
+                    !person1Sign ||
+                    !person2Sign ||
+                    !person1Name ||
+                    !person2Name ||
+                    tokens < 3
+                  }
                   className="w-full bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all duration-300"
                   size="lg"
                 >
@@ -315,9 +395,13 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
                   <Card className="glass border-accent/20">
                     <CardHeader className="text-center">
                       <div className="flex justify-center items-center gap-4 mb-4">
-                        <div className="text-2xl">{person1Data?.label.split(' ')[0]}</div>
+                        <div className="text-2xl">
+                          {person1Data?.label.split(' ')[0]}
+                        </div>
                         <Heart className="text-accent" size={24} />
-                        <div className="text-2xl">{person2Data?.label.split(' ')[0]}</div>
+                        <div className="text-2xl">
+                          {person2Data?.label.split(' ')[0]}
+                        </div>
                       </div>
                       <CardTitle className="font-display text-2xl">
                         Compatibilidade Geral
@@ -325,8 +409,11 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
                       <div className="text-4xl font-bold text-accent">
                         {result.overall}%
                       </div>
-                      <Badge className={getCompatibilityLevel(result.overall).color}>
-                        {getCompatibilityLevel(result.overall).emoji} {getCompatibilityLevel(result.overall).label}
+                      <Badge
+                        className={getCompatibilityLevel(result.overall).color}
+                      >
+                        {getCompatibilityLevel(result.overall).emoji}{' '}
+                        {getCompatibilityLevel(result.overall).label}
                       </Badge>
                     </CardHeader>
                   </Card>
@@ -334,16 +421,42 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
                   {/* Detailed Scores */}
                   <Card className="glass border-primary/20">
                     <CardHeader>
-                      <CardTitle className="text-lg">Análise Detalhada</CardTitle>
+                      <CardTitle className="text-lg">
+                        Análise Detalhada
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       {[
-                        { label: 'Conexão Emocional', value: result.emotional, icon: Heart },
-                        { label: 'Sintonia Intelectual', value: result.intellectual, icon: Star },
-                        { label: 'Atração Física', value: result.physical, icon: Fire },
-                        { label: 'Afinidade Espiritual', value: result.spiritual, icon: Sparkles },
-                        { label: 'Comunicação', value: result.communication, icon: Users },
-                        { label: 'Potencial de Longo Prazo', value: result.longTerm, icon: Heart }
+                        {
+                          label: 'Conexão Emocional',
+                          value: result.emotional,
+                          icon: Heart,
+                        },
+                        {
+                          label: 'Sintonia Intelectual',
+                          value: result.intellectual,
+                          icon: Star,
+                        },
+                        {
+                          label: 'Atração Física',
+                          value: result.physical,
+                          icon: Fire,
+                        },
+                        {
+                          label: 'Afinidade Espiritual',
+                          value: result.spiritual,
+                          icon: Sparkles,
+                        },
+                        {
+                          label: 'Comunicação',
+                          value: result.communication,
+                          icon: Users,
+                        },
+                        {
+                          label: 'Potencial de Longo Prazo',
+                          value: result.longTerm,
+                          icon: Heart,
+                        },
                       ].map((item, index) => {
                         const IconComponent = item.icon
                         return (
@@ -356,10 +469,17 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
                           >
                             <div className="flex justify-between items-center">
                               <div className="flex items-center gap-2">
-                                <IconComponent size={16} className="text-primary" />
-                                <span className="text-sm font-medium">{item.label}</span>
+                                <IconComponent
+                                  size={16}
+                                  className="text-primary"
+                                />
+                                <span className="text-sm font-medium">
+                                  {item.label}
+                                </span>
                               </div>
-                              <span className="text-sm font-bold">{item.value}%</span>
+                              <span className="text-sm font-bold">
+                                {item.value}%
+                              </span>
                             </div>
                             <Progress value={item.value} className="h-2" />
                           </motion.div>
@@ -379,7 +499,8 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
                   <div className="text-center space-y-4">
                     <div className="text-6xl">💕</div>
                     <p className="text-muted-foreground max-w-xs">
-                      Preencha os dados do casal para descobrir a compatibilidade astrológica
+                      Preencha os dados do casal para descobrir a
+                      compatibilidade astrológica
                     </p>
                   </div>
                 </motion.div>
@@ -404,7 +525,9 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="leading-relaxed text-foreground">{result.analysis}</p>
+                  <p className="leading-relaxed text-foreground">
+                    {result.analysis}
+                  </p>
                 </CardContent>
               </Card>
 
@@ -450,7 +573,10 @@ export function CompatibilityAnalyzer({ onSectionClick }: CompatibilityAnalyzerP
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-4">
                     {result.advice.map((tip, index) => (
-                      <div key={index} className="flex items-start gap-3 p-3 bg-secondary/20 rounded-lg">
+                      <div
+                        key={index}
+                        className="flex items-start gap-3 p-3 bg-secondary/20 rounded-lg"
+                      >
                         <div className="text-accent text-xl">💡</div>
                         <span className="text-sm leading-relaxed">{tip}</span>
                       </div>

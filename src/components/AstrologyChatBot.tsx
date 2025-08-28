@@ -4,7 +4,15 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { ChatCircle, PaperPlaneTilt, Robot, User, Sparkles, Star, Coins } from '@phosphor-icons/react'
+import {
+  ChatCircle,
+  PaperPlaneTilt,
+  Robot,
+  User,
+  Sparkles,
+  Star,
+  Coins,
+} from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
@@ -26,7 +34,7 @@ export function AstrologyChatBot() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   useEffect(() => {
@@ -44,9 +52,11 @@ export function AstrologyChatBot() {
 
   const sendMessage = async () => {
     if (!inputValue.trim()) return
-    
+
     if (tokens <= 0) {
-      toast.error('Você não possui tokens suficientes para conversar com a IA mística!')
+      toast.error(
+        'Você não possui tokens suficientes para conversar com a IA mística!'
+      )
       return
     }
 
@@ -54,7 +64,7 @@ export function AstrologyChatBot() {
       id: Date.now().toString(),
       content: inputValue,
       isUser: true,
-      timestamp: new Date()
+      timestamp: new Date(),
     }
 
     setMessages((current: ChatMessage[]) => [...current, userMessage])
@@ -85,13 +95,12 @@ export function AstrologyChatBot() {
         content: response,
         isUser: false,
         timestamp: new Date(),
-        tokensUsed: 1
+        tokensUsed: 1,
       }
 
       setMessages((current: ChatMessage[]) => [...current, aiMessage])
       setTokens(currentTokens => currentTokens - 1)
       toast.success('Consulta realizada com sucesso! ✨')
-
     } catch (error) {
       console.error('Error in chat:', error)
       toast.error('Erro ao consultar a IA mística. Tente novamente.')
@@ -114,9 +123,10 @@ export function AstrologyChatBot() {
 
   const welcomeMessage = {
     id: 'welcome',
-    content: '🔮 Olá! Sou sua IA mística pessoal. Posso ajudar com questões sobre astrologia, compatibilidade entre signos, interpretação de mapas astrais, tarô e muito mais. Como posso iluminar seu caminho hoje? ✨',
+    content:
+      '🔮 Olá! Sou sua IA mística pessoal. Posso ajudar com questões sobre astrologia, compatibilidade entre signos, interpretação de mapas astrais, tarô e muito mais. Como posso iluminar seu caminho hoje? ✨',
     isUser: false,
-    timestamp: new Date()
+    timestamp: new Date(),
   }
 
   const displayMessages = messages.length === 0 ? [welcomeMessage] : messages
@@ -157,7 +167,7 @@ export function AstrologyChatBot() {
               </motion.div>
             )}
           </AnimatePresence>
-          
+
           {/* Notification dot for new features */}
           <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full animate-pulse" />
         </Button>
@@ -170,7 +180,7 @@ export function AstrologyChatBot() {
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
             className="fixed bottom-24 right-6 z-50 w-96 h-[600px] max-w-[calc(100vw-3rem)]"
           >
             <Card className="h-full flex flex-col glass border-primary/20 shadow-2xl">
@@ -181,11 +191,15 @@ export function AstrologyChatBot() {
                       <Sparkles size={20} className="text-white" />
                     </div>
                     <div>
-                      <CardTitle className="font-display text-lg">IA Mística</CardTitle>
-                      <p className="text-sm text-muted-foreground">Consultora Astrológica</p>
+                      <CardTitle className="font-display text-lg">
+                        IA Mística
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground">
+                        Consultora Astrológica
+                      </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     <Badge variant="secondary" className="text-xs">
                       <Coins size={12} className="mr-1" />
@@ -221,20 +235,22 @@ export function AstrologyChatBot() {
                               <Robot size={16} className="text-white" />
                             </div>
                           )}
-                          
-                          <div className={`max-w-[280px] p-3 rounded-xl ${
-                            message.isUser 
-                              ? 'bg-gradient-to-br from-primary to-accent text-white ml-8' 
-                              : 'bg-secondary/50 text-foreground mr-8'
-                          }`}>
+
+                          <div
+                            className={`max-w-[280px] p-3 rounded-xl ${
+                              message.isUser
+                                ? 'bg-gradient-to-br from-primary to-accent text-white ml-8'
+                                : 'bg-secondary/50 text-foreground mr-8'
+                            }`}
+                          >
                             <p className="text-sm leading-relaxed whitespace-pre-wrap">
                               {message.content}
                             </p>
                             <div className="flex items-center justify-between mt-2 text-xs opacity-70">
                               <span>
-                                {message.timestamp.toLocaleTimeString('pt-BR', { 
-                                  hour: '2-digit', 
-                                  minute: '2-digit' 
+                                {message.timestamp.toLocaleTimeString('pt-BR', {
+                                  hour: '2-digit',
+                                  minute: '2-digit',
                                 })}
                               </span>
                               {message.tokensUsed && (
@@ -245,7 +261,7 @@ export function AstrologyChatBot() {
                               )}
                             </div>
                           </div>
-                          
+
                           {message.isUser && (
                             <div className="w-8 h-8 bg-secondary rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
                               <User size={16} className="text-foreground" />
@@ -254,7 +270,7 @@ export function AstrologyChatBot() {
                         </motion.div>
                       ))}
                     </AnimatePresence>
-                    
+
                     {isLoading && (
                       <motion.div
                         initial={{ opacity: 0 }}
@@ -266,9 +282,18 @@ export function AstrologyChatBot() {
                         </div>
                         <div className="bg-secondary/50 p-3 rounded-xl">
                           <div className="flex gap-1">
-                            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                            <div
+                              className="w-2 h-2 bg-primary rounded-full animate-bounce"
+                              style={{ animationDelay: '0ms' }}
+                            />
+                            <div
+                              className="w-2 h-2 bg-primary rounded-full animate-bounce"
+                              style={{ animationDelay: '150ms' }}
+                            />
+                            <div
+                              className="w-2 h-2 bg-primary rounded-full animate-bounce"
+                              style={{ animationDelay: '300ms' }}
+                            />
                           </div>
                         </div>
                       </motion.div>
@@ -282,7 +307,7 @@ export function AstrologyChatBot() {
                   <div className="flex gap-2">
                     <Input
                       value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
+                      onChange={e => setInputValue(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Pergunte sobre astrologia, tarô, mapas astrais..."
                       disabled={isLoading || tokens <= 0}
@@ -297,7 +322,7 @@ export function AstrologyChatBot() {
                       <PaperPlaneTilt size={16} />
                     </Button>
                   </div>
-                  
+
                   {tokens <= 0 && (
                     <p className="text-xs text-muted-foreground mt-2 text-center">
                       Você precisa de tokens para conversar com a IA mística

@@ -1,9 +1,21 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
 import { Loader2, Star, Heart, Coins, User, Lock } from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -51,19 +63,28 @@ const zodiacSigns = [
   { value: 'sagittarius', label: '♐ Sagitário', dates: '22/11 - 21/12' },
   { value: 'capricorn', label: '♑ Capricórnio', dates: '22/12 - 19/01' },
   { value: 'aquarius', label: '♒ Aquário', dates: '20/01 - 18/02' },
-  { value: 'pisces', label: '♓ Peixes', dates: '19/02 - 20/03' }
+  { value: 'pisces', label: '♓ Peixes', dates: '19/02 - 20/03' },
 ]
 
 interface HoroscopeGeneratorProps {
   onSectionClick?: (section: string) => void
 }
 
-export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps = {}) {
-  const [currentUser, setCurrentUser] = useKV<UserData | null>('current-user', null)
+export function HoroscopeGenerator({
+  onSectionClick,
+}: HoroscopeGeneratorProps = {}) {
+  const [currentUser, setCurrentUser] = useKV<UserData | null>(
+    'current-user',
+    null
+  )
   const [users, setUsers] = useKV<UserData[]>('cosmind-users', [])
-  const [selectedSign, setSelectedSign] = useState<string>(currentUser?.zodiacSign || '')
+  const [selectedSign, setSelectedSign] = useState<string>(
+    currentUser?.zodiacSign || ''
+  )
   const [userName, setUserName] = useState<string>(currentUser?.name || '')
-  const [birthDate, setBirthDate] = useState<string>(currentUser?.birthDate || '')
+  const [birthDate, setBirthDate] = useState<string>(
+    currentUser?.birthDate || ''
+  )
   const [isGenerating, setIsGenerating] = useState(false)
   const [horoscope, setHoroscope] = useState<HoroscopeData | null>(null)
 
@@ -79,7 +100,9 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
     }
 
     if (currentUser.tokens <= 0) {
-      toast.error('Você não possui tokens suficientes. Adquira mais tokens para continuar!')
+      toast.error(
+        'Você não possui tokens suficientes. Adquira mais tokens para continuar!'
+      )
       return
     }
 
@@ -88,8 +111,10 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
     try {
       // Simulate AI horoscope generation
       const today = new Date().toLocaleDateString('pt-BR')
-      const selectedSignData = zodiacSigns.find(sign => sign.value === selectedSign)
-      
+      const selectedSignData = zodiacSigns.find(
+        sign => sign.value === selectedSign
+      )
+
       // Create prompt for AI generation
       const prompt = spark.llmPrompt`
         Você é um astrólogo místico especialista. Gere um horóscopo personalizado para ${userName}, 
@@ -114,38 +139,41 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
         reading: aiHoroscope.reading,
         mood: aiHoroscope.mood,
         lucky_numbers: aiHoroscope.lucky_numbers,
-        compatibility: aiHoroscope.compatibility
+        compatibility: aiHoroscope.compatibility,
       }
 
       setHoroscope(newHoroscope)
-      
+
       // Update user tokens
       const updatedUser = { ...currentUser, tokens: currentUser.tokens - 1 }
       setCurrentUser(updatedUser)
-      
+
       // Update users array
-      setUsers(currentUsers => 
-        currentUsers.map(u => u.id === currentUser.id ? updatedUser : u)
+      setUsers(currentUsers =>
+        currentUsers.map(u => (u.id === currentUser.id ? updatedUser : u))
       )
-      
+
       // Add to user activity
       const activity: UserActivity = {
         id: Date.now().toString(),
         type: 'horoscope',
         title: `Horóscopo de ${selectedSignData?.label}`,
         date: new Date().toISOString(),
-        tokensUsed: 1
+        tokensUsed: 1,
       }
-      
-      const currentActivity = await spark.kv.get<UserActivity[]>(`activity-${currentUser.id}`) || []
-      await spark.kv.set(`activity-${currentUser.id}`, [...currentActivity, activity])
-      
+
+      const currentActivity =
+        (await spark.kv.get<UserActivity[]>(`activity-${currentUser.id}`)) || []
+      await spark.kv.set(`activity-${currentUser.id}`, [
+        ...currentActivity,
+        activity,
+      ])
+
       toast.success('Horóscopo gerado com sucesso! ✨')
 
       // Save to history
-      const history = await spark.kv.get('horoscope-history') || []
+      const history = (await spark.kv.get('horoscope-history')) || []
       await spark.kv.set('horoscope-history', [...history, newHoroscope])
-
     } catch (error) {
       console.error('Error generating horoscope:', error)
       toast.error('Erro ao consultar os astros. Tente novamente.')
@@ -174,25 +202,30 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
               </span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Descubra o que as estrelas reservam para você hoje com nosso horóscopo personalizado por IA
+              Descubra o que as estrelas reservam para você hoje com nosso
+              horóscopo personalizado por IA
             </p>
-            
+
             {/* Token Counter */}
             {currentUser ? (
-              <motion.div 
+              <motion.div
                 className="flex items-center justify-center gap-2 mt-6 glass p-3 rounded-xl w-fit mx-auto"
                 whileHover={{ scale: 1.05 }}
               >
                 <Coins size={20} className="text-accent" />
-                <span className="font-medium">{currentUser.tokens} tokens restantes</span>
+                <span className="font-medium">
+                  {currentUser.tokens} tokens restantes
+                </span>
               </motion.div>
             ) : (
-              <motion.div 
+              <motion.div
                 className="flex items-center justify-center gap-2 mt-6 glass p-3 rounded-xl w-fit mx-auto bg-muted/50"
                 whileHover={{ scale: 1.05 }}
               >
                 <Lock size={20} className="text-muted-foreground" />
-                <span className="font-medium text-muted-foreground">Faça login para ver seus tokens</span>
+                <span className="font-medium text-muted-foreground">
+                  Faça login para ver seus tokens
+                </span>
               </motion.div>
             )}
           </div>
@@ -201,8 +234,12 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
             {/* Input Form */}
             <Card className="glass border-primary/20">
               <CardHeader>
-                <CardTitle className="font-display text-2xl">Seus Dados Cósmicos</CardTitle>
-                <CardDescription>Preencha as informações para uma leitura personalizada</CardDescription>
+                <CardTitle className="font-display text-2xl">
+                  Seus Dados Cósmicos
+                </CardTitle>
+                <CardDescription>
+                  Preencha as informações para uma leitura personalizada
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
@@ -212,7 +249,7 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
                     type="text"
                     placeholder="Digite seu nome"
                     value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
+                    onChange={e => setUserName(e.target.value)}
                     className="bg-background/50"
                   />
                 </div>
@@ -224,11 +261,13 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
                       <SelectValue placeholder="Selecione seu signo" />
                     </SelectTrigger>
                     <SelectContent>
-                      {zodiacSigns.map((sign) => (
+                      {zodiacSigns.map(sign => (
                         <SelectItem key={sign.value} value={sign.value}>
                           <div className="flex items-center justify-between w-full">
                             <span>{sign.label}</span>
-                            <span className="text-xs text-muted-foreground ml-2">{sign.dates}</span>
+                            <span className="text-xs text-muted-foreground ml-2">
+                              {sign.dates}
+                            </span>
                           </div>
                         </SelectItem>
                       ))}
@@ -237,19 +276,27 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="birth-date">Data de Nascimento (opcional)</Label>
+                  <Label htmlFor="birth-date">
+                    Data de Nascimento (opcional)
+                  </Label>
                   <Input
                     id="birth-date"
                     type="date"
                     value={birthDate}
-                    onChange={(e) => setBirthDate(e.target.value)}
+                    onChange={e => setBirthDate(e.target.value)}
                     className="bg-background/50"
                   />
                 </div>
 
-                <Button 
+                <Button
                   onClick={generateHoroscope}
-                  disabled={isGenerating || !selectedSign || !userName || !currentUser || (currentUser && currentUser.tokens <= 0)}
+                  disabled={
+                    isGenerating ||
+                    !selectedSign ||
+                    !userName ||
+                    !currentUser ||
+                    (currentUser && currentUser.tokens <= 0)
+                  }
                   className="w-full bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all duration-300"
                   size="lg"
                 >
@@ -300,25 +347,37 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <div className="prose prose-sm max-w-none">
-                        <p className="text-foreground leading-relaxed">{horoscope.reading}</p>
+                        <p className="text-foreground leading-relaxed">
+                          {horoscope.reading}
+                        </p>
                       </div>
 
                       <div className="grid grid-cols-1 gap-4">
                         <div className="flex items-center gap-3 p-3 bg-secondary/20 rounded-lg">
                           <Heart className="text-primary" size={20} />
                           <div>
-                            <div className="font-medium text-sm">Energia do Dia</div>
-                            <div className="text-muted-foreground text-sm">{horoscope.mood}</div>
+                            <div className="font-medium text-sm">
+                              Energia do Dia
+                            </div>
+                            <div className="text-muted-foreground text-sm">
+                              {horoscope.mood}
+                            </div>
                           </div>
                         </div>
 
                         <div className="flex items-center gap-3 p-3 bg-accent/20 rounded-lg">
                           <Star className="text-accent" size={20} />
                           <div>
-                            <div className="font-medium text-sm">Números da Sorte</div>
+                            <div className="font-medium text-sm">
+                              Números da Sorte
+                            </div>
                             <div className="flex gap-2 mt-1">
                               {horoscope.lucky_numbers.map((num, index) => (
-                                <Badge key={index} variant="secondary" className="bg-accent/20">
+                                <Badge
+                                  key={index}
+                                  variant="secondary"
+                                  className="bg-accent/20"
+                                >
                                   {num}
                                 </Badge>
                               ))}
@@ -329,8 +388,12 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
                         <div className="flex items-center gap-3 p-3 bg-primary/20 rounded-lg">
                           <Heart className="text-primary" size={20} />
                           <div>
-                            <div className="font-medium text-sm">Compatibilidade</div>
-                            <div className="text-muted-foreground text-sm">{horoscope.compatibility}</div>
+                            <div className="font-medium text-sm">
+                              Compatibilidade
+                            </div>
+                            <div className="text-muted-foreground text-sm">
+                              {horoscope.compatibility}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -377,7 +440,8 @@ export function HoroscopeGenerator({ onSectionClick }: HoroscopeGeneratorProps =
                   <div className="text-center space-y-4">
                     <div className="text-6xl">✨</div>
                     <p className="text-muted-foreground">
-                      Preencha os dados ao lado para receber sua leitura cósmica personalizada
+                      Preencha os dados ao lado para receber sua leitura cósmica
+                      personalizada
                     </p>
                   </div>
                 </motion.div>

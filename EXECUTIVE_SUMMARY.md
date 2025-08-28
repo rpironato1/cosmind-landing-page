@@ -3,6 +3,7 @@
 ## 🎯 SITUAÇÃO ATUAL
 
 **✅ IMPLEMENTADO**: Portal de horóscopo funcional com:
+
 - React/Vite SPA básica
 - Features de horóscopo com IA
 - Sistema de autenticação simples
@@ -14,27 +15,32 @@
 ## 🚨 PRINCIPAIS GAPS IDENTIFICADOS
 
 ### 1. **ARQUITETURA** (Gap: 60-80%)
+
 - **Atual**: SPA monolítica simples
 - **Decisão necessária**: Monorepo vs Multi-repo para web + mobile
 - **Recomendação**: Multi-repo simplificado para time pequeno/médio
 - **Impacto**: Flexibilidade vs Complexidade
 
 ### 2. **OBSERVABILIDADE** (Gap: 100%)
+
 - **Atual**: Zero visibilidade de produção
 - **Objetivo**: OpenTelemetry + Prometheus + Alertas
 - **Risco**: Downtime não detectado = -R$10k/hora
 
 ### 3. **RESILIÊNCIA** (Gap: 100%)
+
 - **Atual**: Sem proteção contra falhas
 - **Objetivo**: Circuit breakers + Fallback cascade
 - **Risco**: Cascading failures = -R$50k/evento
 
 ### 4. **CACHE INTELIGENTE** (Gap: 100%)
+
 - **Atual**: Sem cache otimizado
 - **Objetivo**: Multi-layer cache com ML
 - **Impacto**: Custo IA 10x maior = -R$5k/mês
 
 ### 5. **TESTES** (Gap: 95%)
+
 - **Atual**: Zero cobertura de testes
 - **Objetivo**: 95% com MCP Playwright
 - **Risco**: Bugs produção = -R$20k/bug
@@ -42,12 +48,14 @@
 ## 💰 IMPACTO FINANCEIRO
 
 ### Custos de NÃO Implementar
+
 - **Operacional**: R$15k/mês extras em custos IA
 - **Downtime**: R$10k/hora de indisponibilidade
 - **Bugs**: R$20k/bug crítico em produção
 - **Opportunity cost**: R$50k/mês em features atrasadas
 
 ### ROI da Implementação v2.0
+
 - **Cache optimization**: -90% custos IA = +R$13.5k/mês
 - **Observabilidade**: +300% uptime = +R$30k/mês
 - **Modularização**: +200% velocidade dev = +R$40k/mês
@@ -59,7 +67,9 @@
 ## 🚀 ROADMAP RECOMENDADO
 
 ### **FASE 1 - CRÍTICA** (4 semanas)
+
 **Prioridade**: MÁXIMA - Base para tudo
+
 - ✅ Sistema de Observabilidade (OpenTelemetry + Prometheus)
 - ✅ Circuit Breakers para APIs
 - ✅ Cache Multi-Layer (L1/L2/L3)
@@ -68,7 +78,9 @@
 **Investimento**: R$40k | **ROI**: R$58k/mês
 
 ### **FASE 2 - IMPORTANTE** (4 semanas)
+
 **Prioridade**: ALTA - Experimentação
+
 - ✅ Feature Flags (A/B testing)
 - ✅ Event-Driven Architecture
 - ✅ Testes MCP Playwright (95% cobertura)
@@ -77,7 +89,9 @@
 **Investimento**: R$40k | **ROI**: R$25k/mês
 
 ### **FASE 3 - AVANÇADA** (4 semanas)
+
 **Prioridade**: MÉDIA - Otimização
+
 - ✅ ML Cache Prediction
 - ✅ Load Testing (Artillery)
 - ✅ Security Audit + LGPD
@@ -86,7 +100,9 @@
 **Investimento**: R$40k | **ROI**: R$15k/mês
 
 ### **FASE 4 - OPCIONAL** (4 semanas)
+
 **Prioridade**: BAIXA - Polimento
+
 - ✅ Chaos Engineering
 - ✅ Advanced ML features
 - ✅ Mobile app foundation
@@ -127,23 +143,27 @@ cosmind/
 **CONTEXTO**: Projeto será web app + Android/iOS
 
 **ANÁLISE**:
+
 - **Monorepo**: Mais complexidade, melhor compartilhamento de código
 - **Multi-repo**: Simplicidade, deploy independente, menor curva de aprendizado
 
 **RECOMENDAÇÃO**: **Multi-repo simplificado**
+
 ```bash
 cosmind-web/     # Next.js (migração do atual)
-cosmind-mobile/  # React Native (futuro)  
+cosmind-mobile/  # React Native (futuro)
 cosmind-shared/  # NPM package compartilhado
 ```
 
 **Justificativa**:
+
 1. Time pequeno/médio se beneficia mais da simplicidade
 2. Deploy independente reduz riscos
 3. Pode evoluir para monorepo quando necessário
 4. 70% dos benefícios com 30% da complexidade
 
 ### **DECISÃO ESTRATÉGICA**:
+
 1. **IMPLEMENTAR FASE 1** imediatamente (4 semanas)
    - ROI positivo em 1.2 meses
    - Base sólida para crescimento
@@ -158,12 +178,15 @@ cosmind-shared/  # NPM package compartilhado
    - Nice-to-have vs must-have
 
 ### **RECURSOS NECESSÁRIOS**:
+
 - **2 Desenvolvedores Sênior** (backend/devops)
 - **4 semanas dedicadas** para Fase 1
 - **Acesso a infraestrutura** (Redis, monitoring tools)
 
 ### **ALTERNATIVA MINIMALISTA**:
+
 Se recursos limitados, implementar apenas:
+
 1. **Observabilidade básica** (2 semanas)
 2. **Cache L1/L2** (2 semanas)
 

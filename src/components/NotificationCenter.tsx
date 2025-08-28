@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
 import { Badge } from '@/components/ui/badge'
@@ -32,20 +38,25 @@ export function NotificationCenter() {
     loveCompatibility: false,
     careerGuidance: false,
     lunarTransits: false,
-    preferredTime: '08:00'
+    preferredTime: '08:00',
   })
   const [notifications, setNotifications] = useKV('daily-notifications', [])
   const [hasUnread, setHasUnread] = useState(false)
 
   useEffect(() => {
-    const unreadCount = notifications.filter((n: DailyNotification) => !n.read).length
+    const unreadCount = notifications.filter(
+      (n: DailyNotification) => !n.read
+    ).length
     setHasUnread(unreadCount > 0)
   }, [notifications])
 
-  const updateSetting = (key: keyof NotificationSettings, value: boolean | string) => {
+  const updateSetting = (
+    key: keyof NotificationSettings,
+    value: boolean | string
+  ) => {
     setSettings((current: NotificationSettings) => ({
       ...current,
-      [key]: value
+      [key]: value,
     }))
     toast.success('Configurações de notificação atualizadas ✨')
   }
@@ -55,12 +66,13 @@ export function NotificationCenter() {
 
     try {
       const today = new Date().toLocaleDateString('pt-BR')
-      
+
       // Check if we already have notifications for today
-      const todayNotifications = notifications.filter((n: DailyNotification) => 
-        new Date(n.timestamp).toLocaleDateString('pt-BR') === today
+      const todayNotifications = notifications.filter(
+        (n: DailyNotification) =>
+          new Date(n.timestamp).toLocaleDateString('pt-BR') === today
       )
-      
+
       if (todayNotifications.length > 0) return
 
       const prompt = spark.llmPrompt`
@@ -83,19 +95,21 @@ export function NotificationCenter() {
         content: notificationData.content,
         type: 'horoscope',
         timestamp: new Date(),
-        read: false
+        read: false,
       }
 
-      setNotifications((current: DailyNotification[]) => [newNotification, ...current])
-      
+      setNotifications((current: DailyNotification[]) => [
+        newNotification,
+        ...current,
+      ])
+
       // Show browser notification if permission granted
       if (Notification.permission === 'granted') {
         new Notification(notificationData.title, {
           body: notificationData.content,
-          icon: '/favicon.ico'
+          icon: '/favicon.ico',
         })
       }
-
     } catch (error) {
       console.error('Error generating daily notification:', error)
     }
@@ -105,18 +119,22 @@ export function NotificationCenter() {
     if ('Notification' in window) {
       const permission = await Notification.requestPermission()
       if (permission === 'granted') {
-        toast.success('Notificações habilitadas! Você receberá seus horóscops diários.')
+        toast.success(
+          'Notificações habilitadas! Você receberá seus horóscops diários.'
+        )
         // Generate initial notification
         generateDailyNotifications()
       } else {
-        toast.error('Permissão negada. Você pode ativar nas configurações do navegador.')
+        toast.error(
+          'Permissão negada. Você pode ativar nas configurações do navegador.'
+        )
       }
     }
   }
 
   const markAsRead = (notificationId: string) => {
     setNotifications((current: DailyNotification[]) =>
-      current.map(n => n.id === notificationId ? { ...n, read: true } : n)
+      current.map(n => (n.id === notificationId ? { ...n, read: true } : n))
     )
   }
 
@@ -133,11 +151,16 @@ export function NotificationCenter() {
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
-      case 'horoscope': return <Star size={16} className="text-primary" />
-      case 'love': return <Sun size={16} className="text-accent" />
-      case 'career': return <Clock size={16} className="text-secondary" />
-      case 'lunar': return <Moon size={16} className="text-primary" />
-      default: return <Bell size={16} className="text-muted-foreground" />
+      case 'horoscope':
+        return <Star size={16} className="text-primary" />
+      case 'love':
+        return <Sun size={16} className="text-accent" />
+      case 'career':
+        return <Clock size={16} className="text-secondary" />
+      case 'lunar':
+        return <Moon size={16} className="text-primary" />
+      default:
+        return <Bell size={16} className="text-muted-foreground" />
     }
   }
 
@@ -182,8 +205,12 @@ export function NotificationCenter() {
                 <CardHeader className="pb-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <CardTitle className="text-lg">Central de Notificações</CardTitle>
-                      <CardDescription>Configurações e notificações cósmicas</CardDescription>
+                      <CardTitle className="text-lg">
+                        Central de Notificações
+                      </CardTitle>
+                      <CardDescription>
+                        Configurações e notificações cósmicas
+                      </CardDescription>
                     </div>
                     {notifications.length > 0 && (
                       <Button
@@ -202,7 +229,7 @@ export function NotificationCenter() {
                   {/* Notification Settings */}
                   <div className="space-y-4">
                     <h4 className="font-medium text-sm">Configurações</h4>
-                    
+
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -211,29 +238,39 @@ export function NotificationCenter() {
                         </div>
                         <Switch
                           checked={settings.dailyHoroscope}
-                          onCheckedChange={(checked) => updateSetting('dailyHoroscope', checked)}
+                          onCheckedChange={checked =>
+                            updateSetting('dailyHoroscope', checked)
+                          }
                         />
                       </div>
 
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Sun size={16} className="text-accent" />
-                          <span className="text-sm">Compatibilidade Amorosa</span>
+                          <span className="text-sm">
+                            Compatibilidade Amorosa
+                          </span>
                         </div>
                         <Switch
                           checked={settings.loveCompatibility}
-                          onCheckedChange={(checked) => updateSetting('loveCompatibility', checked)}
+                          onCheckedChange={checked =>
+                            updateSetting('loveCompatibility', checked)
+                          }
                         />
                       </div>
 
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Clock size={16} className="text-secondary" />
-                          <span className="text-sm">Orientações de Carreira</span>
+                          <span className="text-sm">
+                            Orientações de Carreira
+                          </span>
                         </div>
                         <Switch
                           checked={settings.careerGuidance}
-                          onCheckedChange={(checked) => updateSetting('careerGuidance', checked)}
+                          onCheckedChange={checked =>
+                            updateSetting('careerGuidance', checked)
+                          }
                         />
                       </div>
 
@@ -244,7 +281,9 @@ export function NotificationCenter() {
                         </div>
                         <Switch
                           checked={settings.lunarTransits}
-                          onCheckedChange={(checked) => updateSetting('lunarTransits', checked)}
+                          onCheckedChange={checked =>
+                            updateSetting('lunarTransits', checked)
+                          }
                         />
                       </div>
                     </div>
@@ -266,7 +305,8 @@ export function NotificationCenter() {
                       <div className="flex items-center gap-2 p-2 bg-destructive/10 rounded-lg">
                         <BellSlash size={16} className="text-destructive" />
                         <span className="text-xs text-destructive">
-                          Notificações bloqueadas. Ative nas configurações do navegador.
+                          Notificações bloqueadas. Ative nas configurações do
+                          navegador.
                         </span>
                       </div>
                     )}
@@ -275,7 +315,9 @@ export function NotificationCenter() {
                   {/* Recent Notifications */}
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-sm">Notificações Recentes</h4>
+                      <h4 className="font-medium text-sm">
+                        Notificações Recentes
+                      </h4>
                       {notifications.length > 0 && (
                         <Button
                           variant="ghost"
@@ -295,41 +337,48 @@ export function NotificationCenter() {
                           <p className="text-sm">Nenhuma notificação ainda</p>
                         </div>
                       ) : (
-                        notifications.slice(0, 10).map((notification: DailyNotification) => (
-                          <motion.div
-                            key={notification.id}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className={`p-3 rounded-lg border cursor-pointer transition-colors ${
-                              notification.read 
-                                ? 'bg-background/50 border-border/50' 
-                                : 'bg-primary/5 border-primary/20'
-                            }`}
-                            onClick={() => markAsRead(notification.id)}
-                          >
-                            <div className="flex items-start gap-3">
-                              {getNotificationIcon(notification.type)}
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2 mb-1">
-                                  <h5 className="font-medium text-sm truncate">
-                                    {notification.title}
-                                  </h5>
-                                  {!notification.read && (
-                                    <Badge variant="secondary" className="text-xs">
-                                      Nova
-                                    </Badge>
-                                  )}
+                        notifications
+                          .slice(0, 10)
+                          .map((notification: DailyNotification) => (
+                            <motion.div
+                              key={notification.id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              className={`p-3 rounded-lg border cursor-pointer transition-colors ${
+                                notification.read
+                                  ? 'bg-background/50 border-border/50'
+                                  : 'bg-primary/5 border-primary/20'
+                              }`}
+                              onClick={() => markAsRead(notification.id)}
+                            >
+                              <div className="flex items-start gap-3">
+                                {getNotificationIcon(notification.type)}
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <h5 className="font-medium text-sm truncate">
+                                      {notification.title}
+                                    </h5>
+                                    {!notification.read && (
+                                      <Badge
+                                        variant="secondary"
+                                        className="text-xs"
+                                      >
+                                        Nova
+                                      </Badge>
+                                    )}
+                                  </div>
+                                  <p className="text-xs text-muted-foreground line-clamp-2">
+                                    {notification.content}
+                                  </p>
+                                  <span className="text-xs text-muted-foreground">
+                                    {new Date(
+                                      notification.timestamp
+                                    ).toLocaleDateString('pt-BR')}
+                                  </span>
                                 </div>
-                                <p className="text-xs text-muted-foreground line-clamp-2">
-                                  {notification.content}
-                                </p>
-                                <span className="text-xs text-muted-foreground">
-                                  {new Date(notification.timestamp).toLocaleDateString('pt-BR')}
-                                </span>
                               </div>
-                            </div>
-                          </motion.div>
-                        ))
+                            </motion.div>
+                          ))
                       )}
                     </div>
                   </div>

@@ -1,13 +1,36 @@
 import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
-import { Briefcase, TrendUp, Target, Star, Users, Lightbulb, Coins, Loader2, Crown, Heart } from '@phosphor-icons/react'
+import {
+  Briefcase,
+  TrendUp,
+  Target,
+  Star,
+  Users,
+  Lightbulb,
+  Coins,
+  Loader2,
+  Crown,
+  Heart,
+} from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
@@ -65,24 +88,79 @@ const zodiacSigns = [
   { value: 'leo', label: '♌ Leão', ruling: 'Sol', element: 'Fogo' },
   { value: 'virgo', label: '♍ Virgem', ruling: 'Mercúrio', element: 'Terra' },
   { value: 'libra', label: '♎ Libra', ruling: 'Vênus', element: 'Ar' },
-  { value: 'scorpio', label: '♏ Escorpião', ruling: 'Plutão', element: 'Água' },
-  { value: 'sagittarius', label: '♐ Sagitário', ruling: 'Júpiter', element: 'Fogo' },
-  { value: 'capricorn', label: '♑ Capricórnio', ruling: 'Saturno', element: 'Terra' },
+  {
+    value: 'scorpio',
+    label: '♏ Escorpião',
+    ruling: 'Plutão',
+    element: 'Água',
+  },
+  {
+    value: 'sagittarius',
+    label: '♐ Sagitário',
+    ruling: 'Júpiter',
+    element: 'Fogo',
+  },
+  {
+    value: 'capricorn',
+    label: '♑ Capricórnio',
+    ruling: 'Saturno',
+    element: 'Terra',
+  },
   { value: 'aquarius', label: '♒ Aquário', ruling: 'Urano', element: 'Ar' },
-  { value: 'pisces', label: '♓ Peixes', ruling: 'Netuno', element: 'Água' }
+  { value: 'pisces', label: '♓ Peixes', ruling: 'Netuno', element: 'Água' },
 ]
 
 const careerAreas = [
-  { value: 'technology', label: '💻 Tecnologia', description: 'TI, software, inovação digital' },
-  { value: 'healthcare', label: '🏥 Saúde', description: 'Medicina, terapias, bem-estar' },
-  { value: 'business', label: '💼 Negócios', description: 'Administração, vendas, consultoria' },
-  { value: 'creative', label: '🎨 Criativo', description: 'Arte, design, entretenimento' },
-  { value: 'education', label: '📚 Educação', description: 'Ensino, pesquisa, desenvolvimento' },
-  { value: 'finance', label: '💰 Finanças', description: 'Banking, investimentos, contabilidade' },
-  { value: 'legal', label: '⚖️ Jurídico', description: 'Direito, advocacia, compliance' },
-  { value: 'social', label: '🤝 Social', description: 'ONG, serviços sociais, política' },
-  { value: 'science', label: '🔬 Ciências', description: 'Pesquisa, laboratório, inovação' },
-  { value: 'sports', label: '🏃 Esportes', description: 'Atletismo, fitness, recreação' }
+  {
+    value: 'technology',
+    label: '💻 Tecnologia',
+    description: 'TI, software, inovação digital',
+  },
+  {
+    value: 'healthcare',
+    label: '🏥 Saúde',
+    description: 'Medicina, terapias, bem-estar',
+  },
+  {
+    value: 'business',
+    label: '💼 Negócios',
+    description: 'Administração, vendas, consultoria',
+  },
+  {
+    value: 'creative',
+    label: '🎨 Criativo',
+    description: 'Arte, design, entretenimento',
+  },
+  {
+    value: 'education',
+    label: '📚 Educação',
+    description: 'Ensino, pesquisa, desenvolvimento',
+  },
+  {
+    value: 'finance',
+    label: '💰 Finanças',
+    description: 'Banking, investimentos, contabilidade',
+  },
+  {
+    value: 'legal',
+    label: '⚖️ Jurídico',
+    description: 'Direito, advocacia, compliance',
+  },
+  {
+    value: 'social',
+    label: '🤝 Social',
+    description: 'ONG, serviços sociais, política',
+  },
+  {
+    value: 'science',
+    label: '🔬 Ciências',
+    description: 'Pesquisa, laboratório, inovação',
+  },
+  {
+    value: 'sports',
+    label: '🏃 Esportes',
+    description: 'Atletismo, fitness, recreação',
+  },
 ]
 
 const careerSatisfaction = [
@@ -90,7 +168,7 @@ const careerSatisfaction = [
   { value: 'satisfied', label: 'Satisfeito', score: 70 },
   { value: 'neutral', label: 'Neutro', score: 50 },
   { value: 'dissatisfied', label: 'Insatisfeito', score: 30 },
-  { value: 'very-dissatisfied', label: 'Muito insatisfeito', score: 10 }
+  { value: 'very-dissatisfied', label: 'Muito insatisfeito', score: 10 },
 ]
 
 interface CareerAstrologyProps {
@@ -115,7 +193,9 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
     }
 
     if (tokens < 4) {
-      toast.error('Você precisa de pelo menos 4 tokens para análise de carreira')
+      toast.error(
+        'Você precisa de pelo menos 4 tokens para análise de carreira'
+      )
       return
     }
 
@@ -124,7 +204,9 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
     try {
       const signData = zodiacSigns.find(sign => sign.value === selectedSign)
       const areaData = careerAreas.find(area => area.value === careerArea)
-      const satisfactionData = careerSatisfaction.find(sat => sat.value === satisfaction)
+      const satisfactionData = careerSatisfaction.find(
+        sat => sat.value === satisfaction
+      )
 
       const prompt = spark.llmPrompt`
         Você é um astrólogo especialista em carreira e vocação profissional. Faça uma análise completa da carreira de uma pessoa com as seguintes informações:
@@ -204,7 +286,7 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
         luckyPeriods: aiAnalysis.luckyPeriods,
         astrological: aiAnalysis.astrological,
         detailedAnalysis: aiAnalysis.detailedAnalysis,
-        date: new Date().toLocaleDateString('pt-BR')
+        date: new Date().toLocaleDateString('pt-BR'),
       }
 
       setAnalysis(careerAnalysis)
@@ -212,9 +294,8 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
       toast.success('Análise de carreira concluída! 🌟')
 
       // Save to history
-      const history = await spark.kv.get('career-history') || []
+      const history = (await spark.kv.get('career-history')) || []
       await spark.kv.set('career-history', [...history, careerAnalysis])
-
     } catch (error) {
       console.error('Error analyzing career:', error)
       toast.error('Erro ao analisar carreira. Tente novamente.')
@@ -224,17 +305,40 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
   }
 
   const getCompatibilityLevel = (score: number) => {
-    if (score >= 80) return { label: 'Excelente', color: 'text-green-600 bg-green-50', emoji: '🌟' }
-    if (score >= 65) return { label: 'Muito Boa', color: 'text-blue-600 bg-blue-50', emoji: '⭐' }
-    if (score >= 50) return { label: 'Boa', color: 'text-yellow-600 bg-yellow-50', emoji: '✨' }
-    if (score >= 35) return { label: 'Moderada', color: 'text-orange-600 bg-orange-50', emoji: '💫' }
+    if (score >= 80)
+      return {
+        label: 'Excelente',
+        color: 'text-green-600 bg-green-50',
+        emoji: '🌟',
+      }
+    if (score >= 65)
+      return {
+        label: 'Muito Boa',
+        color: 'text-blue-600 bg-blue-50',
+        emoji: '⭐',
+      }
+    if (score >= 50)
+      return {
+        label: 'Boa',
+        color: 'text-yellow-600 bg-yellow-50',
+        emoji: '✨',
+      }
+    if (score >= 35)
+      return {
+        label: 'Moderada',
+        color: 'text-orange-600 bg-orange-50',
+        emoji: '💫',
+      }
     return { label: 'Baixa', color: 'text-red-600 bg-red-50', emoji: '⚡' }
   }
 
   const selectedSignData = zodiacSigns.find(sign => sign.value === selectedSign)
 
   return (
-    <section id="career-astrology" className="py-24 bg-gradient-to-br from-secondary/5 to-primary/5">
+    <section
+      id="career-astrology"
+      className="py-24 bg-gradient-to-br from-secondary/5 to-primary/5"
+    >
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -252,16 +356,19 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
               </span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Descubra sua vocação cósmica e otimize sua trajetória profissional através dos astros
+              Descubra sua vocação cósmica e otimize sua trajetória profissional
+              através dos astros
             </p>
-            
+
             {/* Token Info */}
-            <motion.div 
+            <motion.div
               className="flex items-center justify-center gap-3 mt-6 glass p-3 rounded-xl w-fit mx-auto"
               whileHover={{ scale: 1.05 }}
             >
               <Coins size={20} className="text-accent" />
-              <span className="font-medium">{tokens} tokens • Análise custa 4 tokens</span>
+              <span className="font-medium">
+                {tokens} tokens • Análise custa 4 tokens
+              </span>
             </motion.div>
           </motion.div>
 
@@ -274,7 +381,8 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                   Perfil Profissional
                 </CardTitle>
                 <CardDescription>
-                  Forneça informações sobre sua carreira atual para análise astrológica personalizada
+                  Forneça informações sobre sua carreira atual para análise
+                  astrológica personalizada
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -285,7 +393,7 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                       <SelectValue placeholder="Selecione seu signo" />
                     </SelectTrigger>
                     <SelectContent>
-                      {zodiacSigns.map((sign) => (
+                      {zodiacSigns.map(sign => (
                         <SelectItem key={sign.value} value={sign.value}>
                           <div className="flex items-center justify-between w-full">
                             <span>{sign.label}</span>
@@ -304,7 +412,7 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                   <Input
                     id="current-role"
                     value={currentRole}
-                    onChange={(e) => setCurrentRole(e.target.value)}
+                    onChange={e => setCurrentRole(e.target.value)}
                     placeholder="Ex: Desenvolvedor, Gerente, Designer..."
                     className="bg-background/50"
                   />
@@ -317,11 +425,13 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                       <SelectValue placeholder="Selecione sua área" />
                     </SelectTrigger>
                     <SelectContent>
-                      {careerAreas.map((area) => (
+                      {careerAreas.map(area => (
                         <SelectItem key={area.value} value={area.value}>
                           <div className="flex flex-col">
                             <span>{area.label}</span>
-                            <span className="text-xs text-muted-foreground">{area.description}</span>
+                            <span className="text-xs text-muted-foreground">
+                              {area.description}
+                            </span>
                           </div>
                         </SelectItem>
                       ))}
@@ -336,7 +446,7 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                       <SelectValue placeholder="Como se sente na carreira atual?" />
                     </SelectTrigger>
                     <SelectContent>
-                      {careerSatisfaction.map((sat) => (
+                      {careerSatisfaction.map(sat => (
                         <SelectItem key={sat.value} value={sat.value}>
                           {sat.label}
                         </SelectItem>
@@ -346,11 +456,13 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="goals">Objetivos Profissionais (opcional)</Label>
+                  <Label htmlFor="goals">
+                    Objetivos Profissionais (opcional)
+                  </Label>
                   <Textarea
                     id="goals"
                     value={goals}
-                    onChange={(e) => setGoals(e.target.value)}
+                    onChange={e => setGoals(e.target.value)}
                     placeholder="Descreva seus objetivos e aspirações profissionais..."
                     className="bg-background/50 min-h-[80px]"
                   />
@@ -361,15 +473,22 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                   <Textarea
                     id="challenges"
                     value={challenges}
-                    onChange={(e) => setChallenges(e.target.value)}
+                    onChange={e => setChallenges(e.target.value)}
                     placeholder="Quais desafios está enfrentando na carreira?"
                     className="bg-background/50 min-h-[80px]"
                   />
                 </div>
 
-                <Button 
+                <Button
                   onClick={analyzeCareer}
-                  disabled={isAnalyzing || !selectedSign || !currentRole || !careerArea || !satisfaction || tokens < 4}
+                  disabled={
+                    isAnalyzing ||
+                    !selectedSign ||
+                    !currentRole ||
+                    !careerArea ||
+                    !satisfaction ||
+                    tokens < 4
+                  }
                   className="w-full bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all duration-300"
                   size="lg"
                 >
@@ -402,16 +521,32 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                   {/* Career Compatibility */}
                   <Card className="glass border-accent/20">
                     <CardHeader className="text-center">
-                      <div className="text-4xl mb-4">{selectedSignData?.label.split(' ')[0]}</div>
+                      <div className="text-4xl mb-4">
+                        {selectedSignData?.label.split(' ')[0]}
+                      </div>
                       <CardTitle className="font-display text-2xl mb-2">
                         Compatibilidade Profissional
                       </CardTitle>
                       <div className="text-4xl font-bold text-accent mb-2">
                         {analysis.currentCareerAnalysis.compatibility}%
                       </div>
-                      <Badge className={getCompatibilityLevel(analysis.currentCareerAnalysis.compatibility).color}>
-                        {getCompatibilityLevel(analysis.currentCareerAnalysis.compatibility).emoji}{' '}
-                        {getCompatibilityLevel(analysis.currentCareerAnalysis.compatibility).label}
+                      <Badge
+                        className={
+                          getCompatibilityLevel(
+                            analysis.currentCareerAnalysis.compatibility
+                          ).color
+                        }
+                      >
+                        {
+                          getCompatibilityLevel(
+                            analysis.currentCareerAnalysis.compatibility
+                          ).emoji
+                        }{' '}
+                        {
+                          getCompatibilityLevel(
+                            analysis.currentCareerAnalysis.compatibility
+                          ).label
+                        }
                       </Badge>
                     </CardHeader>
                   </Card>
@@ -426,11 +561,31 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       {[
-                        { label: 'Liderança', value: analysis.personalityProfile.leadership, icon: Crown },
-                        { label: 'Criatividade', value: analysis.personalityProfile.creativity, icon: Lightbulb },
-                        { label: 'Análise', value: analysis.personalityProfile.analytical, icon: Target },
-                        { label: 'Social', value: analysis.personalityProfile.social, icon: Users },
-                        { label: 'Independência', value: analysis.personalityProfile.independence, icon: Star }
+                        {
+                          label: 'Liderança',
+                          value: analysis.personalityProfile.leadership,
+                          icon: Crown,
+                        },
+                        {
+                          label: 'Criatividade',
+                          value: analysis.personalityProfile.creativity,
+                          icon: Lightbulb,
+                        },
+                        {
+                          label: 'Análise',
+                          value: analysis.personalityProfile.analytical,
+                          icon: Target,
+                        },
+                        {
+                          label: 'Social',
+                          value: analysis.personalityProfile.social,
+                          icon: Users,
+                        },
+                        {
+                          label: 'Independência',
+                          value: analysis.personalityProfile.independence,
+                          icon: Star,
+                        },
                       ].map((trait, index) => {
                         const IconComponent = trait.icon
                         return (
@@ -443,10 +598,17 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                           >
                             <div className="flex justify-between items-center">
                               <div className="flex items-center gap-2">
-                                <IconComponent size={16} className="text-primary" />
-                                <span className="text-sm font-medium">{trait.label}</span>
+                                <IconComponent
+                                  size={16}
+                                  className="text-primary"
+                                />
+                                <span className="text-sm font-medium">
+                                  {trait.label}
+                                </span>
                               </div>
-                              <span className="text-sm font-bold">{trait.value}%</span>
+                              <span className="text-sm font-bold">
+                                {trait.value}%
+                              </span>
                             </div>
                             <Progress value={trait.value} className="h-2" />
                           </motion.div>
@@ -465,24 +627,40 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div>
-                        <span className="text-sm font-medium text-muted-foreground">Carreiras Primárias:</span>
+                        <span className="text-sm font-medium text-muted-foreground">
+                          Carreiras Primárias:
+                        </span>
                         <div className="flex flex-wrap gap-1 mt-1">
-                          {analysis.careerPaths.primary.slice(0, 3).map((career, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
-                              🎯 {career}
-                            </Badge>
-                          ))}
+                          {analysis.careerPaths.primary
+                            .slice(0, 3)
+                            .map((career, index) => (
+                              <Badge
+                                key={index}
+                                variant="secondary"
+                                className="text-xs"
+                              >
+                                🎯 {career}
+                              </Badge>
+                            ))}
                         </div>
                       </div>
-                      
+
                       <div>
-                        <span className="text-sm font-medium text-muted-foreground">Tendências Emergentes:</span>
+                        <span className="text-sm font-medium text-muted-foreground">
+                          Tendências Emergentes:
+                        </span>
                         <div className="flex flex-wrap gap-1 mt-1">
-                          {analysis.careerPaths.emerging.slice(0, 2).map((career, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
-                              🚀 {career}
-                            </Badge>
-                          ))}
+                          {analysis.careerPaths.emerging
+                            .slice(0, 2)
+                            .map((career, index) => (
+                              <Badge
+                                key={index}
+                                variant="secondary"
+                                className="text-xs"
+                              >
+                                🚀 {career}
+                              </Badge>
+                            ))}
                         </div>
                       </div>
                     </CardContent>
@@ -499,7 +677,8 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                   <div className="text-center space-y-4">
                     <div className="text-6xl">💼</div>
                     <p className="text-muted-foreground max-w-xs">
-                      Preencha suas informações profissionais para receber análise astrológica personalizada
+                      Preencha suas informações profissionais para receber
+                      análise astrológica personalizada
                     </p>
                   </div>
                 </motion.div>
@@ -544,7 +723,9 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                     </div>
                   </div>
                   <div>
-                    <span className="text-sm font-medium">Dias Favoráveis:</span>
+                    <span className="text-sm font-medium">
+                      Dias Favoráveis:
+                    </span>
                     <div className="text-xs text-muted-foreground">
                       {analysis.luckyPeriods.favorableDays.join(', ')}
                     </div>
@@ -565,34 +746,46 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
                     <div className="space-y-2">
                       <h3 className="font-medium text-sm">Curto Prazo</h3>
                       {analysis.recommendations.shortTerm.map((rec, index) => (
-                        <div key={index} className="text-xs p-2 bg-primary/10 rounded">
+                        <div
+                          key={index}
+                          className="text-xs p-2 bg-primary/10 rounded"
+                        >
                           {rec}
                         </div>
                       ))}
                     </div>
-                    
+
                     <div className="space-y-2">
                       <h3 className="font-medium text-sm">Longo Prazo</h3>
                       {analysis.recommendations.longTerm.map((rec, index) => (
-                        <div key={index} className="text-xs p-2 bg-accent/10 rounded">
+                        <div
+                          key={index}
+                          className="text-xs p-2 bg-accent/10 rounded"
+                        >
                           {rec}
                         </div>
                       ))}
                     </div>
-                    
+
                     <div className="space-y-2">
                       <h3 className="font-medium text-sm">Habilidades</h3>
                       {analysis.recommendations.skills.map((skill, index) => (
-                        <div key={index} className="text-xs p-2 bg-secondary/30 rounded">
+                        <div
+                          key={index}
+                          className="text-xs p-2 bg-secondary/30 rounded"
+                        >
                           {skill}
                         </div>
                       ))}
                     </div>
-                    
+
                     <div className="space-y-2">
                       <h3 className="font-medium text-sm">Networking</h3>
                       {analysis.recommendations.networking.map((net, index) => (
-                        <div key={index} className="text-xs p-2 bg-muted/50 rounded">
+                        <div
+                          key={index}
+                          className="text-xs p-2 bg-muted/50 rounded"
+                        >
                           {net}
                         </div>
                       ))}
@@ -602,7 +795,8 @@ export function CareerAstrology({ onSectionClick }: CareerAstrologyProps = {}) {
               </Card>
 
               <div className="lg:col-span-3 text-center text-xs text-muted-foreground">
-                Análise realizada em {analysis.date} • Use estas orientações como guia em sua jornada profissional
+                Análise realizada em {analysis.date} • Use estas orientações
+                como guia em sua jornada profissional
               </div>
 
               {/* Next Steps CTA */}

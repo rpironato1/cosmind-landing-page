@@ -1,11 +1,11 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @layer base {
   * {
     @apply border-border;
   }
-  
+
   body {
     cursor: auto;
   }
@@ -58,17 +58,21 @@
 
 /* Custom Gradients */
 .bg-gradient-cosmic {
-  background: linear-gradient(135deg, 
-    oklch(0.98 0.02 290) 0%, 
-    oklch(0.95 0.05 280) 50%, 
-    oklch(0.92 0.08 270) 100%);
+  background: linear-gradient(
+    135deg,
+    oklch(0.98 0.02 290) 0%,
+    oklch(0.95 0.05 280) 50%,
+    oklch(0.92 0.08 270) 100%
+  );
 }
 
 .bg-gradient-hero {
-  background: linear-gradient(135deg, 
-    oklch(0.35 0.15 280) 0%, 
-    oklch(0.45 0.12 260) 50%, 
-    oklch(0.55 0.10 240) 100%);
+  background: linear-gradient(
+    135deg,
+    oklch(0.35 0.15 280) 0%,
+    oklch(0.45 0.12 260) 50%,
+    oklch(0.55 0.1 240) 100%
+  );
 }
 
 /* Glassmorphism Effects */

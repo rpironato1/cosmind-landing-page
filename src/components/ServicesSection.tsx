@@ -1,6 +1,13 @@
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Brain, Star, Heart, UserCircle, ChartLine, Sparkles } from '@phosphor-icons/react'
+import {
+  Brain,
+  Star,
+  Heart,
+  UserCircle,
+  ChartLine,
+  Sparkles,
+} from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 
 interface ServicesProps {
@@ -8,56 +15,89 @@ interface ServicesProps {
   onSectionClick: (section: string) => void
 }
 
-export function ServicesSection({ onContactClick, onSectionClick }: ServicesProps) {
+export function ServicesSection({
+  onContactClick,
+  onSectionClick,
+}: ServicesProps) {
   const services = [
     {
       icon: Star,
       title: 'Horóscopo Diário',
-      description: 'Previsões personalizadas geradas por IA para cada dia, incluindo orientações sobre amor, trabalho, saúde e finanças.',
-      features: ['Atualizado diariamente', 'Personalização total', 'Insights profundos'],
+      description:
+        'Previsões personalizadas geradas por IA para cada dia, incluindo orientações sobre amor, trabalho, saúde e finanças.',
+      features: [
+        'Atualizado diariamente',
+        'Personalização total',
+        'Insights profundos',
+      ],
       gradient: 'from-primary to-primary/70',
-      section: 'horoscope'
+      section: 'horoscope',
     },
     {
       icon: Heart,
       title: 'Compatibilidade Amorosa',
-      description: 'Análise completa de compatibilidade entre signos com insights detalhados sobre relacionamentos e afinidades cósmicas.',
-      features: ['Análise de sinastria', 'Dicas de relacionamento', 'Previsões românticas'],
+      description:
+        'Análise completa de compatibilidade entre signos com insights detalhados sobre relacionamentos e afinidades cósmicas.',
+      features: [
+        'Análise de sinastria',
+        'Dicas de relacionamento',
+        'Previsões românticas',
+      ],
       gradient: 'from-accent to-accent/70',
-      section: 'compatibility'
+      section: 'compatibility',
     },
     {
       icon: Sparkles,
       title: 'Mapa Astral Completo',
-      description: 'Interpretação detalhada do seu mapa natal com análise de planetas, casas astrológicas e aspectos planetários.',
-      features: ['Mapa personalizado', 'Interpretação profissional', 'Insights de personalidade'],
+      description:
+        'Interpretação detalhada do seu mapa natal com análise de planetas, casas astrológicas e aspectos planetários.',
+      features: [
+        'Mapa personalizado',
+        'Interpretação profissional',
+        'Insights de personalidade',
+      ],
       gradient: 'from-secondary to-primary/50',
-      section: 'horoscope'
+      section: 'horoscope',
     },
     {
       icon: Brain,
       title: 'Consulta com IA Mística',
-      description: 'Converse diretamente com nossa IA especializada em astrologia para tirar dúvidas e receber orientações específicas.',
-      features: ['Chat em tempo real', 'Respostas personalizadas', 'Disponível 24/7'],
+      description:
+        'Converse diretamente com nossa IA especializada em astrologia para tirar dúvidas e receber orientações específicas.',
+      features: [
+        'Chat em tempo real',
+        'Respostas personalizadas',
+        'Disponível 24/7',
+      ],
       gradient: 'from-primary/70 to-accent/70',
-      section: 'chat'
+      section: 'chat',
     },
     {
       icon: ChartLine,
       title: 'Previsões de Carreira',
-      description: 'Orientações astrológicas para decisões profissionais, timing ideal para mudanças e oportunidades de crescimento.',
-      features: ['Timing profissional', 'Orientação de carreira', 'Análise de trânsitos'],
+      description:
+        'Orientações astrológicas para decisões profissionais, timing ideal para mudanças e oportunidades de crescimento.',
+      features: [
+        'Timing profissional',
+        'Orientação de carreira',
+        'Análise de trânsitos',
+      ],
       gradient: 'from-accent/70 to-secondary',
-      section: 'career-astrology'
+      section: 'career-astrology',
     },
     {
       icon: UserCircle,
       title: 'Perfil Cósmico Premium',
-      description: 'Análise completa da sua personalidade astrológica com relatórios detalhados sobre talentos, desafios e potenciais.',
-      features: ['Relatório completo', 'Análise psicológica', 'Guia de desenvolvimento'],
+      description:
+        'Análise completa da sua personalidade astrológica com relatórios detalhados sobre talentos, desafios e potenciais.',
+      features: [
+        'Relatório completo',
+        'Análise psicológica',
+        'Guia de desenvolvimento',
+      ],
       gradient: 'from-primary to-secondary/70',
-      section: 'horoscope'
-    }
+      section: 'horoscope',
+    },
   ]
 
   return (
@@ -79,7 +119,7 @@ export function ServicesSection({ onContactClick, onSectionClick }: ServicesProp
               </span>
             </h2>
             <p className="font-sans text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Uma gama completa de serviços astrológicos premium, powered by IA, 
+              Uma gama completa de serviços astrológicos premium, powered by IA,
               para desvendar os mistérios do cosmos e guiar sua jornada de vida.
             </p>
           </motion.div>
@@ -101,10 +141,12 @@ export function ServicesSection({ onContactClick, onSectionClick }: ServicesProp
                   <Card className="p-8 h-full bg-card/80 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-xl">
                     <div className="space-y-6">
                       {/* Icon */}
-                      <div className={`w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center`}>
+                      <div
+                        className={`w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center`}
+                      >
                         <IconComponent size={32} className="text-white" />
                       </div>
-                      
+
                       {/* Content */}
                       <div className="space-y-4">
                         <h3 className="font-display font-semibold text-2xl text-foreground">
@@ -118,7 +160,10 @@ export function ServicesSection({ onContactClick, onSectionClick }: ServicesProp
                       {/* Features */}
                       <div className="space-y-2">
                         {service.features.map((feature, featureIndex) => (
-                          <div key={featureIndex} className="flex items-center gap-3">
+                          <div
+                            key={featureIndex}
+                            className="flex items-center gap-3"
+                          >
                             <div className="w-2 h-2 bg-gradient-to-r from-primary to-accent rounded-full"></div>
                             <span className="text-sm text-muted-foreground font-medium">
                               {feature}
@@ -128,8 +173,8 @@ export function ServicesSection({ onContactClick, onSectionClick }: ServicesProp
                       </div>
 
                       {/* Action Button */}
-                      <motion.div 
-                        whileHover={{ scale: 1.02 }} 
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="pt-4"
                       >
@@ -162,8 +207,8 @@ export function ServicesSection({ onContactClick, onSectionClick }: ServicesProp
               </span>
             </h3>
             <p className="font-sans text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Nossa IA mística está pronta para revelar os mistérios que as estrelas 
-              guardam sobre seu destino e futuro.
+              Nossa IA mística está pronta para revelar os mistérios que as
+              estrelas guardam sobre seu destino e futuro.
             </p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
               <Button
