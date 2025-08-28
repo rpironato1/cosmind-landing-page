@@ -5,7 +5,7 @@
 **Status**: ✅ **EXCELLENTE SETUP** - Minimal refactoring needed  
 **Current State**: Modern, professional, and production-ready design system  
 **Tailwind Version**: v4.1.11 (Latest)  
-**shadcn/ui**: Fully implemented with 40+ components  
+**shadcn/ui**: Fully implemented with 40+ components
 
 ---
 
@@ -21,6 +21,7 @@
 ```
 
 **Modern Features Implemented:**
+
 - ✅ New `@import 'tailwindcss'` syntax
 - ✅ `@config` directive for configuration
 - ✅ CSS-first approach with `@theme inline`
@@ -45,6 +46,7 @@
 ```
 
 **Components Inventory (40+ components):**
+
 - 🎯 Core: Button, Card, Input, Label, Select
 - 📊 Data: Table, Progress, Chart, Badge
 - 🎨 Layout: Tabs, Accordion, Separator, Resizable
@@ -61,29 +63,34 @@
 ```tsx
 // src/components/ui/button.tsx
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50",
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
-        destructive: "bg-destructive text-white shadow-xs hover:bg-destructive/90",
-        outline: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline"
+        default:
+          'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',
+        destructive:
+          'bg-destructive text-white shadow-xs hover:bg-destructive/90',
+        outline:
+          'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
+        secondary:
+          'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md gap-1.5 px-3",
-        lg: "h-10 rounded-md px-6",
-        icon: "size-9"
-      }
-    }
+        default: 'h-9 px-4 py-2',
+        sm: 'h-8 rounded-md gap-1.5 px-3',
+        lg: 'h-10 rounded-md px-6',
+        icon: 'size-9',
+      },
+    },
   }
 )
 ```
 
 **Standardization Benefits:**
+
 - ✅ **Consistent API**: All components use `className`, `variant`, `size` pattern
 - ✅ **Type Safety**: Full TypeScript integration with `VariantProps`
 - ✅ **Accessibility**: Built-in focus states, ARIA support
@@ -102,12 +109,12 @@ const buttonVariants = cva(
   --secondary: oklch(0.97 0 0);
   --accent: oklch(0.97 0 0);
   --muted: oklch(0.97 0 0);
-  
+
   /* Spacing scale with multiplier */
   --size-scale: 1;
   --size-1: calc(0.25rem * var(--size-scale));
   --size-2: calc(0.5rem * var(--size-scale));
-  
+
   /* Border radius system */
   --radius-factor: 1;
   --radius-sm: calc(2px * var(--radius-factor));
@@ -125,11 +132,7 @@ const buttonVariants = cva(
 // HeroSection.tsx - Using standardized components
 import { Button } from '@/components/ui/button'
 
-<Button 
-  variant="default" 
-  size="lg" 
-  onClick={onCtaClick}
->
+;<Button variant="default" size="lg" onClick={onCtaClick}>
   Gerar Horóscopo <ArrowRight />
 </Button>
 ```
@@ -140,7 +143,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem } from '@/components/ui/select'
 
-<Card>
+;<Card>
   <CardHeader>
     <CardTitle>Gerar Horóscopo Personalizado</CardTitle>
   </CardHeader>
@@ -161,14 +164,14 @@ import { Select, SelectContent, SelectItem } from '@/components/ui/select'
 
 ### ✅ MINIMAL CHANGES NEEDED
 
-| Component | Current State | Action Required |
-|-----------|---------------|-----------------|
-| **Buttons** | ✅ Fully standardized | None |
-| **Forms** | ✅ Consistent implementation | None |
-| **Cards** | ✅ Proper structure | None |
-| **Layout** | ✅ Grid/Flex patterns | None |
-| **Colors** | ✅ CSS custom properties | Optional: Cosmic theme |
-| **Typography** | ✅ Consistent scaling | None |
+| Component      | Current State                | Action Required        |
+| -------------- | ---------------------------- | ---------------------- |
+| **Buttons**    | ✅ Fully standardized        | None                   |
+| **Forms**      | ✅ Consistent implementation | None                   |
+| **Cards**      | ✅ Proper structure          | None                   |
+| **Layout**     | ✅ Grid/Flex patterns        | None                   |
+| **Colors**     | ✅ CSS custom properties     | Optional: Cosmic theme |
+| **Typography** | ✅ Consistent scaling        | None                   |
 
 ### 🎨 Enhancement Opportunities (Optional)
 
@@ -177,11 +180,11 @@ import { Select, SelectContent, SelectItem } from '@/components/ui/select'
 const cosmicButtonVariants = cva(buttonVariants.base, {
   variants: {
     cosmic: {
-      mystical: "bg-gradient-to-r from-purple-600 to-indigo-600",
-      stellar: "bg-gradient-to-r from-blue-500 to-cyan-500",
-      lunar: "bg-gradient-to-r from-slate-600 to-gray-600"
-    }
-  }
+      mystical: 'bg-gradient-to-r from-purple-600 to-indigo-600',
+      stellar: 'bg-gradient-to-r from-blue-500 to-cyan-500',
+      lunar: 'bg-gradient-to-r from-slate-600 to-gray-600',
+    },
+  },
 })
 
 // 2. Astrology-specific composed components
@@ -202,6 +205,7 @@ export function ZodiacCard({ sign, children }) {
 ## 💰 Cost-Benefit Analysis
 
 ### ✅ Current Benefits
+
 - **Development Speed**: 80% faster UI development with pre-built components
 - **Consistency**: 100% consistent design across all interfaces
 - **Maintenance**: Centralized styling reduces bugs by 60%
@@ -209,6 +213,7 @@ export function ZodiacCard({ sign, children }) {
 - **Accessibility**: WCAG 2.1 compliance out of the box
 
 ### 🔄 Refactoring Cost Estimate
+
 - **Time Required**: ~8 hours for cosmic theme enhancements
 - **Risk Level**: Very Low (only additive changes)
 - **Breaking Changes**: None required
@@ -219,28 +224,31 @@ export function ZodiacCard({ sign, children }) {
 ## 🎯 Recommendations
 
 ### 1. **Keep Current System** ✅
+
 - The existing Tailwind v4 + shadcn/ui setup is **production-ready**
 - No major refactoring needed
 - Continue building features on this solid foundation
 
 ### 2. **Optional Enhancements** 🎨
+
 ```tsx
 // Add cosmic color palette
 const cosmicColors = {
   cosmic: {
     50: '#f0f4ff',
     500: '#6366f1',
-    900: '#312e81'
+    900: '#312e81',
   },
   mystical: {
     50: '#faf5ff',
     500: '#a855f7',
-    900: '#581c87'
-  }
+    900: '#581c87',
+  },
 }
 ```
 
 ### 3. **Component Composition** 🔧
+
 - Create higher-level components for common patterns
 - Build astrology-specific variants
 - Maintain the existing component APIs
@@ -250,6 +258,7 @@ const cosmicColors = {
 ## 📋 Implementation Checklist
 
 ### Phase 1: Foundation (Current) ✅
+
 - [x] Tailwind CSS v4 setup
 - [x] shadcn/ui components installed
 - [x] Design token system
@@ -257,6 +266,7 @@ const cosmicColors = {
 - [x] Consistent component APIs
 
 ### Phase 2: Enhancements (Optional)
+
 - [ ] Cosmic color palette
 - [ ] Astrology-themed variants
 - [ ] Composed components for common patterns

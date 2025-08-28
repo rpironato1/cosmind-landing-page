@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Clock, Star, Heart, Trash2, Eye } from '@phosphor-icons/react'
@@ -18,7 +24,8 @@ interface HoroscopeHistoryItem {
 
 export function HoroscopeHistory() {
   const [history, setHistory] = useKV('horoscope-history', [])
-  const [selectedReading, setSelectedReading] = useState<HoroscopeHistoryItem | null>(null)
+  const [selectedReading, setSelectedReading] =
+    useState<HoroscopeHistoryItem | null>(null)
   const [showFullHistory, setShowFullHistory] = useState(false)
 
   const zodiacSigns = [
@@ -33,7 +40,7 @@ export function HoroscopeHistory() {
     { value: 'sagittarius', label: '♐ Sagitário' },
     { value: 'capricorn', label: '♑ Capricórnio' },
     { value: 'aquarius', label: '♒ Aquário' },
-    { value: 'pisces', label: '♓ Peixes' }
+    { value: 'pisces', label: '♓ Peixes' },
   ]
 
   const getSignEmoji = (sign: string) => {
@@ -48,7 +55,7 @@ export function HoroscopeHistory() {
   }
 
   const deleteReading = async (index: number) => {
-    setHistory((currentHistory: HoroscopeHistoryItem[]) => 
+    setHistory((currentHistory: HoroscopeHistoryItem[]) =>
       currentHistory.filter((_, i) => i !== index)
     )
     if (selectedReading) {
@@ -61,7 +68,10 @@ export function HoroscopeHistory() {
 
   if (!history || history.length === 0) {
     return (
-      <section id="history" className="py-16 bg-gradient-to-br from-secondary/10 to-primary/5">
+      <section
+        id="history"
+        className="py-16 bg-gradient-to-br from-secondary/10 to-primary/5"
+      >
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
@@ -75,8 +85,9 @@ export function HoroscopeHistory() {
                 Nenhum Horóscopo Ainda
               </h3>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Você ainda não consultou os astros. Que tal gerar seu primeiro horóscopo personalizado 
-                e começar sua jornada de autoconhecimento cósmico?
+                Você ainda não consultou os astros. Que tal gerar seu primeiro
+                horóscopo personalizado e começar sua jornada de
+                autoconhecimento cósmico?
               </p>
             </motion.div>
           </div>
@@ -103,15 +114,17 @@ export function HoroscopeHistory() {
               </span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Reveja suas consultas astrológicas anteriores e acompanhe sua jornada de autoconhecimento
+              Reveja suas consultas astrológicas anteriores e acompanhe sua
+              jornada de autoconhecimento
             </p>
-            
+
             <div className="flex justify-center gap-4 mt-6">
               <Badge variant="secondary" className="px-4 py-2">
                 <Clock size={16} className="mr-2" />
-                {history.length} consulta{history.length !== 1 ? 's' : ''} realizada{history.length !== 1 ? 's' : ''}
+                {history.length} consulta{history.length !== 1 ? 's' : ''}{' '}
+                realizada{history.length !== 1 ? 's' : ''}
               </Badge>
-              
+
               {history.length > 0 && (
                 <Button
                   onClick={clearHistory}
@@ -129,86 +142,94 @@ export function HoroscopeHistory() {
           <div className="grid lg:grid-cols-2 gap-8">
             {/* History List */}
             <div className="space-y-6">
-              <h3 className="font-display font-semibold text-xl">Consultas Recentes</h3>
-              
+              <h3 className="font-display font-semibold text-xl">
+                Consultas Recentes
+              </h3>
+
               <div className="space-y-4">
                 <AnimatePresence>
-                  {displayedHistory.map((reading: HoroscopeHistoryItem, index: number) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Card 
-                        className={`p-4 cursor-pointer transition-all duration-300 hover:shadow-md ${
-                          selectedReading === reading 
-                            ? 'border-primary bg-primary/5' 
-                            : 'border-border/50 hover:border-primary/30'
-                        }`}
-                        onClick={() => setSelectedReading(reading)}
+                  {displayedHistory.map(
+                    (reading: HoroscopeHistoryItem, index: number) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
                       >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="text-2xl">
-                              {getSignEmoji(reading.sign)}
+                        <Card
+                          className={`p-4 cursor-pointer transition-all duration-300 hover:shadow-md ${
+                            selectedReading === reading
+                              ? 'border-primary bg-primary/5'
+                              : 'border-border/50 hover:border-primary/30'
+                          }`}
+                          onClick={() => setSelectedReading(reading)}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="text-2xl">
+                                {getSignEmoji(reading.sign)}
+                              </div>
+                              <div>
+                                <div className="font-medium text-foreground">
+                                  {reading.date}
+                                </div>
+                                <div className="text-sm text-muted-foreground">
+                                  {reading.mood}
+                                </div>
+                              </div>
                             </div>
-                            <div>
-                              <div className="font-medium text-foreground">
-                                {reading.date}
-                              </div>
-                              <div className="text-sm text-muted-foreground">
-                                {reading.mood}
-                              </div>
+
+                            <div className="flex items-center gap-2">
+                              <Button
+                                onClick={e => {
+                                  e.stopPropagation()
+                                  setSelectedReading(reading)
+                                }}
+                                variant="ghost"
+                                size="sm"
+                              >
+                                <Eye size={16} />
+                              </Button>
+                              <Button
+                                onClick={e => {
+                                  e.stopPropagation()
+                                  deleteReading(index)
+                                }}
+                                variant="ghost"
+                                size="sm"
+                                className="text-destructive hover:bg-destructive/10"
+                              >
+                                <Trash2 size={16} />
+                              </Button>
                             </div>
                           </div>
-                          
-                          <div className="flex items-center gap-2">
-                            <Button
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                setSelectedReading(reading)
-                              }}
-                              variant="ghost"
-                              size="sm"
-                            >
-                              <Eye size={16} />
-                            </Button>
-                            <Button
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                deleteReading(index)
-                              }}
-                              variant="ghost"
-                              size="sm"
-                              className="text-destructive hover:bg-destructive/10"
-                            >
-                              <Trash2 size={16} />
-                            </Button>
-                          </div>
-                        </div>
-                      </Card>
-                    </motion.div>
-                  ))}
+                        </Card>
+                      </motion.div>
+                    )
+                  )}
                 </AnimatePresence>
               </div>
-              
+
               {history.length > 3 && (
                 <Button
                   onClick={() => setShowFullHistory(!showFullHistory)}
                   variant="outline"
                   className="w-full"
                 >
-                  {showFullHistory ? 'Ver Menos' : `Ver Todas (${history.length - 3} mais)`}
+                  {showFullHistory
+                    ? 'Ver Menos'
+                    : `Ver Todas (${history.length - 3} mais)`}
                 </Button>
               )}
             </div>
 
             {/* Selected Reading Details */}
             <div className="space-y-6">
-              <h3 className="font-display font-semibold text-xl">Detalhes da Consulta</h3>
-              
+              <h3 className="font-display font-semibold text-xl">
+                Detalhes da Consulta
+              </h3>
+
               <AnimatePresence mode="wait">
                 {selectedReading ? (
                   <motion.div
@@ -227,7 +248,7 @@ export function HoroscopeHistory() {
                           Consulta de {selectedReading.date}
                         </CardTitle>
                       </CardHeader>
-                      
+
                       <CardContent className="px-0 space-y-6">
                         <div className="prose prose-sm max-w-none">
                           <p className="text-foreground leading-relaxed">
@@ -239,21 +260,33 @@ export function HoroscopeHistory() {
                           <div className="flex items-center gap-3 p-3 bg-secondary/20 rounded-lg">
                             <Heart className="text-primary" size={20} />
                             <div>
-                              <div className="font-medium text-sm">Energia do Dia</div>
-                              <div className="text-muted-foreground text-sm">{selectedReading.mood}</div>
+                              <div className="font-medium text-sm">
+                                Energia do Dia
+                              </div>
+                              <div className="text-muted-foreground text-sm">
+                                {selectedReading.mood}
+                              </div>
                             </div>
                           </div>
 
                           <div className="flex items-center gap-3 p-3 bg-accent/20 rounded-lg">
                             <Star className="text-accent" size={20} />
                             <div>
-                              <div className="font-medium text-sm">Números da Sorte</div>
+                              <div className="font-medium text-sm">
+                                Números da Sorte
+                              </div>
                               <div className="flex gap-2 mt-1">
-                                {selectedReading.lucky_numbers.map((num, index) => (
-                                  <Badge key={index} variant="secondary" className="bg-accent/20">
-                                    {num}
-                                  </Badge>
-                                ))}
+                                {selectedReading.lucky_numbers.map(
+                                  (num, index) => (
+                                    <Badge
+                                      key={index}
+                                      variant="secondary"
+                                      className="bg-accent/20"
+                                    >
+                                      {num}
+                                    </Badge>
+                                  )
+                                )}
                               </div>
                             </div>
                           </div>
@@ -261,8 +294,12 @@ export function HoroscopeHistory() {
                           <div className="flex items-center gap-3 p-3 bg-primary/20 rounded-lg">
                             <Heart className="text-primary" size={20} />
                             <div>
-                              <div className="font-medium text-sm">Compatibilidade</div>
-                              <div className="text-muted-foreground text-sm">{selectedReading.compatibility}</div>
+                              <div className="font-medium text-sm">
+                                Compatibilidade
+                              </div>
+                              <div className="text-muted-foreground text-sm">
+                                {selectedReading.compatibility}
+                              </div>
                             </div>
                           </div>
                         </div>

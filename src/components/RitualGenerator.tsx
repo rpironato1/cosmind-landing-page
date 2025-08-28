@@ -1,13 +1,35 @@
 import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { Flame, Moon, Star, Sparkles, Leaf, Heart, Coins, Loader2, Clock } from '@phosphor-icons/react'
+import {
+  Flame,
+  Moon,
+  Star,
+  Sparkles,
+  Leaf,
+  Heart,
+  Coins,
+  Loader2,
+  Clock,
+} from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
@@ -45,30 +67,102 @@ interface GeneratedRitual {
 }
 
 const ritualTypes = [
-  { value: 'protection', label: '🛡️ Proteção', description: 'Rituais para proteção energética e espiritual' },
-  { value: 'love', label: '💕 Amor', description: 'Atrair amor, fortalecer relacionamentos' },
-  { value: 'prosperity', label: '💰 Prosperidade', description: 'Abundância financeira e profissional' },
-  { value: 'healing', label: '🌿 Cura', description: 'Cura emocional, física e espiritual' },
-  { value: 'wisdom', label: '🧠 Sabedoria', description: 'Clareza mental e intuição' },
-  { value: 'manifestation', label: '✨ Manifestação', description: 'Materializar desejos e objetivos' },
-  { value: 'cleansing', label: '🧹 Limpeza', description: 'Purificação energética de espaços e pessoas' },
-  { value: 'communication', label: '🗣️ Comunicação', description: 'Melhorar relacionamentos e diálogo' },
-  { value: 'creativity', label: '🎨 Criatividade', description: 'Despertar potencial criativo e artístico' },
-  { value: 'strength', label: '💪 Força', description: 'Coragem, determinação e poder pessoal' }
+  {
+    value: 'protection',
+    label: '🛡️ Proteção',
+    description: 'Rituais para proteção energética e espiritual',
+  },
+  {
+    value: 'love',
+    label: '💕 Amor',
+    description: 'Atrair amor, fortalecer relacionamentos',
+  },
+  {
+    value: 'prosperity',
+    label: '💰 Prosperidade',
+    description: 'Abundância financeira e profissional',
+  },
+  {
+    value: 'healing',
+    label: '🌿 Cura',
+    description: 'Cura emocional, física e espiritual',
+  },
+  {
+    value: 'wisdom',
+    label: '🧠 Sabedoria',
+    description: 'Clareza mental e intuição',
+  },
+  {
+    value: 'manifestation',
+    label: '✨ Manifestação',
+    description: 'Materializar desejos e objetivos',
+  },
+  {
+    value: 'cleansing',
+    label: '🧹 Limpeza',
+    description: 'Purificação energética de espaços e pessoas',
+  },
+  {
+    value: 'communication',
+    label: '🗣️ Comunicação',
+    description: 'Melhorar relacionamentos e diálogo',
+  },
+  {
+    value: 'creativity',
+    label: '🎨 Criatividade',
+    description: 'Despertar potencial criativo e artístico',
+  },
+  {
+    value: 'strength',
+    label: '💪 Força',
+    description: 'Coragem, determinação e poder pessoal',
+  },
 ]
 
 const moonPhases = [
-  { value: 'new', label: '🌑 Lua Nova', description: 'Novos começos, intenções, plantio de sementes' },
-  { value: 'waxing', label: '🌒 Lua Crescente', description: 'Crescimento, atração, construção' },
-  { value: 'full', label: '🌕 Lua Cheia', description: 'Manifestação, poder máximo, gratidão' },
-  { value: 'waning', label: '🌘 Lua Minguante', description: 'Liberação, limpeza, banimento' },
-  { value: 'any', label: '🌙 Qualquer Fase', description: 'Ritual adaptável a qualquer momento' }
+  {
+    value: 'new',
+    label: '🌑 Lua Nova',
+    description: 'Novos começos, intenções, plantio de sementes',
+  },
+  {
+    value: 'waxing',
+    label: '🌒 Lua Crescente',
+    description: 'Crescimento, atração, construção',
+  },
+  {
+    value: 'full',
+    label: '🌕 Lua Cheia',
+    description: 'Manifestação, poder máximo, gratidão',
+  },
+  {
+    value: 'waning',
+    label: '🌘 Lua Minguante',
+    description: 'Liberação, limpeza, banimento',
+  },
+  {
+    value: 'any',
+    label: '🌙 Qualquer Fase',
+    description: 'Ritual adaptável a qualquer momento',
+  },
 ]
 
 const experience = [
-  { value: 'beginner', label: 'Iniciante', description: 'Primeiro contato com rituais' },
-  { value: 'intermediate', label: 'Intermediário', description: 'Já fiz alguns rituais' },
-  { value: 'advanced', label: 'Avançado', description: 'Praticante experiente' }
+  {
+    value: 'beginner',
+    label: 'Iniciante',
+    description: 'Primeiro contato com rituais',
+  },
+  {
+    value: 'intermediate',
+    label: 'Intermediário',
+    description: 'Já fiz alguns rituais',
+  },
+  {
+    value: 'advanced',
+    label: 'Avançado',
+    description: 'Praticante experiente',
+  },
 ]
 
 interface RitualGeneratorProps {
@@ -82,7 +176,8 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
   const [specificIntention, setSpecificIntention] = useState<string>('')
   const [availableTime, setAvailableTime] = useState<string>('')
   const [isGenerating, setIsGenerating] = useState(false)
-  const [generatedRitual, setGeneratedRitual] = useState<GeneratedRitual | null>(null)
+  const [generatedRitual, setGeneratedRitual] =
+    useState<GeneratedRitual | null>(null)
   const [tokens, setTokens] = useKV('user-tokens', 5)
 
   const generateRitual = async () => {
@@ -92,7 +187,9 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
     }
 
     if (tokens < 2) {
-      toast.error('Você precisa de pelo menos 2 tokens para gerar um ritual personalizado')
+      toast.error(
+        'Você precisa de pelo menos 2 tokens para gerar um ritual personalizado'
+      )
       return
     }
 
@@ -158,7 +255,7 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
         crystals: aiRitual.crystals,
         herbs: aiRitual.herbs,
         colors: aiRitual.colors,
-        date: new Date().toLocaleDateString('pt-BR')
+        date: new Date().toLocaleDateString('pt-BR'),
       }
 
       setGeneratedRitual(newRitual)
@@ -166,9 +263,8 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
       toast.success('Ritual personalizado criado com sucesso! ✨')
 
       // Save to history
-      const history = await spark.kv.get('ritual-history') || []
+      const history = (await spark.kv.get('ritual-history')) || []
       await spark.kv.set('ritual-history', [...history, newRitual])
-
     } catch (error) {
       console.error('Error generating ritual:', error)
       toast.error('Erro ao gerar ritual. Tente novamente.')
@@ -179,24 +275,35 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'iniciante': return 'text-green-600 bg-green-50'
-      case 'intermediário': return 'text-yellow-600 bg-yellow-50'
-      case 'avançado': return 'text-red-600 bg-red-50'
-      default: return 'text-gray-600 bg-gray-50'
+      case 'iniciante':
+        return 'text-green-600 bg-green-50'
+      case 'intermediário':
+        return 'text-yellow-600 bg-yellow-50'
+      case 'avançado':
+        return 'text-red-600 bg-red-50'
+      default:
+        return 'text-gray-600 bg-gray-50'
     }
   }
 
   const getDifficultyIcon = (difficulty: string) => {
     switch (difficulty) {
-      case 'iniciante': return '🌱'
-      case 'intermediário': return '🌿'
-      case 'avançado': return '🌳'
-      default: return '⭐'
+      case 'iniciante':
+        return '🌱'
+      case 'intermediário':
+        return '🌿'
+      case 'avançado':
+        return '🌳'
+      default:
+        return '⭐'
     }
   }
 
   return (
-    <section id="ritual-generator" className="py-24 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/10">
+    <section
+      id="ritual-generator"
+      className="py-24 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/10"
+    >
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -214,16 +321,19 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
               </span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Crie rituais personalizados com base em suas necessidades específicas, fase lunar e nível de experiência
+              Crie rituais personalizados com base em suas necessidades
+              específicas, fase lunar e nível de experiência
             </p>
-            
+
             {/* Token Info */}
-            <motion.div 
+            <motion.div
               className="flex items-center justify-center gap-3 mt-6 glass p-3 rounded-xl w-fit mx-auto"
               whileHover={{ scale: 1.05 }}
             >
               <Coins size={20} className="text-accent" />
-              <span className="font-medium">{tokens} tokens • Ritual custa 2 tokens</span>
+              <span className="font-medium">
+                {tokens} tokens • Ritual custa 2 tokens
+              </span>
             </motion.div>
           </motion.div>
 
@@ -236,7 +346,8 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                   Configuração do Ritual
                 </CardTitle>
                 <CardDescription>
-                  Defina os parâmetros para criar seu ritual místico personalizado
+                  Defina os parâmetros para criar seu ritual místico
+                  personalizado
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -247,11 +358,13 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                       <SelectValue placeholder="Selecione o tipo de ritual" />
                     </SelectTrigger>
                     <SelectContent>
-                      {ritualTypes.map((type) => (
+                      {ritualTypes.map(type => (
                         <SelectItem key={type.value} value={type.value}>
                           <div className="flex flex-col">
                             <span>{type.label}</span>
-                            <span className="text-xs text-muted-foreground">{type.description}</span>
+                            <span className="text-xs text-muted-foreground">
+                              {type.description}
+                            </span>
                           </div>
                         </SelectItem>
                       ))}
@@ -266,11 +379,13 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                       <SelectValue placeholder="Selecione a fase lunar" />
                     </SelectTrigger>
                     <SelectContent>
-                      {moonPhases.map((phase) => (
+                      {moonPhases.map(phase => (
                         <SelectItem key={phase.value} value={phase.value}>
                           <div className="flex flex-col">
                             <span>{phase.label}</span>
-                            <span className="text-xs text-muted-foreground">{phase.description}</span>
+                            <span className="text-xs text-muted-foreground">
+                              {phase.description}
+                            </span>
                           </div>
                         </SelectItem>
                       ))}
@@ -280,16 +395,21 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
 
                 <div className="space-y-2">
                   <Label htmlFor="experience">Nível de Experiência *</Label>
-                  <Select value={userExperience} onValueChange={setUserExperience}>
+                  <Select
+                    value={userExperience}
+                    onValueChange={setUserExperience}
+                  >
                     <SelectTrigger className="bg-background/50">
                       <SelectValue placeholder="Seu nível de experiência" />
                     </SelectTrigger>
                     <SelectContent>
-                      {experience.map((exp) => (
+                      {experience.map(exp => (
                         <SelectItem key={exp.value} value={exp.value}>
                           <div className="flex flex-col">
                             <span>{exp.label}</span>
-                            <span className="text-xs text-muted-foreground">{exp.description}</span>
+                            <span className="text-xs text-muted-foreground">
+                              {exp.description}
+                            </span>
                           </div>
                         </SelectItem>
                       ))}
@@ -298,11 +418,13 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="intention">Intenção Específica (opcional)</Label>
+                  <Label htmlFor="intention">
+                    Intenção Específica (opcional)
+                  </Label>
                   <Textarea
                     id="intention"
                     value={specificIntention}
-                    onChange={(e) => setSpecificIntention(e.target.value)}
+                    onChange={e => setSpecificIntention(e.target.value)}
                     placeholder="Descreva sua intenção específica para este ritual..."
                     className="bg-background/50 min-h-[80px]"
                   />
@@ -313,15 +435,21 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                   <Input
                     id="time"
                     value={availableTime}
-                    onChange={(e) => setAvailableTime(e.target.value)}
+                    onChange={e => setAvailableTime(e.target.value)}
                     placeholder="Ex: 30 minutos, 1 hora, flexível"
                     className="bg-background/50"
                   />
                 </div>
 
-                <Button 
+                <Button
                   onClick={generateRitual}
-                  disabled={isGenerating || !ritualType || !moonPhase || !userExperience || tokens < 2}
+                  disabled={
+                    isGenerating ||
+                    !ritualType ||
+                    !moonPhase ||
+                    !userExperience ||
+                    tokens < 2
+                  }
                   className="w-full bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all duration-300"
                   size="lg"
                 >
@@ -362,8 +490,13 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                         {generatedRitual.purpose}
                       </CardDescription>
                       <div className="flex justify-center gap-2 mt-4">
-                        <Badge className={getDifficultyColor(generatedRitual.difficulty)}>
-                          {getDifficultyIcon(generatedRitual.difficulty)} {generatedRitual.difficulty}
+                        <Badge
+                          className={getDifficultyColor(
+                            generatedRitual.difficulty
+                          )}
+                        >
+                          {getDifficultyIcon(generatedRitual.difficulty)}{' '}
+                          {generatedRitual.difficulty}
                         </Badge>
                         <Badge variant="outline">
                           <Clock size={12} className="mr-1" />
@@ -379,41 +512,67 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                   {/* Quick Info */}
                   <Card className="glass border-primary/20">
                     <CardHeader>
-                      <CardTitle className="text-lg">Informações Rápidas</CardTitle>
+                      <CardTitle className="text-lg">
+                        Informações Rápidas
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
-                          <span className="text-muted-foreground">Melhor Horário:</span>
-                          <div className="font-medium">{generatedRitual.bestTime}</div>
+                          <span className="text-muted-foreground">
+                            Melhor Horário:
+                          </span>
+                          <div className="font-medium">
+                            {generatedRitual.bestTime}
+                          </div>
                         </div>
                         <div>
-                          <span className="text-muted-foreground">Duração:</span>
-                          <div className="font-medium">{generatedRitual.duration}</div>
+                          <span className="text-muted-foreground">
+                            Duração:
+                          </span>
+                          <div className="font-medium">
+                            {generatedRitual.duration}
+                          </div>
                         </div>
                       </div>
-                      
+
                       <Separator />
-                      
+
                       <div>
-                        <span className="text-muted-foreground text-sm">Cristais:</span>
+                        <span className="text-muted-foreground text-sm">
+                          Cristais:
+                        </span>
                         <div className="flex flex-wrap gap-1 mt-1">
-                          {generatedRitual.crystals.slice(0, 3).map((crystal, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
-                              💎 {crystal}
-                            </Badge>
-                          ))}
+                          {generatedRitual.crystals
+                            .slice(0, 3)
+                            .map((crystal, index) => (
+                              <Badge
+                                key={index}
+                                variant="secondary"
+                                className="text-xs"
+                              >
+                                💎 {crystal}
+                              </Badge>
+                            ))}
                         </div>
                       </div>
-                      
+
                       <div>
-                        <span className="text-muted-foreground text-sm">Ervas:</span>
+                        <span className="text-muted-foreground text-sm">
+                          Ervas:
+                        </span>
                         <div className="flex flex-wrap gap-1 mt-1">
-                          {generatedRitual.herbs.slice(0, 3).map((herb, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
-                              🌿 {herb}
-                            </Badge>
-                          ))}
+                          {generatedRitual.herbs
+                            .slice(0, 3)
+                            .map((herb, index) => (
+                              <Badge
+                                key={index}
+                                variant="secondary"
+                                className="text-xs"
+                              >
+                                🌿 {herb}
+                              </Badge>
+                            ))}
                         </div>
                       </div>
                     </CardContent>
@@ -429,15 +588,21 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                     </CardHeader>
                     <CardContent>
                       <div className="grid grid-cols-1 gap-2">
-                        {generatedRitual.materials.slice(0, 5).map((material, index) => (
-                          <div key={index} className="flex items-center gap-2 text-sm">
-                            <div className="w-2 h-2 bg-accent rounded-full"></div>
-                            <span>{material}</span>
-                          </div>
-                        ))}
+                        {generatedRitual.materials
+                          .slice(0, 5)
+                          .map((material, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center gap-2 text-sm"
+                            >
+                              <div className="w-2 h-2 bg-accent rounded-full"></div>
+                              <span>{material}</span>
+                            </div>
+                          ))}
                         {generatedRitual.materials.length > 5 && (
                           <div className="text-sm text-muted-foreground">
-                            + {generatedRitual.materials.length - 5} materiais adicionais
+                            + {generatedRitual.materials.length - 5} materiais
+                            adicionais
                           </div>
                         )}
                       </div>
@@ -455,7 +620,8 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                   <div className="text-center space-y-4">
                     <div className="text-6xl">🔮</div>
                     <p className="text-muted-foreground max-w-xs">
-                      Configure os parâmetros para gerar seu ritual místico personalizado
+                      Configure os parâmetros para gerar seu ritual místico
+                      personalizado
                     </p>
                   </div>
                 </motion.div>
@@ -480,7 +646,9 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="leading-relaxed">{generatedRitual.preparation}</p>
+                  <p className="leading-relaxed">
+                    {generatedRitual.preparation}
+                  </p>
                 </CardContent>
               </Card>
 
@@ -541,7 +709,9 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="leading-relaxed text-sm">{generatedRitual.closing}</p>
+                    <p className="leading-relaxed text-sm">
+                      {generatedRitual.closing}
+                    </p>
                   </CardContent>
                 </Card>
 
@@ -554,7 +724,10 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                   </CardHeader>
                   <CardContent className="space-y-2">
                     {generatedRitual.aftercare.map((care, index) => (
-                      <div key={index} className="flex items-start gap-2 text-sm">
+                      <div
+                        key={index}
+                        className="flex items-start gap-2 text-sm"
+                      >
                         <div className="text-accent mt-1">•</div>
                         <span>{care}</span>
                       </div>
@@ -590,7 +763,10 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
                   </CardHeader>
                   <CardContent className="space-y-2">
                     {generatedRitual.warnings.map((warning, index) => (
-                      <div key={index} className="flex items-start gap-2 text-sm">
+                      <div
+                        key={index}
+                        className="flex items-start gap-2 text-sm"
+                      >
                         <div className="text-yellow-600 mt-1">⚠️</div>
                         <span>{warning}</span>
                       </div>
@@ -600,7 +776,8 @@ export function RitualGenerator({ onSectionClick }: RitualGeneratorProps = {}) {
               </div>
 
               <div className="text-center text-xs text-muted-foreground">
-                Ritual criado em {generatedRitual.date} • Use com respeito e intenção positiva
+                Ritual criado em {generatedRitual.date} • Use com respeito e
+                intenção positiva
               </div>
 
               {/* Next Steps CTA */}

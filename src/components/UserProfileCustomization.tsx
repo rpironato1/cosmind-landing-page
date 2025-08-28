@@ -1,13 +1,34 @@
 import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { UserCircle, Star, Heart, Brain, MapPin, Calendar, Clock, Sparkles } from '@phosphor-icons/react'
+import {
+  UserCircle,
+  Star,
+  Heart,
+  Brain,
+  MapPin,
+  Calendar,
+  Clock,
+  Sparkles,
+} from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
@@ -49,18 +70,18 @@ export function UserProfileCustomization() {
       birthDate: '',
       birthTime: '',
       birthPlace: '',
-      zodiacSign: ''
+      zodiacSign: '',
     },
     preferences: {
       favoriteTopics: [],
       consultationStyle: 'mystical',
       language: 'pt',
-      notifications: true
+      notifications: true,
     },
     astrologyInterests: {
       primaryFocus: [],
       experienceLevel: 'beginner',
-      favoriteAspects: []
+      favoriteAspects: [],
     },
     cosmicProfile: {
       moonSign: '',
@@ -68,31 +89,61 @@ export function UserProfileCustomization() {
       venusSign: '',
       marsSign: '',
       dominantElement: '',
-      personalityTraits: []
-    }
+      personalityTraits: [],
+    },
   })
   const [isGeneratingProfile, setIsGeneratingProfile] = useState(false)
   const [activeTab, setActiveTab] = useState('personal')
 
   const zodiacSigns = [
-    'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-    'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'
+    'aries',
+    'taurus',
+    'gemini',
+    'cancer',
+    'leo',
+    'virgo',
+    'libra',
+    'scorpio',
+    'sagittarius',
+    'capricorn',
+    'aquarius',
+    'pisces',
   ]
 
   const astrologyTopics = [
-    'Horóscopo Diário', 'Compatibilidade Amorosa', 'Carreira & Finanças',
-    'Mapa Astral', 'Trânsitos Planetários', 'Numerologia',
-    'Tarô', 'Chakras & Energia', 'Meditação Cósmica'
+    'Horóscopo Diário',
+    'Compatibilidade Amorosa',
+    'Carreira & Finanças',
+    'Mapa Astral',
+    'Trânsitos Planetários',
+    'Numerologia',
+    'Tarô',
+    'Chakras & Energia',
+    'Meditação Cósmica',
   ]
 
   const astrologyAspects = [
-    'Conjunção', 'Oposição', 'Trígono', 'Quadratura', 'Sextil',
-    'Quincúncio', 'Semi-sextil', 'Semi-quadratura'
+    'Conjunção',
+    'Oposição',
+    'Trígono',
+    'Quadratura',
+    'Sextil',
+    'Quincúncio',
+    'Semi-sextil',
+    'Semi-quadratura',
   ]
 
   const personalityTraits = [
-    'Intuitivo', 'Analítico', 'Criativo', 'Prático', 'Espiritual',
-    'Ambicioso', 'Empático', 'Independente', 'Comunicativo', 'Reservado'
+    'Intuitivo',
+    'Analítico',
+    'Criativo',
+    'Prático',
+    'Espiritual',
+    'Ambicioso',
+    'Empático',
+    'Independente',
+    'Comunicativo',
+    'Reservado',
   ]
 
   const generateCosmicProfile = async () => {
@@ -129,12 +180,11 @@ export function UserProfileCustomization() {
         ...current,
         cosmicProfile: {
           ...current.cosmicProfile,
-          ...cosmicData
-        }
+          ...cosmicData,
+        },
       }))
 
       toast.success('Perfil cósmico gerado com sucesso! ✨')
-
     } catch (error) {
       console.error('Error generating cosmic profile:', error)
       toast.error('Erro ao gerar perfil cósmico. Tente novamente.')
@@ -143,29 +193,37 @@ export function UserProfileCustomization() {
     }
   }
 
-  const updateProfile = (section: keyof UserProfile, field: string, value: any) => {
+  const updateProfile = (
+    section: keyof UserProfile,
+    field: string,
+    value: any
+  ) => {
     setProfile((current: UserProfile) => ({
       ...current,
       [section]: {
         ...current[section],
-        [field]: value
-      }
+        [field]: value,
+      },
     }))
   }
 
-  const toggleArrayItem = (section: keyof UserProfile, field: string, item: string) => {
+  const toggleArrayItem = (
+    section: keyof UserProfile,
+    field: string,
+    item: string
+  ) => {
     setProfile((current: UserProfile) => {
       const currentArray = (current[section] as any)[field] || []
       const newArray = currentArray.includes(item)
         ? currentArray.filter((i: string) => i !== item)
         : [...currentArray, item]
-      
+
       return {
         ...current,
         [section]: {
           ...current[section],
-          [field]: newArray
-        }
+          [field]: newArray,
+        },
       }
     })
   }
@@ -179,7 +237,7 @@ export function UserProfileCustomization() {
     { id: 'personal', label: 'Pessoal', icon: UserCircle },
     { id: 'preferences', label: 'Preferências', icon: Heart },
     { id: 'interests', label: 'Interesses', icon: Star },
-    { id: 'cosmic', label: 'Perfil Cósmico', icon: Sparkles }
+    { id: 'cosmic', label: 'Perfil Cósmico', icon: Sparkles },
   ]
 
   return (
@@ -212,7 +270,7 @@ export function UserProfileCustomization() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               className="w-full max-w-4xl max-h-[90vh] overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
+              onClick={e => e.stopPropagation()}
             >
               <Card className="h-full glass border-primary/20">
                 <CardHeader>
@@ -221,7 +279,8 @@ export function UserProfileCustomization() {
                     Perfil Cósmico Personalizado
                   </CardTitle>
                   <CardDescription>
-                    Configure suas informações para consultas mais precisas e personalizadas
+                    Configure suas informações para consultas mais precisas e
+                    personalizadas
                   </CardDescription>
                 </CardHeader>
 
@@ -230,12 +289,14 @@ export function UserProfileCustomization() {
                     {/* Tabs */}
                     <div className="lg:w-64 p-6 border-r border-border/50">
                       <div className="space-y-2">
-                        {tabs.map((tab) => {
+                        {tabs.map(tab => {
                           const IconComponent = tab.icon
                           return (
                             <Button
                               key={tab.id}
-                              variant={activeTab === tab.id ? "default" : "ghost"}
+                              variant={
+                                activeTab === tab.id ? 'default' : 'ghost'
+                              }
                               className="w-full justify-start"
                               onClick={() => setActiveTab(tab.id)}
                             >
@@ -258,36 +319,60 @@ export function UserProfileCustomization() {
                             exit={{ opacity: 0, x: -20 }}
                             className="space-y-6"
                           >
-                            <h3 className="font-display text-xl mb-4">Informações Pessoais</h3>
-                            
+                            <h3 className="font-display text-xl mb-4">
+                              Informações Pessoais
+                            </h3>
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div className="space-y-2">
                                 <Label htmlFor="name">Nome Completo</Label>
                                 <Input
                                   id="name"
                                   value={profile.personalInfo.name}
-                                  onChange={(e) => updateProfile('personalInfo', 'name', e.target.value)}
+                                  onChange={e =>
+                                    updateProfile(
+                                      'personalInfo',
+                                      'name',
+                                      e.target.value
+                                    )
+                                  }
                                   placeholder="Seu nome"
                                 />
                               </div>
 
                               <div className="space-y-2">
-                                <Label htmlFor="birthDate">Data de Nascimento</Label>
+                                <Label htmlFor="birthDate">
+                                  Data de Nascimento
+                                </Label>
                                 <Input
                                   id="birthDate"
                                   type="date"
                                   value={profile.personalInfo.birthDate}
-                                  onChange={(e) => updateProfile('personalInfo', 'birthDate', e.target.value)}
+                                  onChange={e =>
+                                    updateProfile(
+                                      'personalInfo',
+                                      'birthDate',
+                                      e.target.value
+                                    )
+                                  }
                                 />
                               </div>
 
                               <div className="space-y-2">
-                                <Label htmlFor="birthTime">Horário de Nascimento</Label>
+                                <Label htmlFor="birthTime">
+                                  Horário de Nascimento
+                                </Label>
                                 <Input
                                   id="birthTime"
                                   type="time"
                                   value={profile.personalInfo.birthTime}
-                                  onChange={(e) => updateProfile('personalInfo', 'birthTime', e.target.value)}
+                                  onChange={e =>
+                                    updateProfile(
+                                      'personalInfo',
+                                      'birthTime',
+                                      e.target.value
+                                    )
+                                  }
                                 />
                               </div>
 
@@ -295,15 +380,22 @@ export function UserProfileCustomization() {
                                 <Label htmlFor="zodiacSign">Signo Solar</Label>
                                 <Select
                                   value={profile.personalInfo.zodiacSign}
-                                  onValueChange={(value) => updateProfile('personalInfo', 'zodiacSign', value)}
+                                  onValueChange={value =>
+                                    updateProfile(
+                                      'personalInfo',
+                                      'zodiacSign',
+                                      value
+                                    )
+                                  }
                                 >
                                   <SelectTrigger>
                                     <SelectValue placeholder="Selecione seu signo" />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    {zodiacSigns.map((sign) => (
+                                    {zodiacSigns.map(sign => (
                                       <SelectItem key={sign} value={sign}>
-                                        {sign.charAt(0).toUpperCase() + sign.slice(1)}
+                                        {sign.charAt(0).toUpperCase() +
+                                          sign.slice(1)}
                                       </SelectItem>
                                     ))}
                                   </SelectContent>
@@ -312,11 +404,19 @@ export function UserProfileCustomization() {
                             </div>
 
                             <div className="space-y-2">
-                              <Label htmlFor="birthPlace">Local de Nascimento</Label>
+                              <Label htmlFor="birthPlace">
+                                Local de Nascimento
+                              </Label>
                               <Input
                                 id="birthPlace"
                                 value={profile.personalInfo.birthPlace}
-                                onChange={(e) => updateProfile('personalInfo', 'birthPlace', e.target.value)}
+                                onChange={e =>
+                                  updateProfile(
+                                    'personalInfo',
+                                    'birthPlace',
+                                    e.target.value
+                                  )
+                                }
                                 placeholder="Cidade, Estado, País"
                               />
                             </div>
@@ -331,18 +431,32 @@ export function UserProfileCustomization() {
                             exit={{ opacity: 0, x: -20 }}
                             className="space-y-6"
                           >
-                            <h3 className="font-display text-xl mb-4">Preferências de Consulta</h3>
-                            
+                            <h3 className="font-display text-xl mb-4">
+                              Preferências de Consulta
+                            </h3>
+
                             <div className="space-y-6">
                               <div className="space-y-3">
                                 <Label>Tópicos de Interesse</Label>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                                  {astrologyTopics.map((topic) => (
+                                  {astrologyTopics.map(topic => (
                                     <Badge
                                       key={topic}
-                                      variant={profile.preferences.favoriteTopics.includes(topic) ? "default" : "outline"}
+                                      variant={
+                                        profile.preferences.favoriteTopics.includes(
+                                          topic
+                                        )
+                                          ? 'default'
+                                          : 'outline'
+                                      }
                                       className="cursor-pointer justify-center p-2"
-                                      onClick={() => toggleArrayItem('preferences', 'favoriteTopics', topic)}
+                                      onClick={() =>
+                                        toggleArrayItem(
+                                          'preferences',
+                                          'favoriteTopics',
+                                          topic
+                                        )
+                                      }
                                     >
                                       {topic}
                                     </Badge>
@@ -354,16 +468,30 @@ export function UserProfileCustomization() {
                                 <Label>Estilo de Consulta</Label>
                                 <Select
                                   value={profile.preferences.consultationStyle}
-                                  onValueChange={(value) => updateProfile('preferences', 'consultationStyle', value)}
+                                  onValueChange={value =>
+                                    updateProfile(
+                                      'preferences',
+                                      'consultationStyle',
+                                      value
+                                    )
+                                  }
                                 >
                                   <SelectTrigger>
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    <SelectItem value="mystical">Místico e Espiritual</SelectItem>
-                                    <SelectItem value="practical">Prático e Objetivo</SelectItem>
-                                    <SelectItem value="detailed">Detalhado e Profundo</SelectItem>
-                                    <SelectItem value="brief">Breve e Direto</SelectItem>
+                                    <SelectItem value="mystical">
+                                      Místico e Espiritual
+                                    </SelectItem>
+                                    <SelectItem value="practical">
+                                      Prático e Objetivo
+                                    </SelectItem>
+                                    <SelectItem value="detailed">
+                                      Detalhado e Profundo
+                                    </SelectItem>
+                                    <SelectItem value="brief">
+                                      Breve e Direto
+                                    </SelectItem>
                                   </SelectContent>
                                 </Select>
                               </div>
@@ -379,22 +507,38 @@ export function UserProfileCustomization() {
                             exit={{ opacity: 0, x: -20 }}
                             className="space-y-6"
                           >
-                            <h3 className="font-display text-xl mb-4">Interesses Astrológicos</h3>
-                            
+                            <h3 className="font-display text-xl mb-4">
+                              Interesses Astrológicos
+                            </h3>
+
                             <div className="space-y-6">
                               <div className="space-y-2">
                                 <Label>Nível de Experiência</Label>
                                 <Select
-                                  value={profile.astrologyInterests.experienceLevel}
-                                  onValueChange={(value) => updateProfile('astrologyInterests', 'experienceLevel', value)}
+                                  value={
+                                    profile.astrologyInterests.experienceLevel
+                                  }
+                                  onValueChange={value =>
+                                    updateProfile(
+                                      'astrologyInterests',
+                                      'experienceLevel',
+                                      value
+                                    )
+                                  }
                                 >
                                   <SelectTrigger>
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    <SelectItem value="beginner">Iniciante</SelectItem>
-                                    <SelectItem value="intermediate">Intermediário</SelectItem>
-                                    <SelectItem value="advanced">Avançado</SelectItem>
+                                    <SelectItem value="beginner">
+                                      Iniciante
+                                    </SelectItem>
+                                    <SelectItem value="intermediate">
+                                      Intermediário
+                                    </SelectItem>
+                                    <SelectItem value="advanced">
+                                      Avançado
+                                    </SelectItem>
                                   </SelectContent>
                                 </Select>
                               </div>
@@ -402,12 +546,24 @@ export function UserProfileCustomization() {
                               <div className="space-y-3">
                                 <Label>Aspectos Astrológicos Favoritos</Label>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                                  {astrologyAspects.map((aspect) => (
+                                  {astrologyAspects.map(aspect => (
                                     <Badge
                                       key={aspect}
-                                      variant={profile.astrologyInterests.favoriteAspects.includes(aspect) ? "default" : "outline"}
+                                      variant={
+                                        profile.astrologyInterests.favoriteAspects.includes(
+                                          aspect
+                                        )
+                                          ? 'default'
+                                          : 'outline'
+                                      }
                                       className="cursor-pointer justify-center p-2"
-                                      onClick={() => toggleArrayItem('astrologyInterests', 'favoriteAspects', aspect)}
+                                      onClick={() =>
+                                        toggleArrayItem(
+                                          'astrologyInterests',
+                                          'favoriteAspects',
+                                          aspect
+                                        )
+                                      }
                                     >
                                       {aspect}
                                     </Badge>
@@ -427,7 +583,9 @@ export function UserProfileCustomization() {
                             className="space-y-6"
                           >
                             <div className="flex items-center justify-between">
-                              <h3 className="font-display text-xl">Perfil Cósmico Avançado</h3>
+                              <h3 className="font-display text-xl">
+                                Perfil Cósmico Avançado
+                              </h3>
                               <Button
                                 onClick={generateCosmicProfile}
                                 disabled={isGeneratingProfile}
@@ -438,7 +596,11 @@ export function UserProfileCustomization() {
                                   <>
                                     <motion.div
                                       animate={{ rotate: 360 }}
-                                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                                      transition={{
+                                        duration: 1,
+                                        repeat: Infinity,
+                                        ease: 'linear',
+                                      }}
                                       className="mr-2"
                                     >
                                       <Sparkles size={16} />
@@ -453,21 +615,28 @@ export function UserProfileCustomization() {
                                 )}
                               </Button>
                             </div>
-                            
+
                             <div className="grid grid-cols-2 gap-4">
                               <div className="space-y-2">
                                 <Label>Signo Lunar</Label>
                                 <Select
                                   value={profile.cosmicProfile.moonSign}
-                                  onValueChange={(value) => updateProfile('cosmicProfile', 'moonSign', value)}
+                                  onValueChange={value =>
+                                    updateProfile(
+                                      'cosmicProfile',
+                                      'moonSign',
+                                      value
+                                    )
+                                  }
                                 >
                                   <SelectTrigger>
                                     <SelectValue placeholder="Selecione" />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    {zodiacSigns.map((sign) => (
+                                    {zodiacSigns.map(sign => (
                                       <SelectItem key={sign} value={sign}>
-                                        {sign.charAt(0).toUpperCase() + sign.slice(1)}
+                                        {sign.charAt(0).toUpperCase() +
+                                          sign.slice(1)}
                                       </SelectItem>
                                     ))}
                                   </SelectContent>
@@ -478,15 +647,22 @@ export function UserProfileCustomization() {
                                 <Label>Ascendente</Label>
                                 <Select
                                   value={profile.cosmicProfile.risingSign}
-                                  onValueChange={(value) => updateProfile('cosmicProfile', 'risingSign', value)}
+                                  onValueChange={value =>
+                                    updateProfile(
+                                      'cosmicProfile',
+                                      'risingSign',
+                                      value
+                                    )
+                                  }
                                 >
                                   <SelectTrigger>
                                     <SelectValue placeholder="Selecione" />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    {zodiacSigns.map((sign) => (
+                                    {zodiacSigns.map(sign => (
                                       <SelectItem key={sign} value={sign}>
-                                        {sign.charAt(0).toUpperCase() + sign.slice(1)}
+                                        {sign.charAt(0).toUpperCase() +
+                                          sign.slice(1)}
                                       </SelectItem>
                                     ))}
                                   </SelectContent>
@@ -497,12 +673,24 @@ export function UserProfileCustomization() {
                             <div className="space-y-3">
                               <Label>Traços de Personalidade</Label>
                               <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                                {personalityTraits.map((trait) => (
+                                {personalityTraits.map(trait => (
                                   <Badge
                                     key={trait}
-                                    variant={profile.cosmicProfile.personalityTraits.includes(trait) ? "default" : "outline"}
+                                    variant={
+                                      profile.cosmicProfile.personalityTraits.includes(
+                                        trait
+                                      )
+                                        ? 'default'
+                                        : 'outline'
+                                    }
                                     className="cursor-pointer justify-center p-2"
-                                    onClick={() => toggleArrayItem('cosmicProfile', 'personalityTraits', trait)}
+                                    onClick={() =>
+                                      toggleArrayItem(
+                                        'cosmicProfile',
+                                        'personalityTraits',
+                                        trait
+                                      )
+                                    }
                                   >
                                     {trait}
                                   </Badge>
@@ -516,12 +704,15 @@ export function UserProfileCustomization() {
                   </div>
 
                   <Separator />
-                  
+
                   <div className="p-6 flex justify-between">
                     <Button variant="outline" onClick={() => setIsOpen(false)}>
                       Cancelar
                     </Button>
-                    <Button onClick={saveProfile} className="bg-gradient-to-r from-primary to-accent">
+                    <Button
+                      onClick={saveProfile}
+                      className="bg-gradient-to-r from-primary to-accent"
+                    >
                       <UserCircle size={16} className="mr-2" />
                       Salvar Perfil
                     </Button>

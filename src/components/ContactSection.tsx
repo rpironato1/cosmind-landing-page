@@ -4,7 +4,12 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { Phone, EnvelopeSimple, MapPin, PaperPlaneTilt } from '@phosphor-icons/react'
+import {
+  Phone,
+  EnvelopeSimple,
+  MapPin,
+  PaperPlaneTilt,
+} from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import { useKV } from '@github/spark/hooks'
@@ -27,7 +32,7 @@ export function ContactSection({ onSectionClick }: ContactSectionProps = {}) {
     email: '',
     phone: '',
     service: '',
-    message: ''
+    message: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [contacts, setContacts] = useKV('cosmind-contacts', [])
@@ -37,20 +42,20 @@ export function ContactSection({ onSectionClick }: ContactSectionProps = {}) {
       icon: Phone,
       title: 'Atendimento Cósmico',
       content: '+55 (11) 99999-9999',
-      subtitle: 'Suporte místico 24/7'
+      subtitle: 'Suporte místico 24/7',
     },
     {
       icon: EnvelopeSimple,
       title: 'Email Astral',
       content: 'contato@cosmind.ai',
-      subtitle: 'Resposta em até 2h'
+      subtitle: 'Resposta em até 2h',
     },
     {
       icon: MapPin,
       title: 'Portal Digital',
       content: 'Conexão Global',
-      subtitle: 'Atendimento online universal'
-    }
+      subtitle: 'Atendimento online universal',
+    },
   ]
 
   const services = [
@@ -59,7 +64,7 @@ export function ContactSection({ onSectionClick }: ContactSectionProps = {}) {
     'Mapa Astral Completo',
     'Consulta com IA Mística',
     'Previsões de Carreira',
-    'Perfil Cósmico Premium'
+    'Perfil Cósmico Premium',
   ]
 
   const handleInputChange = (field: keyof ContactForm, value: string) => {
@@ -71,52 +76,54 @@ export function ContactSection({ onSectionClick }: ContactSectionProps = {}) {
       toast.error('Por favor, informe seu nome')
       return false
     }
-    
+
     if (!formData.email.trim() || !formData.email.includes('@')) {
       toast.error('Por favor, informe um email válido')
       return false
     }
-    
+
     if (!formData.message.trim()) {
       toast.error('Por favor, descreva como podemos ajudá-lo')
       return false
     }
-    
+
     return true
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!validateForm()) return
-    
+
     setIsSubmitting(true)
-    
+
     try {
       const newContact = {
         ...formData,
         id: Date.now(),
         timestamp: new Date().toISOString(),
-        status: 'pending'
+        status: 'pending',
       }
-      
+
       setContacts((currentContacts: any[]) => [...currentContacts, newContact])
-      
-      toast.success('Mensagem enviada com sucesso! Entraremos em contato em breve.')
-      
+
+      toast.success(
+        'Mensagem enviada com sucesso! Entraremos em contato em breve.'
+      )
+
       // Navigate to horoscope after successful submission
       if (onSectionClick) {
         setTimeout(() => {
           onSectionClick('horoscope')
         }, 2000)
       }
-      
+
       setFormData({
         name: '',
         email: '',
         phone: '',
         service: '',
-        message: ''
+        message: '',
       })
     } catch (error) {
       toast.error('Erro ao enviar mensagem. Tente novamente.')
@@ -144,8 +151,9 @@ export function ContactSection({ onSectionClick }: ContactSectionProps = {}) {
               </span>
             </h2>
             <p className="font-sans text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Conecte-se conosco e descubra como nossa IA mística pode transformar 
-              sua jornada de autoconhecimento através do cosmos digital.
+              Conecte-se conosco e descubra como nossa IA mística pode
+              transformar sua jornada de autoconhecimento através do cosmos
+              digital.
             </p>
           </motion.div>
 
@@ -161,31 +169,41 @@ export function ContactSection({ onSectionClick }: ContactSectionProps = {}) {
                 <h3 className="font-display font-semibold text-2xl text-foreground mb-6">
                   Conecte-se ao Cosmos
                 </h3>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="name" className="text-sm font-medium text-foreground">
+                      <Label
+                        htmlFor="name"
+                        className="text-sm font-medium text-foreground"
+                      >
                         Nome *
                       </Label>
                       <Input
                         id="name"
                         value={formData.name}
-                        onChange={(e) => handleInputChange('name', e.target.value)}
+                        onChange={e =>
+                          handleInputChange('name', e.target.value)
+                        }
                         placeholder="Seu nome completo"
                         className="border-border/50 focus:border-primary/50"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="text-sm font-medium text-foreground">
+                      <Label
+                        htmlFor="email"
+                        className="text-sm font-medium text-foreground"
+                      >
                         Email *
                       </Label>
                       <Input
                         id="email"
                         type="email"
                         value={formData.email}
-                        onChange={(e) => handleInputChange('email', e.target.value)}
+                        onChange={e =>
+                          handleInputChange('email', e.target.value)
+                        }
                         placeholder="seu@email.com"
                         className="border-border/50 focus:border-primary/50"
                       />
@@ -194,30 +212,40 @@ export function ContactSection({ onSectionClick }: ContactSectionProps = {}) {
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="phone" className="text-sm font-medium text-foreground">
+                      <Label
+                        htmlFor="phone"
+                        className="text-sm font-medium text-foreground"
+                      >
                         Telefone
                       </Label>
                       <Input
                         id="phone"
                         value={formData.phone}
-                        onChange={(e) => handleInputChange('phone', e.target.value)}
+                        onChange={e =>
+                          handleInputChange('phone', e.target.value)
+                        }
                         placeholder="(11) 99999-9999"
                         className="border-border/50 focus:border-primary/50"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="service" className="text-sm font-medium text-foreground">
+                      <Label
+                        htmlFor="service"
+                        className="text-sm font-medium text-foreground"
+                      >
                         Serviço de Interesse
                       </Label>
                       <select
                         id="service"
                         value={formData.service}
-                        onChange={(e) => handleInputChange('service', e.target.value)}
+                        onChange={e =>
+                          handleInputChange('service', e.target.value)
+                        }
                         className="w-full px-3 py-2 border border-border/50 rounded-md bg-background text-foreground focus:border-primary/50 focus:outline-none"
                       >
                         <option value="">Selecione um serviço</option>
-                        {services.map((service) => (
+                        {services.map(service => (
                           <option key={service} value={service}>
                             {service}
                           </option>
@@ -227,20 +255,28 @@ export function ContactSection({ onSectionClick }: ContactSectionProps = {}) {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message" className="text-sm font-medium text-foreground">
+                    <Label
+                      htmlFor="message"
+                      className="text-sm font-medium text-foreground"
+                    >
                       Mensagem *
                     </Label>
                     <Textarea
                       id="message"
                       value={formData.message}
-                      onChange={(e) => handleInputChange('message', e.target.value)}
+                      onChange={e =>
+                        handleInputChange('message', e.target.value)
+                      }
                       placeholder="Como podemos ajudá-lo em sua jornada cósmica?"
                       rows={5}
                       className="border-border/50 focus:border-primary/50 resize-none"
                     />
                   </div>
 
-                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
                     <Button
                       type="submit"
                       disabled={isSubmitting}
@@ -273,8 +309,9 @@ export function ContactSection({ onSectionClick }: ContactSectionProps = {}) {
                   Canais de Conexão Cósmica
                 </h3>
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  Nossa equipe de especialistas cósmicos está sempre disponível para guiá-lo. 
-                  Conecte-se através dos portais abaixo ou inicie sua consulta astral gratuita.
+                  Nossa equipe de especialistas cósmicos está sempre disponível
+                  para guiá-lo. Conecte-se através dos portais abaixo ou inicie
+                  sua consulta astral gratuita.
                 </p>
               </div>
 

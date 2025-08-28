@@ -24,10 +24,10 @@ function App() {
     if (element) {
       const navHeight = 80
       const elementPosition = element.offsetTop - navHeight
-      
+
       window.scrollTo({
         top: elementPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       })
     }
   }
@@ -55,9 +55,12 @@ function App() {
   return (
     <div className="min-h-screen bg-background font-sans antialiased">
       <Navigation onSectionClick={scrollToSection} />
-      
+
       <main>
-        <HeroSection onCtaClick={scrollToHoroscope} onSectionClick={scrollToSection} />
+        <HeroSection
+          onCtaClick={scrollToHoroscope}
+          onSectionClick={scrollToSection}
+        />
         <AboutSection />
         <HoroscopeGenerator onSectionClick={scrollToSection} />
         <HoroscopeHistory />
@@ -65,18 +68,21 @@ function App() {
         <RitualGenerator onSectionClick={scrollToSection} />
         <CareerAstrology onSectionClick={scrollToSection} />
         <PlanetaryTransits onSectionClick={scrollToSection} />
-        <ServicesSection onContactClick={scrollToHoroscope} onSectionClick={scrollToSection} />
+        <ServicesSection
+          onContactClick={scrollToHoroscope}
+          onSectionClick={scrollToSection}
+        />
         <TokenShop onSectionClick={scrollToSection} />
         <ContactSection onSectionClick={scrollToSection} />
       </main>
-      
+
       <Footer onSectionClick={scrollToSection} />
-      
+
       <SplashCursor />
       <AstrologyChatBot />
       <BackToTop />
-      
-      <Toaster 
+
+      <Toaster
         position="top-right"
         toastOptions={{
           style: {

@@ -1,8 +1,22 @@
 import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Coins, Star, Sparkles, Crown, Check, User, Lock } from '@phosphor-icons/react'
+import {
+  Coins,
+  Star,
+  Sparkles,
+  Crown,
+  Check,
+  User,
+  Lock,
+} from '@phosphor-icons/react'
 import { motion } from 'framer-motion'
 import { useKV } from '@github/spark/hooks'
 import { toast } from 'sonner'
@@ -36,24 +50,24 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
       id: 'starter',
       name: 'Pacote Iniciante',
       tokens: 10,
-      price: 9.90,
-      originalPrice: 19.90,
+      price: 9.9,
+      originalPrice: 19.9,
       icon: Star,
       popular: false,
       features: [
         '10 consultas astrológicas',
         'Horóscopo diário por 1 semana',
         'Análise de compatibilidade básica',
-        'Suporte por email'
+        'Suporte por email',
       ],
-      gradient: 'from-secondary to-primary/50'
+      gradient: 'from-secondary to-primary/50',
     },
     {
       id: 'premium',
       name: 'Pacote Premium',
       tokens: 50,
-      price: 39.90,
-      originalPrice: 99.90,
+      price: 39.9,
+      originalPrice: 99.9,
       icon: Sparkles,
       popular: true,
       features: [
@@ -62,16 +76,16 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
         'Mapa astral completo',
         'Análise de compatibilidade premium',
         'Chat com IA mística 24/7',
-        'Relatórios personalizados'
+        'Relatórios personalizados',
       ],
-      gradient: 'from-primary to-accent'
+      gradient: 'from-primary to-accent',
     },
     {
       id: 'cosmic',
       name: 'Pacote Cósmico',
       tokens: 150,
-      price: 99.90,
-      originalPrice: 299.90,
+      price: 99.9,
+      originalPrice: 299.9,
       icon: Crown,
       popular: false,
       features: [
@@ -82,10 +96,10 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
         'Chat prioritário com IA mística',
         'Relatórios exclusivos',
         'Consultoria personalizada',
-        'Acesso a funcionalidades beta'
+        'Acesso a funcionalidades beta',
       ],
-      gradient: 'from-accent to-primary/70'
-    }
+      gradient: 'from-accent to-primary/70',
+    },
   ]
 
   const handlePurchase = (pkg: any) => {
@@ -99,11 +113,14 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
 
   const handlePurchaseComplete = (tokens: number) => {
     if (currentUser) {
-      const updatedUser = { ...currentUser, tokens: currentUser.tokens + tokens }
-      
+      const updatedUser = {
+        ...currentUser,
+        tokens: currentUser.tokens + tokens,
+      }
+
       // Update users array
-      setUsers(currentUsers => 
-        currentUsers.map(u => u.id === currentUser.id ? updatedUser : u)
+      setUsers(currentUsers =>
+        currentUsers.map(u => (u.id === currentUser.id ? updatedUser : u))
       )
     }
     setShowCheckout(false)
@@ -129,13 +146,13 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
               </span>
             </h2>
             <p className="font-sans text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Adquira tokens para desbloquear consultas ilimitadas com nossa IA mística 
-              e mergulhe profundamente nos segredos do cosmos.
+              Adquira tokens para desbloquear consultas ilimitadas com nossa IA
+              mística e mergulhe profundamente nos segredos do cosmos.
             </p>
-            
+
             {/* Current Balance */}
             {currentUser ? (
-              <motion.div 
+              <motion.div
                 className="flex items-center justify-center gap-3 mt-8 glass p-4 rounded-2xl w-fit mx-auto"
                 whileHover={{ scale: 1.05 }}
               >
@@ -145,7 +162,7 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
                 </span>
               </motion.div>
             ) : (
-              <motion.div 
+              <motion.div
                 className="flex items-center justify-center gap-3 mt-8 glass p-4 rounded-2xl w-fit mx-auto bg-muted/50"
                 whileHover={{ scale: 1.05 }}
               >
@@ -161,8 +178,11 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
           <div className="grid md:grid-cols-3 gap-8">
             {tokenPackages.map((pkg, index) => {
               const IconComponent = pkg.icon
-              const savings = ((pkg.originalPrice - pkg.price) / pkg.originalPrice * 100).toFixed(0)
-              
+              const savings = (
+                ((pkg.originalPrice - pkg.price) / pkg.originalPrice) *
+                100
+              ).toFixed(0)
+
               return (
                 <motion.div
                   key={pkg.id}
@@ -180,61 +200,80 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
                       </Badge>
                     </div>
                   )}
-                  
-                  <Card className={`p-8 h-full transition-all duration-300 hover:shadow-xl relative overflow-hidden ${
-                    pkg.popular 
-                      ? 'border-2 border-primary/50 bg-gradient-to-br from-primary/5 to-accent/5' 
-                      : 'border-border/50 bg-card/50 backdrop-blur-sm'
-                  }`}>
+
+                  <Card
+                    className={`p-8 h-full transition-all duration-300 hover:shadow-xl relative overflow-hidden ${
+                      pkg.popular
+                        ? 'border-2 border-primary/50 bg-gradient-to-br from-primary/5 to-accent/5'
+                        : 'border-border/50 bg-card/50 backdrop-blur-sm'
+                    }`}
+                  >
                     {/* Background Gradient */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${pkg.gradient} opacity-5`} />
-                    
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${pkg.gradient} opacity-5`}
+                    />
+
                     <div className="relative z-10">
                       <CardHeader className="text-center pb-8">
                         {/* Icon */}
-                        <div className={`w-20 h-20 bg-gradient-to-br ${pkg.gradient} rounded-3xl mx-auto mb-6 flex items-center justify-center`}>
+                        <div
+                          className={`w-20 h-20 bg-gradient-to-br ${pkg.gradient} rounded-3xl mx-auto mb-6 flex items-center justify-center`}
+                        >
                           <IconComponent size={40} className="text-white" />
                         </div>
-                        
+
                         {/* Package Name */}
                         <CardTitle className="font-display text-2xl mb-2">
                           {pkg.name}
                         </CardTitle>
-                        
+
                         {/* Tokens */}
                         <div className="flex items-center justify-center gap-2 mb-4">
                           <Coins size={20} className="text-accent" />
-                          <span className="font-bold text-3xl">{pkg.tokens}</span>
+                          <span className="font-bold text-3xl">
+                            {pkg.tokens}
+                          </span>
                           <span className="text-muted-foreground">tokens</span>
                         </div>
-                        
+
                         {/* Pricing */}
                         <div className="space-y-2">
                           <div className="flex items-center justify-center gap-2">
-                            <span className="text-3xl font-bold">R$ {pkg.price.toFixed(2)}</span>
+                            <span className="text-3xl font-bold">
+                              R$ {pkg.price.toFixed(2)}
+                            </span>
                             <span className="text-lg text-muted-foreground line-through">
                               R$ {pkg.originalPrice.toFixed(2)}
                             </span>
                           </div>
-                          <Badge variant="secondary" className="bg-green-100 text-green-800">
+                          <Badge
+                            variant="secondary"
+                            className="bg-green-100 text-green-800"
+                          >
                             {savings}% de desconto
                           </Badge>
                         </div>
                       </CardHeader>
-                      
+
                       <CardContent className="space-y-6">
                         {/* Features */}
                         <div className="space-y-3">
                           {pkg.features.map((feature, featureIndex) => (
-                            <div key={featureIndex} className="flex items-start gap-3">
-                              <Check size={16} className="text-primary mt-1 flex-shrink-0" />
+                            <div
+                              key={featureIndex}
+                              className="flex items-start gap-3"
+                            >
+                              <Check
+                                size={16}
+                                className="text-primary mt-1 flex-shrink-0"
+                              />
                               <span className="text-sm text-muted-foreground">
                                 {feature}
                               </span>
                             </div>
                           ))}
                         </div>
-                        
+
                         {/* Purchase Button */}
                         <Button
                           onClick={() => handlePurchase(pkg)}
@@ -257,7 +296,7 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
                             'Adquirir Agora'
                           )}
                         </Button>
-                        
+
                         {/* Value Proposition */}
                         <div className="text-center text-xs text-muted-foreground">
                           R$ {(pkg.price / pkg.tokens).toFixed(2)} por token
@@ -269,7 +308,7 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
               )
             })}
           </div>
-          
+
           {/* Additional Info */}
           <motion.div
             initial={{ y: 30, opacity: 0 }}
@@ -279,7 +318,8 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
             className="text-center mt-16 space-y-4"
           >
             <p className="text-muted-foreground">
-              ✨ Tokens nunca expiram • 🔒 Pagamento 100% seguro • 💫 Satisfação garantida
+              ✨ Tokens nunca expiram • 🔒 Pagamento 100% seguro • 💫 Satisfação
+              garantida
             </p>
             <div className="flex justify-center gap-8 text-sm text-muted-foreground">
               <span>💳 Cartão de Crédito</span>
@@ -289,7 +329,7 @@ export function TokenShop({ onSectionClick }: TokenShopProps = {}) {
           </motion.div>
         </div>
       </div>
-      
+
       {/* Stripe Checkout Modal */}
       {currentUser && (
         <StripeCheckout
